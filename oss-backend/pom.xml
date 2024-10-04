@@ -22,7 +22,7 @@
     <module>cart</module>
     <module>delivery</module>
     <module>payment</module>
-    <module>product_category</module>
+    <module>category</module>
     <module>auth</module>
     <module>user</module>
   </modules>

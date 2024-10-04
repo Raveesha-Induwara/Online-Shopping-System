@@ -6,7 +6,7 @@
         <artifactId>oss-backend</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>product_category</artifactId>
+    <artifactId>category</artifactId>
     <name>Archetype - product_category</name>
     <url>http://maven.apache.org</url>
 
