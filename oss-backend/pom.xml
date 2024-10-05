@@ -26,6 +26,7 @@
     <module>auth</module>
     <module>user</module>
     <module>discoveryserver</module>
+      <module>apigateway</module>
   </modules>
 
   <properties>
