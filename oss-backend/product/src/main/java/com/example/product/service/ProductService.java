@@ -25,10 +25,10 @@ public class ProductService {
     public void createProduct(ProductRequest productRequest) {
         try{
             Product product = Product.builder()
-                    .productName(productRequest.getProductName())
-                    .productDescription(productRequest.getProductDescription())
-                    .productCategory(productRequest.getProductCategory())
-                    .productPrice(productRequest.getProductPrice())
+                    .product_name(productRequest.getProduct_name())
+                    .product_description(productRequest.getProduct_description())
+                    .product_category(productRequest.getProduct_category())
+                    .product_price(productRequest.getProduct_price())
                     .build();
             productRepository.save(product);
             log.info("product created with id: {}", product.getId());
@@ -61,25 +61,37 @@ public class ProductService {
         return null;
     }
 
+
     @Transactional
     public void updateProduct(Long id, ProductRequest productRequest) {
         try {
+            // Fetch the existing product from the repository
             Product existingProduct = productRepository.findById(id)
                     .orElseThrow(() -> new Exception("Product not found with ID: " + id));
 
-            // Update product details
-            existingProduct.setProductName(productRequest.getProductName());
-            existingProduct.setProductDescription(productRequest.getProductDescription());
-            existingProduct.setProductCategory(productRequest.getProductCategory());
-            existingProduct.setProductPrice(productRequest.getProductPrice());
+            // Update product details only if they are not null
+            if (productRequest.getProduct_name() != null) {
+                existingProduct.setProduct_name(productRequest.getProduct_name());
+            }
+            if (productRequest.getProduct_description() != null) {
+                existingProduct.setProduct_description(productRequest.getProduct_description());
+            }
+            if (productRequest.getProduct_category() != null) {
+                existingProduct.setProduct_category(productRequest.getProduct_category());
+            }
+            if (productRequest.getProduct_price() != null) {
+                existingProduct.setProduct_price(productRequest.getProduct_price());
+            }
 
             // Save the updated product
             productRepository.save(existingProduct);
             log.info("Product updated with ID: {}", id);
         } catch (Exception e) {
             log.error("Error occurred while updating product with ID: {}", id, e);
+            // Optionally, rethrow the exception or handle it as needed
         }
     }
+
 
     @Transactional
     public void deleteProduct(Long id) {
@@ -100,10 +112,10 @@ public class ProductService {
     private ProductRespond mapToProductResponse(Product product) {
         return ProductRespond.builder()
                 .id(product.getId())
-                .productName(product.getProductName())
-                .productDescription(product.getProductDescription())
-                .productCategory(product.getProductCategory())
-                .productPrice(product.getProductPrice())
+                .product_name(product.getProduct_name())
+                .product_description(product.getProduct_description())
+                .product_category(product.getProduct_category())
+                .product_price(product.getProduct_price())
                 .build();
     }
 }
