@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductRequest {
     //Field Representing for product request
-    private String productName;
-    private String productDescription;
-    private String productCategory;
-    private int productPrice;
+    private String product_name;
+    private String product_description;
+    private String product_category;
+    private Integer product_price;
 }
