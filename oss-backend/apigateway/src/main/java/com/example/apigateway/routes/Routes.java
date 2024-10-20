@@ -19,7 +19,6 @@ public class Routes {
         RouteLocator routeLocator = builder.routes()
                     .route("auth-service", r -> r.path("/auth-service/v3/api-docs").uri("lb://auth"))
                     .route("cart-service", r -> r.path("/cart-service/v3/api-docs").uri("lb://cart"))
-                    .route("category-service", r -> r.path("/category-service/v3/api-docs").uri("lb://category"))
                     .route("delivery-service", r -> r.path("/delivery-service/v3/api-docs").uri("lb://delivery"))
                     .route("inventory-service", r -> r.path("/inventory-service/v3/api-docs").uri("lb://inventory"))
                     .route("order-service", r -> r.path("/order-service/v3/api-docs").uri("lb://order"))
