@@ -27,6 +27,15 @@ public class Routes {
                     .route("user-service", r -> r.path("/user-service/v3/api-docs").uri("lb://user"))
                     
                     .route("product-service", r -> r.path("/api/v1/products").uri("lb://product"))
+                    
+                    .route("user-service", r -> r.path("/api/v1/customers/getusers").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/customers/adduser").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/customers/updateuser").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/customers/getuser").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/admins/getadmins").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/admins/addadmin").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/admins/deleteadmin").uri("lb://user"))
+                    .route("user-service", r -> r.path("/api/v1/admins/getadmin").uri("lb://user"))
                     .build();
         
         log.info("Gateway routes configured successfully.");
