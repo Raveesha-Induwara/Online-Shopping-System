@@ -12,13 +12,11 @@ import lombok.NoArgsConstructor;
 public class Admin {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int adminId;
+    private String adminId;
     
     @Column(unique = true)
     private String email;
     
     private String firstName;
     private String lastName;
-    private String password;
 }

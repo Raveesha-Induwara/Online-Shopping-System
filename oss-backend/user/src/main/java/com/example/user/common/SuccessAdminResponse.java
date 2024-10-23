@@ -1,15 +1,15 @@
 package com.example.user.common;
 
-import com.example.user.dto.AdminResponseDto;
+import com.example.user.model.Admin;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Getter;
 
 @Getter
 public class SuccessAdminResponse implements UserResponse {
     @JsonUnwrapped
-    private final AdminResponseDto admin;
+    private final Admin admin;
     
-    public SuccessAdminResponse(AdminResponseDto adminResponse) {
+    public SuccessAdminResponse(Admin adminResponse) {
         this.admin = adminResponse;
     }
 }

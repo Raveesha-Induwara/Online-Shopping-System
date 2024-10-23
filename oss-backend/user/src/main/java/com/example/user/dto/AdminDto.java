@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AdminDto {
     
+    @NotNull(message = "adminId is mandatory")
+    private String adminId;
+    
     @NotNull(message = "firstName is mandatory")
     private String firstName;
     
@@ -21,8 +24,4 @@ public class AdminDto {
     @NotNull(message = "email is mandatory")
     @Email(message = "email is not valid")
     private String email;
-    
-    @NotNull(message = "password is mandatory")
-    @Size(min = 8, max = 15, message = "password must be at least 8 characters long")
-    private String password;
 }

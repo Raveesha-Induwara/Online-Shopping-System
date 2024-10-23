@@ -12,15 +12,13 @@ import lombok.NoArgsConstructor;
 public class Customer {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerId;
+    private String customerId;
     
     @Column(unique = true)
     private String email;
     
     private String firstName;
     private String lastName;
-    private String password;
     private String mobileNo;
     private String homeNo;
     private String street;

@@ -4,17 +4,16 @@ import com.example.user.common.ErrorUserResponse;
 import com.example.user.common.SuccessCustomerResponse;
 import com.example.user.common.UserResponse;
 import com.example.user.dto.CustomerDto;
-import com.example.user.dto.CustomerResponseDto;
 import com.example.user.dto.CustomerUpdateDto;
 import com.example.user.model.Customer;
 import com.example.user.repo.CustomerRepo;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,14 +24,13 @@ public class CustomerService {
     @Autowired
     private ModelMapper modelMapper;
     
-    public List<CustomerResponseDto> getAllUsers() {
-        List<Customer> userList = customerRepo.findAll();
-        return modelMapper.map(userList, new TypeToken<List<CustomerResponseDto>>(){}.getType());
+    public List<Customer> getAllUsers() {
+        return customerRepo.findAll();
     }
     
     public CustomerDto createUser(CustomerDto customerDto) {
-        Customer user = customerRepo.getUserByEmail(customerDto.getEmail());
-        if(user != null) {
+        Optional<Customer> user = customerRepo.findByEmail(customerDto.getEmail());
+        if(user.isPresent()) {
             throw new RuntimeException(customerDto.getEmail() + " mail already registered");
         }
         customerRepo.save(modelMapper.map(customerDto, Customer.class));
@@ -40,26 +38,24 @@ public class CustomerService {
     }
     
     public UserResponse updateUser(CustomerUpdateDto customerUpdateDto) {
-        Customer user = customerRepo.getUserByEmail(customerUpdateDto.getEmail());
-        if(user == null) {
-            return new ErrorUserResponse(customerUpdateDto.getEmail() + " email not found");
+        Optional<Customer> user = customerRepo.findByEmail(customerUpdateDto.getEmail());
+        if(user.isPresent()) {
+            user.map(value -> {
+                value.setFirstName(customerUpdateDto.getFirstName());
+                value.setLastName(customerUpdateDto.getLastName());
+                value.setMobileNo(customerUpdateDto.getMobileNo());
+                value.setHomeNo(customerUpdateDto.getHomeNo());
+                value.setStreet(customerUpdateDto.getStreet());
+                value.setCity(customerUpdateDto.getCity());
+                return value;
+            });
+            
+            return new SuccessCustomerResponse(user);
         }
-        user.setFirstName(customerUpdateDto.getFirstName());
-        user.setLastName(customerUpdateDto.getLastName());
-        user.setMobileNo(customerUpdateDto.getMobileNo());
-        user.setHomeNo(customerUpdateDto.getHomeNo());
-        user.setStreet(customerUpdateDto.getStreet());
-        user.setCity(customerUpdateDto.getCity());
-
-        return new SuccessCustomerResponse(modelMapper.map(user, CustomerResponseDto.class));
+        return new ErrorUserResponse(customerUpdateDto.getEmail() + " email not found");
     }
     
-    public UserResponse getUserByEmail(String email) {
-        try {
-            Customer user = customerRepo.getUserByEmail(email);
-            return new SuccessCustomerResponse(modelMapper.map(user, CustomerResponseDto.class));
-        } catch (Exception e) {
-            return new ErrorUserResponse("Email not found");
-        }
+    public Optional<Customer> getUserByEmail(String email) {
+        return customerRepo.findByEmail(email);
     }
 }

@@ -1,8 +1,7 @@
 package com.example.user.controller;
 
-import com.example.user.common.UserResponse;
 import com.example.user.dto.AdminDto;
-import com.example.user.dto.AdminResponseDto;
+import com.example.user.model.Admin;
 import com.example.user.service.AdminService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/v1/admins")
@@ -23,7 +23,7 @@ public class AdminController {
     private AdminService adminService;
     
     @GetMapping("/getadmins")
-    public List<AdminResponseDto> getAdmins() {
+    public List<Admin> getAdmins() {
         return adminService.getAllAdmins();
     }
     
@@ -38,7 +38,7 @@ public class AdminController {
     }
     
     @GetMapping("/getadmin")
-    public UserResponse getAdminByEmail(@Param(value = "email") String email) {
+    public Optional<Admin> getAdminByEmail(@Param(value = "email") String email) {
         return adminService.getAdminByEmail(email);
     }
     
