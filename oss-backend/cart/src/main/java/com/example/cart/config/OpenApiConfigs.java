@@ -1,4 +1,4 @@
-package com.example.user.config;
+package com.example.cart.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -19,9 +19,9 @@ public class OpenApiConfigs {
         server.setDescription("Development");
         
         Info information = new Info()
-                                   .title("Delivery Service")
+                                   .title("Cart Service")
                                    .version("v1.0.0")
-                                   .description("Documentation Delivery Service");
+                                   .description("Documentation Cart Service");
         return new OpenAPI().info(information).servers(List.of(server));
     }
 }

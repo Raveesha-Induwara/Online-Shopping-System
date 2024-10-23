@@ -1,4 +1,4 @@
-package com.example.user;
+package com.example.auth;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class PaymentApplication {
+public class AuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PaymentApplication.class, args);
+        SpringApplication.run(AuthApplication.class, args);
     }
     @Bean
     public ModelMapper modelMapper() {
