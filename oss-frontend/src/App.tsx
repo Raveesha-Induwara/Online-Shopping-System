@@ -6,9 +6,31 @@ import { NavBar } from "./Components/NavBar";
 import { PrimaryButton } from "./Components/PrimaryButton";
 import { ProductDetailsCard } from "./Components/ProductDetailsCard.tsx";
 import { RelatedProductCard } from "./Components/RelatedProductCard.tsx";
+import { RelatedProductList } from "./Components/RelatedProductList.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const list = [
+    {
+      image: "././src/assets/Images/maxi1.jpg",
+      title: "Slate Maxi - Gown",
+      rating: 3,
+      price: "LKR 6500",
+    },
+    {
+      image: "././src/assets/Images/maxi2.jpg",
+      title: "Slate Maxi - Gown",
+      rating: 3,
+      price: "LKR 6500",
+    },
+    {
+      image: "././src/assets/Images/maxi3.jpg",
+      title: "Slate Maxi - Gown",
+      rating: 3,
+      price: "LKR 6500",
+    },
+  ];
 
   return (
     <div>
@@ -21,12 +43,13 @@ function App() {
         description="new frock"
         rating={3}
       /> */}
-      <RelatedProductCard
+      {/* <RelatedProductCard
         image="././src/assets/Images/maxi3.jpg"
         title="Slate Maxi - Gown"
         rating={3}
         price="7500"
-      />
+      /> */}
+      <RelatedProductList items={list} />
     </div>
   );
 }
