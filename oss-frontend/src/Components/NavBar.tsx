@@ -32,7 +32,7 @@ export const NavBar = () => {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{ background: "linear-gradient(45deg, #185A9D 30%, #43CEA2 90%)" }}
     >
       <Toolbar>

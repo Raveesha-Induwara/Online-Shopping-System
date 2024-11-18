@@ -7,30 +7,32 @@ import { PrimaryButton } from "./Components/PrimaryButton";
 import { ProductDetailsCard } from "./Components/ProductDetailsCard.tsx";
 import { RelatedProductCard } from "./Components/RelatedProductCard.tsx";
 import { RelatedProductList } from "./Components/RelatedProductList.tsx";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import ProductDetails from "./Pages/ProductDetails.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  const list = [
-    {
-      image: "././src/assets/Images/maxi1.jpg",
-      title: "Slate Maxi - Gown",
-      rating: 3,
-      price: "LKR 6500",
-    },
-    {
-      image: "././src/assets/Images/maxi2.jpg",
-      title: "Slate Maxi - Gown",
-      rating: 3,
-      price: "LKR 6500",
-    },
-    {
-      image: "././src/assets/Images/maxi3.jpg",
-      title: "Slate Maxi - Gown",
-      rating: 3,
-      price: "LKR 6500",
-    },
-  ];
+  // const list = [
+  //   {
+  //     image: "././src/assets/Images/maxi1.jpg",
+  //     title: "Slate Maxi - Gown",
+  //     rating: 3,
+  //     price: "LKR 6500",
+  //   },
+  //   {
+  //     image: "././src/assets/Images/maxi2.jpg",
+  //     title: "Slate Maxi - Gown",
+  //     rating: 3,
+  //     price: "LKR 6500",
+  //   },
+  //   {
+  //     image: "././src/assets/Images/maxi3.jpg",
+  //     title: "Slate Maxi - Gown",
+  //     rating: 3,
+  //     price: "LKR 6500",
+  //   },
+  // ];
 
   return (
     <div>
@@ -49,7 +51,13 @@ function App() {
         rating={3}
         price="7500"
       /> */}
-      <RelatedProductList items={list} />
+      {/* <RelatedProductList items={list} /> */}
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/productDetails" element={<ProductDetails />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
