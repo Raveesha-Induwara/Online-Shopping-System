@@ -5,6 +5,7 @@ import viteLogo from "/vite.svg";
 import { NavBar } from "./Components/NavBar";
 import { PrimaryButton } from "./Components/PrimaryButton";
 import { ProductDetailsCard } from "./Components/ProductDetailsCard.tsx";
+import { RelatedProductCard } from "./Components/RelatedProductCard.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,11 +15,17 @@ function App() {
       {/* {" "}
       <NavBar />{" "} */}
       {/* <PrimaryButton title="submit" /> */}
-      <ProductDetailsCard
+      {/* <ProductDetailsCard
         title="Slate Maxi - Gown"
         price="LKR 6000"
         description="new frock"
         rating={3}
+      /> */}
+      <RelatedProductCard
+        image="././src/assets/Images/maxi3.jpg"
+        title="Slate Maxi - Gown"
+        rating={3}
+        price="7500"
       />
     </div>
   );
