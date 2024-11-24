@@ -18,7 +18,7 @@ public class OpenApiConfigs {
     @Bean
     public OpenAPI customOpenAPI() {
         Server server = new Server();
-        server.setUrl("http://localhost:8080");
+        server.setUrl("http://localhost:8081");
         server.setDescription("Development");
         
         Info information = new Info()

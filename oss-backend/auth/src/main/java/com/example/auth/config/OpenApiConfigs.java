@@ -1,4 +1,4 @@
-package com.example.user.config;
+package com.example.auth.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
@@ -18,7 +18,7 @@ public class OpenApiConfigs {
     @Bean
     public OpenAPI customOpenAPI() {
         Server server = new Server();
-        server.setUrl("http://localhost:8080");
+        server.setUrl("http://localhost:8081");
         server.setDescription("Development");
         
         Info information = new Info()
