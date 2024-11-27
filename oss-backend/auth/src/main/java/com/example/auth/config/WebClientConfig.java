@@ -1,4 +1,4 @@
-package com.example.user.config;
+package com.example.auth.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ public class WebClientConfig {
     
     @Bean
     public WebClient userWebClient() {
-        return webClientBuilder().baseUrl("http://user/api/v1").build();
+        return webClientBuilder().baseUrl("http://user/api/v1/customers").build();
     }
     
  }
