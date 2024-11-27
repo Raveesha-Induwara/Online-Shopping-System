@@ -26,7 +26,12 @@ public class Routes {
                     .route("product-service", r -> r.path("/product-service/v3/api-docs").uri("lb://product"))
                     .route("user-service", r -> r.path("/user-service/v3/api-docs").uri("lb://user"))
                     
-                    .route("product-service", r -> r.path("/api/v1/products").uri("lb://product"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/signup/client/create-otp").uri("lb://auth"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/signup/client").uri("lb://auth"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/login/client").uri("lb://auth"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/request-otp/client").uri("lb://auth"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/refresh-token").uri("lb://auth"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/login/admin").uri("lb://auth"))
                     
                     .route("user-service", r -> r.path("/api/v1/customers/getusers").uri("lb://user"))
                     .route("user-service", r -> r.path("/api/v1/customers/adduser").uri("lb://user"))
