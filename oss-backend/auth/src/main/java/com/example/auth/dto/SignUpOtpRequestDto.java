@@ -1,4 +1,4 @@
-package com.example.user.dto;
+package com.example.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -8,8 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class SignUpOtpRequestDto {
     
     @NotNull(message = "first name is mandatory")

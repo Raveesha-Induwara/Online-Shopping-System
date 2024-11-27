@@ -1,4 +1,4 @@
-package com.example.user.model;
+package com.example.auth.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ public class ClientCredential {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private long id;
     
     @Column(unique = true)
     private String userId;

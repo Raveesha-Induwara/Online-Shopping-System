@@ -1,4 +1,4 @@
-package com.example.user.enums;
+package com.example.auth.enums;
 
 public enum OtpType {
     SignUp,

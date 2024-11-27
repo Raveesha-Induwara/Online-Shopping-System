@@ -1,4 +1,4 @@
-package com.example.user.dto;
+package com.example.auth.dto;
 
 import jdk.jfr.Description;
 import lombok.AllArgsConstructor;

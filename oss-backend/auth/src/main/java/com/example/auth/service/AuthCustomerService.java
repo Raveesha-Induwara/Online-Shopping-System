@@ -1,13 +1,14 @@
-package com.example.user.service;
+package com.example.auth.service;
 
-import com.example.user.common.AuthResponse;
-import com.example.user.common.ErrorAuthResponse;
-import com.example.user.common.SuccessAuthResponse;
+import com.example.auth.common.SuccessAuthResponse;
+import com.example.auth.dto.*;
+import com.example.auth.repo.ClientCredentialRepo;
+import com.example.auth.common.AuthResponse;
+import com.example.auth.common.ErrorAuthResponse;
 import com.example.user.common.UserResponse;
 import com.example.user.dto.*;
-import com.example.user.enums.UserType;
-import com.example.user.model.ClientCredential;
-import com.example.user.repo.ClientCredentialRepo;
+import com.example.auth.enums.UserType;
+import com.example.auth.model.ClientCredential;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;

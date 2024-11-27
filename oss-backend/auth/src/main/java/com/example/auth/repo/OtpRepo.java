@@ -1,6 +1,6 @@
-package com.example.user.repo;
+package com.example.auth.repo;
 
-import com.example.user.model.Otp;
+import com.example.auth.model.Otp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

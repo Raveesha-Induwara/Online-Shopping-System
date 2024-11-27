@@ -1,8 +1,8 @@
-package com.example.user.service;
+package com.example.auth.service;
 
-import com.example.user.dto.LoginRequestDto;
-import com.example.user.dto.LoginResponseDto;
-import com.example.user.repo.AdminCredentialRepo;
+import com.example.auth.dto.LoginRequestDto;
+import com.example.auth.dto.LoginResponseDto;
+import com.example.auth.repo.AdminCredentialRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

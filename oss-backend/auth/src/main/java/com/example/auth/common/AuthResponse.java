@@ -1,4 +1,4 @@
-package com.example.user.common;
+package com.example.auth.common;
 
 public interface AuthResponse {
 }

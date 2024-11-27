@@ -1,6 +1,6 @@
-package com.example.user.common;
+package com.example.auth.common;
 
-import com.example.user.dto.LoginResponseDto;
+import com.example.auth.dto.LoginResponseDto;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Getter;
 

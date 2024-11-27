@@ -1,4 +1,4 @@
-package com.example.user.dto;
+package com.example.auth.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

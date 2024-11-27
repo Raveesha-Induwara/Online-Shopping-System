@@ -1,6 +1,6 @@
-package com.example.user.dto;
+package com.example.auth.dto;
 
-import com.example.user.enums.UserType;
+import com.example.auth.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

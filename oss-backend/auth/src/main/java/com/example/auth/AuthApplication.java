@@ -1,4 +1,4 @@
-package com.example.user;
+package com.example.auth;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;

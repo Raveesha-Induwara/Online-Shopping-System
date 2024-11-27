@@ -1,6 +1,6 @@
-package com.example.user.repo;
+package com.example.auth.repo;
 
-import com.example.user.model.AdminCredential;
+import com.example.auth.model.AdminCredential;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
