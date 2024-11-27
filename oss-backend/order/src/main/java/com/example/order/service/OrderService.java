@@ -25,9 +25,9 @@ public class OrderService {
         try{
             Order order = Order.builder()
                     .orderStatus(orderRequest.getOrderStatus())
-                    .orderDate(String.valueOf(orderRequest.getOrderDate()))
+                    .orderDate(orderRequest.getOrderDate())
                     .totalAmount(orderRequest.getTotalAmount())
-                    .diliveryAssinged(orderRequest.getDiliveryAssinged())
+                    .deliveryAssigned(orderRequest.getDeliveryAssigned())
                     .build();
             orderRepository.save(order);
             log.info("order created with id: {}", order.getOrderId());
@@ -73,13 +73,13 @@ public class OrderService {
                 existingOrder.setOrderStatus(orderRequest.getOrderStatus());
             }
             if (orderRequest.getOrderDate() != null) {
-                existingOrder.setOrderDate(String.valueOf(orderRequest.getOrderDate()));
+                existingOrder.setOrderDate(orderRequest.getOrderDate());
             }
             if (orderRequest.getTotalAmount() != null) {
                 existingOrder.setTotalAmount(orderRequest.getTotalAmount());
             }
-            if (orderRequest.getDiliveryAssinged() != null) {
-                existingOrder.setDiliveryAssinged(orderRequest.getDiliveryAssinged());
+            if (orderRequest.getDeliveryAssigned() != null) {
+                existingOrder.setDeliveryAssigned(orderRequest.getDeliveryAssigned());
             }
 
             // Save the updated order
@@ -114,7 +114,7 @@ public class OrderService {
                 .orderStatus(order.getOrderStatus())
                 .orderDate(order.getOrderDate())
                 .totalAmount(order.getTotalAmount())
-                .diliveryAssinged(order.getDiliveryAssinged())
+                .deliveryAssigned(order.getDeliveryAssigned())
                 .build();
     }
 }

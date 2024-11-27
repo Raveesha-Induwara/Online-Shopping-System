@@ -16,5 +16,5 @@ public class OrderRequest {
     private String orderStatus;
     private Date orderDate;
     private Double totalAmount;
-    private String diliveryAssinged;
+    private String deliveryAssigned;
 }
