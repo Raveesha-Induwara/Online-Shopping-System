@@ -31,9 +31,10 @@ function createData(
   product: string,
   name: string,
   description: string,
+  price: number,
   quantity: number
 ) {
-  return { id, product, name, description, quantity };
+  return { id, product, name, description, price, quantity };
 }
 
 const initialRows = [
@@ -42,6 +43,7 @@ const initialRows = [
     "././src/assets/Images/maxi3.jpg",
     "Slate Maxi - Gown",
     "Slate Maxi - Gown",
+    6000,
     1
   ),
   createData(
@@ -49,6 +51,7 @@ const initialRows = [
     "././src/assets/Images/maxi2.jpg",
     "Slate Maxi - Gown2",
     "Slate Maxi - Gown2",
+    5000,
     3
   ),
 ];
@@ -80,6 +83,15 @@ export default function MyCart() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const calculateTotal = () => {
+    return rows.reduce((total, row) => {
+      const price = Number(row.price);
+      const quantity = Number(row.quantity);
+
+      return total + price * quantity;
+    }, 0);
   };
 
   return (
@@ -171,6 +183,33 @@ export default function MyCart() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ marginTop: 2, textAlign: "right", paddingRight: 2 }}>
+            <Typography variant="h6">
+              Total: LKR <strong>{calculateTotal()}</strong>
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleClose()}
+          >
+            <strong>Checkout ({rows.length})</strong>
+          </Button>
+        </Box>
+      </Box>
     </div>
   );
 }
