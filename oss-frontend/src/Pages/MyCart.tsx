@@ -54,11 +54,19 @@ const initialRows = [
     5000,
     3
   ),
+  createData(
+    3,
+    "././src/assets/Images/maxi1.jpg",
+    "Slate Maxi - Gown3",
+    "Slate Maxi - Gown3",
+    7000,
+    5
+  ),
 ];
 
 export default function MyCart() {
   const [rows, setRows] = useState(initialRows);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<null | number>(null);
 
   //update quantity of each product in the cart
   const updateQuantity = (id: number, increment: number) => {
@@ -77,12 +85,12 @@ export default function MyCart() {
     handleClose();
   };
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpen = (id: number) => {
+    setOpen(id);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(null);
   };
 
   const calculateTotal = () => {
@@ -147,11 +155,11 @@ export default function MyCart() {
                   <IconButton
                     size="small"
                     color="error"
-                    onClick={() => handleOpen()}
+                    onClick={() => handleOpen(row.id)}
                   >
                     <DeleteForeverOutlined />
                   </IconButton>
-                  <Dialog open={open} onClose={() => handleClose()}>
+                  <Dialog open={open === row.id} onClose={() => handleClose()}>
                     <DialogTitle>
                       {"You are about to delete an item"}
                     </DialogTitle>
