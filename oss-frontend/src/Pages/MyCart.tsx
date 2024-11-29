@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import {
-  DataGrid,
-  GridColDef,
-  GridColumnHeaderParams,
-  GridRowsProp,
-} from "@mui/x-data-grid";
-import {
   Box,
   IconButton,
   Paper,

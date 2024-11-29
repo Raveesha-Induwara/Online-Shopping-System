@@ -10,6 +10,7 @@ import { RelatedProductList } from "./Components/RelatedProductList.tsx";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ProductDetails from "./Pages/ProductDetails.tsx";
 import MyCart from "./Pages/MyCart.tsx";
+import MyOrders from "./Pages/MyOrders.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -58,6 +59,7 @@ function App() {
         <Routes>
           <Route path="/productDetails" element={<ProductDetails />}></Route>
           <Route path="/myCart" element={<MyCart />}></Route>
+          <Route path="/myOrders" element={<MyOrders />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
