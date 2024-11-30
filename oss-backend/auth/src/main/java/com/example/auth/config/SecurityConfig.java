@@ -1,10 +1,16 @@
 package com.example.auth.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,12 +24,21 @@ import java.util.Collections;
 @Configuration
 public class SecurityConfig {
     
+    @Autowired
+    @Qualifier("customUserDetailsService")
+    private UserDetailsService customUserDetailsService;
+    
+    @Autowired
+    @Qualifier("adminUserDetailsService")
+    private UserDetailsService adminUserDetailsService;
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.sessionManagement(Management -> Management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize.requestMatchers(
                         "api/v1/auth/login/client",
                         "api/v1/auth/login/admin",
+                        "api/v1/auth/signup/admin",
                         "api/v1/auth/signup/client",
                         "api/v1/auth/signup/client/create-otp",
                         "api/v1/auth/request-otp/client",
@@ -59,4 +74,12 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration, AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(adminUserDetailsService).passwordEncoder(passwordEncoder());
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+    
 }
