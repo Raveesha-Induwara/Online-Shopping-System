@@ -18,4 +18,8 @@ public class WebClientConfig {
         return webClientBuilder().baseUrl("http://user/api/v1/customers").build();
     }
     
+    @Bean
+    public WebClient adminWebClient() {
+        return webClientBuilder().baseUrl("http://user/api/v1/admins").build();
+    }
  }
