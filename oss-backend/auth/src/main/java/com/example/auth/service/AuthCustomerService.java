@@ -11,10 +11,7 @@ import com.example.auth.enums.UserType;
 import com.example.auth.model.ClientCredential;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,8 +32,6 @@ public class AuthCustomerService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ClientCredentialRepo clientCredentialRepo;
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
     
     public AuthCustomerService(WebClient userWebClient) {
         this.userWebClient = userWebClient;
@@ -61,7 +56,7 @@ public class AuthCustomerService {
                     .uri(uriBuilder -> uriBuilder.path("/adduser").build())
                     .bodyValue(customerDto)
                     .retrieve()
-                    .bodyToMono(UserResponse.class)
+                    .bodyToMono(CustomerDto.class)
                     .block();
         } catch (WebClientResponseException e) {
             if(e.getStatusCode().is5xxServerError()) {
@@ -81,13 +76,24 @@ public class AuthCustomerService {
         response.setAccessToken(authService.generateToken(request.getEmail()));
         response.setRefreshToken("refresh");
         response.setStatus("success");
-        response.setUserType(UserType.Customer);
+        response.setUserType(UserType.CUSTOMER);
         
         return new SuccessAuthResponse(response);
     }
     
     public LoginResponseDto login(LoginRequestDto request) {
-        return null;
+        Authentication authentication = authService.authenticate(request.getEmail(), request.getPassword());
+        
+        if(authentication.isAuthenticated()) {
+            LoginResponseDto response = new LoginResponseDto();
+            response.setAccessToken(authService.generateToken(request.getEmail()));
+            response.setRefreshToken("refresh");
+            response.setStatus("success");
+            response.setUserType(UserType.CUSTOMER);
+            
+            return response;
+        }
+        return  null;
     }
     
     public LoginResponseDto requestOtp(OtpRequestDto request) {
@@ -96,16 +102,5 @@ public class AuthCustomerService {
     
     public LoginResponseDto refreshToken(RefreshTokenRequestDto request) {
         return null;
-    }
-    
-    private Authentication authenticate(String email, String password) {
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-        if(userDetails == null) {
-            throw new BadCredentialsException("Invalid email");
-        }
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
-        }
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }

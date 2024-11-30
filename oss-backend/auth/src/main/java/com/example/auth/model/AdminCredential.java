@@ -18,5 +18,5 @@ public class AdminCredential {
     @Column(unique = true)
     private String userId;
     private String password;
-    private String createdTime;
+    private Long createdTime;
 }
