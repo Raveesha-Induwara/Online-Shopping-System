@@ -1,5 +1,6 @@
 package com.example.auth.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class LoginRequestDto {
     
     @NotNull(message = "Email is required")
+    @Email(message = "email is not valid")
     private String email;
     
     @NotNull(message = "Password is required")

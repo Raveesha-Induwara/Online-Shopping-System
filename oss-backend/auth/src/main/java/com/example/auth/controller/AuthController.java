@@ -48,6 +48,11 @@ public class AuthController {
         return authCustomerService.refreshToken(request);
     }
     
+    @PostMapping(value = "/signup/admin")
+    public AuthResponse handlerAdminSignUp(@Valid @RequestBody SignUpOtpRequestDto request) {
+        return authAdminService.signUp(request);
+    }
+    
     @PostMapping(value = "/login/admin")
     public LoginResponseDto handlerAdminLogin(@Valid @RequestBody LoginRequestDto request) {
         return authAdminService.login(request);

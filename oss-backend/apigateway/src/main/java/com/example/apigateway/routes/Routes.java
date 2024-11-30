@@ -31,6 +31,7 @@ public class Routes {
                     .route("auth-service", r -> r.path("/api/v1/auth/login/client").uri("lb://auth"))
                     .route("auth-service", r -> r.path("/api/v1/auth/request-otp/client").uri("lb://auth"))
                     .route("auth-service", r -> r.path("/api/v1/auth/refresh-token").uri("lb://auth"))
+                    .route("auth-service", r -> r.path("/api/v1/auth/signup/admin").uri("lb://auth"))
                     .route("auth-service", r -> r.path("/api/v1/auth/login/admin").uri("lb://auth"))
                     
                     .route("user-service", r -> r.path("/api/v1/customers/getusers").uri("lb://user"))
