@@ -27,8 +27,10 @@ public class Routes {
                     .route("user-service", r -> r.path("/user-service/v3/api-docs").uri("lb://user"))
                     
                     .route("product-service", r -> r.path("/api/v1/products").uri("lb://product"))
+                    .route("product-service", r -> r.path("/api/v1/products/{id}").uri("lb://product"))
                     .route("order-service", r -> r.path("/api/v1/orders").uri("lb://order"))
                     .route("order-service", r -> r.path("/api/v1/orders/{id}").uri("lb://order"))
+
                     .build();
         
         log.info("Gateway routes configured successfully.");
