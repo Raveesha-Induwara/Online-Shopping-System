@@ -49,6 +49,10 @@ public class Routes {
                     .route("cart-service", r -> r.path("/api/v1/carts/delete/{userId}/{productId}").uri("lb://cart"))
                     .route("cart-service", r -> r.path("/api/v1/carts/delete/{userId}").uri("lb://cart"))
                     
+                    .route("inventory-service", r -> r.path("/api/v1/inventory/inventories").uri("lb://inventory"))
+                    .route("inventory-service", r -> r.path("/api/v1/inventory/getinventory/{productId}").uri("lb://inventory"))
+                    .route("inventory-service", r -> r.path("/api/v1/inventory/addinventory").uri("lb://inventory"))
+                    .route("inventory-service", r -> r.path("/api/v1/inventory/").uri("lb://inventory"))
                     .build();
         
         log.info("Gateway routes configured successfully.");
