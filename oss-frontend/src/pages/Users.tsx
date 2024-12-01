@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import UsersService from "../service/UsersService";
+import UsersService from "../assets/Data/UsersService";
 import GroupIcon from "@mui/icons-material/Group";
 
 // Interfaces for types

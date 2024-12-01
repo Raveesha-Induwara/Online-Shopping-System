@@ -19,7 +19,7 @@ import {
   DialogActions,
   SelectChangeEvent,
 } from "@mui/material";
-import OrderService from "../service/OrdersService";
+import OrderService from "../assets/Data/OrdersService";
 
 interface Product {
   productId: string;
