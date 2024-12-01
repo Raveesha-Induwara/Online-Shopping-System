@@ -3,9 +3,11 @@ import React from "react";
 import { ProductDetailsCard } from "../Components/ProductDetailsCard";
 import { RelatedProductList } from "../Components/RelatedProductList";
 import { RelatedProductData } from "../assets/Data/RelatedProducts";
+import { ProductDetailsData } from "../assets/Data/ProductDetailsData";
 import { NavBar } from "../Components/NavBar";
 
-const productData = RelatedProductData;
+const productData = ProductDetailsData;
+const relatedProductData = RelatedProductData;
 
 export default function ProductDetails() {
   return (
@@ -48,10 +50,10 @@ export default function ProductDetails() {
           </Box>
           <Box>
             <ProductDetailsCard
-              title="Slate Maxi -Gown"
-              price="LKR 6500"
-              description="Perfect for casual outings or dressed up occasions"
-              rating={3}
+              title={productData.title}
+              price={productData.price}
+              description={productData.description}
+              rating={productData.rating}
             />
           </Box>
         </Box>
@@ -64,7 +66,7 @@ export default function ProductDetails() {
           }}
           paddingTop={3}
         >
-          <RelatedProductList items={productData} />
+          <RelatedProductList items={relatedProductData} />
         </Box>
       </Box>
     </>

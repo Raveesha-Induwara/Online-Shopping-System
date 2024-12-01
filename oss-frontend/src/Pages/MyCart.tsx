@@ -19,47 +19,12 @@ import {
 } from "@mui/material";
 import { PrimaryButton } from "../Components/PrimaryButton";
 import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
+import { CartItems } from "../assets/Data/MyCartData";
 
-function createData(
-  id: number,
-  product: string,
-  name: string,
-  description: string,
-  price: number,
-  quantity: number
-) {
-  return { id, product, name, description, price, quantity };
-}
-
-const initialRows = [
-  createData(
-    1,
-    "././src/assets/Images/maxi3.jpg",
-    "Slate Maxi - Gown",
-    "Slate Maxi - Gown",
-    6000,
-    1
-  ),
-  createData(
-    2,
-    "././src/assets/Images/maxi2.jpg",
-    "Slate Maxi - Gown2",
-    "Slate Maxi - Gown2",
-    5000,
-    3
-  ),
-  createData(
-    3,
-    "././src/assets/Images/maxi1.jpg",
-    "Slate Maxi - Gown3",
-    "Slate Maxi - Gown3",
-    7000,
-    5
-  ),
-];
+const cartItems = CartItems;
 
 export default function MyCart() {
-  const [rows, setRows] = useState(initialRows);
+  const [rows, setRows] = useState(cartItems);
   const [open, setOpen] = useState<null | number>(null);
 
   //update quantity of each product in the cart
