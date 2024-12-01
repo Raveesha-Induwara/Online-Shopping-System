@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InventoryService {
@@ -22,7 +23,7 @@ public class InventoryService {
         return inventoryRepo.findAll();
     }
     
-    public Inventory getInventory(Long productId) {
+    public Optional<Inventory> getInventory(Long productId) {
         return inventoryRepo.findByProductId(productId);
     }
     
@@ -31,13 +32,16 @@ public class InventoryService {
         return inventoryDto;
     }
     
-    public InventoryDto updateInventory(InventoryDto inventoryDto) {
-        Inventory inventory = inventoryRepo.findByProductId(inventoryDto.getProductId());
-        if(inventory == null) {
+    public Optional<Inventory> updateInventory(InventoryDto inventoryDto) {
+        Optional<Inventory> inventory = inventoryRepo.findByProductId(inventoryDto.getProductId());
+        if(inventory.isEmpty()) {
             throw new RuntimeException("Product not found");
         }
-        inventory.setQuantity(inventoryDto.getQuantity());
-        inventoryRepo.save(modelMapper.map(inventoryDto, Inventory.class));
-        return inventoryDto;
+        inventory.map(value -> {
+            value.setQuantity(inventoryDto.getQuantity());
+            return value;
+        });
+        inventoryRepo.save(modelMapper.map(inventory, Inventory.class));
+        return inventory;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/v1/inventory")
@@ -28,7 +29,7 @@ public class InventoryController {
     }
     
     @GetMapping("/getinventory/{productId}")
-    public Inventory getInventory(@PathVariable Long productId) {
+    public Optional<Inventory> getInventory(@PathVariable Long productId) {
         return inventoryService.getInventory(productId);
     }
     
@@ -38,7 +39,7 @@ public class InventoryController {
     }
     
     @PatchMapping("/")
-    public InventoryDto updateInventory(@Valid @RequestBody InventoryDto inventoryDto) {
+    public Optional<Inventory> updateInventory(@Valid @RequestBody InventoryDto inventoryDto) {
         return inventoryService.updateInventory(inventoryDto);
     }
     

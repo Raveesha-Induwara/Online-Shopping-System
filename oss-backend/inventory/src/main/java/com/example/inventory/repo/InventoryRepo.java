@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface InventoryRepo extends JpaRepository<Inventory, Long> {
     
-    Inventory findByProductId(Long productId);
+    Optional<Inventory> findByProductId(Long productId);
     
 //    @Query(value = "SELECT * FROM Inventory WHERE productId = :?1", nativeQuery = true)
 //    Inventory findByProductId(Long productId);
