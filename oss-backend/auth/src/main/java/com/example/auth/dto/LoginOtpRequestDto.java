@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OtpRequestDto {
+public class LoginOtpRequestDto {
     
-    @NotNull (message = "Email is required")
-    @Email (message = "Email is invalid")
+    @NotNull(message = "Email is required")
+    @Email(message = "Email is not valid")
     private String email;
-    
-    @NotNull (message = "login | signup")
-    private String mode;
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpOtpRequestDto {
+public class SignUpRequestDto {
     
     @NotNull(message = "first name is mandatory")
     private String firstName;
@@ -25,4 +25,8 @@ public class SignUpOtpRequestDto {
     @NotNull(message = "password is mandatory")
     @Size(min = 8, max = 15, message = "password must be at least 8 characters long and at most 15 characters long")
     private String password;
+    
+    @NotNull(message = "Otp is mandatory")
+    @Size(min = 6, max = 6, message = "Otp must be 6 characters long")
+    private String otp;
 }
