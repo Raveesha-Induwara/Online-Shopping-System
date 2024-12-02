@@ -7,6 +7,7 @@ import com.example.auth.service.AuthCustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -24,38 +25,38 @@ public class AuthController {
     private AuthAdminService authAdminService;
     
     @PostMapping(value = "/signup/client/create-otp")
-    public SignUpOtpResponseDto createSignupOtp(@Valid @RequestBody SignUpOtpRequestDto request) {
-        return authCustomerService.createSignupOtp(request);
-    }
-    
-    @PostMapping(value = "/signup/client")
-    public AuthResponse handlerClientSignUp(@Valid @RequestBody SignUpOtpRequestDto request) {
-        return authCustomerService.signUp(request);
+    public ResponseEntity<LoginOtpResponseDto> createSignupOtp(@Valid @RequestBody LoginOtpRequestDto request) {
+        return new ResponseEntity<>(authCustomerService.createSignupOtp(request), HttpStatus.OK);
     }
     
     @PostMapping(value = "/login/client")
-    public LoginResponseDto handlerClientLogin(@Valid @RequestBody LoginRequestDto request) {
-        return authCustomerService.login(request);
+    public ResponseEntity<LoginResponseDto> handlerClientLogin(@Valid @RequestBody LoginRequestDto request) {
+        return new ResponseEntity<>(authCustomerService.login(request), HttpStatus.OK);
+    }
+    
+    @PostMapping(value = "/signup/client")
+    public ResponseEntity<AuthResponse> handlerClientSignUp(@Valid @RequestBody SignUpRequestDto request) {
+        return new ResponseEntity<>(authCustomerService.signUp(request), HttpStatus.CREATED);
     }
     
     @PostMapping(value = "/request-otp/client")
-    public LoginResponseDto requestOtp(@Valid @RequestBody OtpRequestDto request) {
-        return authCustomerService.requestOtp(request);
+    public ResponseEntity<LoginOtpResponseDto> requestOtp(@Valid @RequestBody OtpRequestDto request) {
+        return new ResponseEntity<>(authCustomerService.requestOtp(request), HttpStatus.OK);
     }
     
-    @PostMapping(value = "/refresh-token")
-    public LoginResponseDto refreshToken(@Valid @RequestBody RefreshTokenRequestDto request) {
-        return authCustomerService.refreshToken(request);
-    }
+//    @PostMapping(value = "/refresh-token")
+//    public ResponseEntity<LoginResponseDto> refreshToken(@Valid @RequestBody RefreshTokenRequestDto request) {
+//        return new ResponseEntity<>(authCustomerService.refreshToken(request), HttpStatus.OK);
+//    }
     
     @PostMapping(value = "/signup/admin")
-    public AuthResponse handlerAdminSignUp(@Valid @RequestBody SignUpOtpRequestDto request) {
-        return authAdminService.signUp(request);
+    public ResponseEntity<AuthResponse> handlerAdminSignUp(@Valid @RequestBody SignUpRequestDto request) {
+        return new ResponseEntity<>(authAdminService.signUp(request), HttpStatus.CREATED);
     }
     
     @PostMapping(value = "/login/admin")
-    public LoginResponseDto handlerAdminLogin(@Valid @RequestBody LoginRequestDto request) {
-        return authAdminService.login(request);
+    public ResponseEntity<LoginResponseDto> handlerAdminLogin(@Valid @RequestBody LoginRequestDto request) {
+        return new ResponseEntity<>(authAdminService.login(request), HttpStatus.OK);
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)

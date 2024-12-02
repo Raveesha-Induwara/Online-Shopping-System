@@ -5,11 +5,11 @@ import com.example.auth.common.ErrorAuthResponse;
 import com.example.auth.common.SuccessAuthResponse;
 import com.example.auth.dto.LoginRequestDto;
 import com.example.auth.dto.LoginResponseDto;
-import com.example.auth.dto.SignUpOtpRequestDto;
+import com.example.auth.dto.SignUpRequestDto;
 import com.example.auth.enums.UserType;
+import com.example.auth.exception.types.EmailAlreadyExistException;
 import com.example.auth.model.AdminCredential;
 import com.example.auth.repo.AdminCredentialRepo;
-import com.example.user.common.UserResponse;
 import com.example.user.dto.AdminDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class AuthAdminService {
         this.adminWebClient = adminWebClient;
     }
     
-    public AuthResponse signUp(SignUpOtpRequestDto request) {
+    public AuthResponse signUp(SignUpRequestDto request) {
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         String adminId = (UUID.randomUUID()).toString();
         
@@ -58,7 +58,7 @@ public class AuthAdminService {
                     .block();
         } catch (WebClientResponseException e) {
             if(e.getStatusCode().is5xxServerError()) {
-                return new ErrorAuthResponse("Email is already registered");
+                throw  new EmailAlreadyExistException("Email is already registered");
             }
         }
         

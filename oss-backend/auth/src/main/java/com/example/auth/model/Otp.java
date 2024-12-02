@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -22,5 +24,5 @@ public class Otp {
     private String otp;
     private String userType;
     private String otpType;
-    private String created;
+    private Date created;
 }
