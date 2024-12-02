@@ -2,6 +2,7 @@ package com.example.product.exception;
 
 import com.example.product.exception.type.ProductNotFoundException;
 import com.example.product.exception.type.ProductServiceException;
+import com.example.product.exception.type.WebClientException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleProductServiceException(ProductServiceException ex) {
         log.error("ProductServiceException: {}", ex.getMessage(), ex);
         return new ResponseEntity<>("An internal server error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @ExceptionHandler(WebClientException.class)
+    public ResponseEntity<String> handleWebClientException(WebClientException ex) {
+        log.error("Exception: {}", ex.getMessage(), ex);
+        return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
