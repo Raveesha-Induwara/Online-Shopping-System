@@ -1,72 +1,78 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-// import "./App.css";
-import { NavBar } from "./Components/NavBar";
-import { PrimaryButton } from "./Components/PrimaryButton";
-import { ProductDetailsCard } from "./Components/ProductDetailsCard.tsx";
-import { RelatedProductCard } from "./Components/RelatedProductCard.tsx";
-import { RelatedProductList } from "./Components/RelatedProductList.tsx";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import "./App.css";
+import SideMenu from "./Components/SideMenu";
+import { makeStyles } from "@mui/styles";
+import Header from "./Components/Header";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import Orders from "./Pages/Orders";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Users from "./Pages/Users";
+import React from "react";
 import ProductDetails from "./Pages/ProductDetails.tsx";
 import MyCart from "./Pages/MyCart.tsx";
 import MyOrders from "./Pages/MyOrders.tsx";
-import { DeliveryDetailsInputForm } from "./Components/DeliveryDetailsInputForm.tsx";
 
-function App() {
-  const [count, setCount] = useState(0);
+// Define Material-UI theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#333996",
+      light: "#3c44b126",
+    },
+    secondary: {
+      main: "#f83245",
+      light: "#f8324526",
+    },
+    background: {
+      default: "linear-gradient(45deg, #185A9D 30%, #43CEA2 90%)",
+    },
+  },
+  shape: {
+    borderRadius: 12,
+  },
+});
 
-  // const list = [
-  //   {
-  //     image: "././src/assets/Images/maxi1.jpg",
-  //     title: "Slate Maxi - Gown",
-  //     rating: 3,
-  //     price: "LKR 6500",
-  //   },
-  //   {
-  //     image: "././src/assets/Images/maxi2.jpg",
-  //     title: "Slate Maxi - Gown",
-  //     rating: 3,
-  //     price: "LKR 6500",
-  //   },
-  //   {
-  //     image: "././src/assets/Images/maxi3.jpg",
-  //     title: "Slate Maxi - Gown",
-  //     rating: 3,
-  //     price: "LKR 6500",
-  //   },
-  // ];
+// Define custom styles for the nav bar
+const useStyles = makeStyles(() => ({
+  appMain: {
+    paddingLeft: "20%",
+    width: "100%",
+  },
+}));
+
+const App: React.FC = () => {
+  const classes = useStyles();
+  const location = useLocation();
+
+  // Define routes that should not use the theme
+  const excludedRoutes = ["/productDetails", "/myCart", "/myOrders"];
+
+  const isThemed = !excludedRoutes.includes(location.pathname);
 
   return (
-    <div>
-      {/* {" "}
-      <NavBar />{" "} */}
-      {/* <PrimaryButton title="submit" /> */}
-      {/* <ProductDetailsCard
-        title="Slate Maxi - Gown"
-        price="LKR 6000"
-        description="new frock"
-        rating={3}
-      /> */}
-      {/* <RelatedProductCard
-        image="././src/assets/Images/maxi3.jpg"
-        title="Slate Maxi - Gown"
-        rating={3}
-        price="7500"
-      /> */}
-      {/* <RelatedProductList items={list} /> */}
-
-      <DeliveryDetailsInputForm />
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/productDetails" element={<ProductDetails />}></Route>
-          <Route path="/myCart" element={<MyCart />}></Route>
-          <Route path="/myOrders" element={<MyOrders />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <>
+      {isThemed ? (
+        <ThemeProvider theme={theme}>
+          <SideMenu />
+          <div className={classes.appMain}>
+            <Header />
+            <Routes>
+              <Route path="/dashboard" element={<div>Dashboard Page</div>} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/products" element={<div>Products Page</div>} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/categories" element={<div>Categories Page</div>} />
+            </Routes>
+            <CssBaseline />
+          </div>
+        </ThemeProvider>
+      ) : null}
+      <Routes>
+        <Route path="/productDetails" element={<ProductDetails />} />
+        <Route path="/myCart" element={<MyCart />} />
+        <Route path="/myOrders" element={<MyOrders />} />
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
