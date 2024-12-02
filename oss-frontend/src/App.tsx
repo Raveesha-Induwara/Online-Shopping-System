@@ -11,6 +11,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ProductDetails from "./Pages/ProductDetails.tsx";
 import MyCart from "./Pages/MyCart.tsx";
 import MyOrders from "./Pages/MyOrders.tsx";
+import { DeliveryDetailsInputForm } from "./Components/DeliveryDetailsInputForm.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -54,6 +55,8 @@ function App() {
         price="7500"
       /> */}
       {/* <RelatedProductList items={list} /> */}
+
+      <DeliveryDetailsInputForm />
 
       <BrowserRouter>
         <Routes>

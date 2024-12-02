@@ -17,6 +17,8 @@ export const ProductDetailsCard = ({
   rating,
 }: ProductDetailsCardProps) => {
   const [count, setCount] = useState(0);
+
+  const navigateToPaymentDetails = () => {};
   return (
     <Paper
       elevation={10}
@@ -139,7 +141,10 @@ export const ProductDetailsCard = ({
               </Box>
             </Box>
             <Box>
-              <PrimaryButton title="Buy now" />
+              <PrimaryButton
+                title="Buy now"
+                onClick={async () => navigateToPaymentDetails()}
+              />
             </Box>
           </Box>
         </Box>
