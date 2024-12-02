@@ -8,7 +8,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
 import { Card, Paper, Box } from "@mui/material";
 import { PrimaryButton } from "./PrimaryButton";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
@@ -16,7 +16,8 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export const DeliveryDetailsInputForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
+  const { errors } = formState;
 
   const onSubmit = handleSubmit((data) => alert(JSON.stringify(data)));
 
@@ -24,8 +25,8 @@ export const DeliveryDetailsInputForm = () => {
     <Paper
       elevation={10}
       sx={{
-        height: "75%",
-        width: "50%",
+        height: "100%",
+        // width: "100%",
         padding: 3,
       }}
     >
@@ -36,30 +37,40 @@ export const DeliveryDetailsInputForm = () => {
               First name
             </FormLabel>
             <OutlinedInput
-              id="first-name"
+              id="firstName"
               // name="first-name"
               type="name"
-              placeholder="John"
+              placeholder="First name"
               autoComplete="first name"
               required
               size="small"
-              {...register("first-name", { required: true })}
+              {...register("firstName", {
+                required: { value: true, message: "First name is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.firstName?.message)}
+            </p>
           </FormGrid>
           <FormGrid size={{ xs: 12, md: 6 }}>
             <FormLabel htmlFor="last-name" required>
               Last name
             </FormLabel>
             <OutlinedInput
-              id="last-name"
+              id="lastName"
               // name="last-name"
               type="last-name"
-              placeholder="Snow"
+              placeholder="Last name"
               autoComplete="last name"
               required
               size="small"
-              {...register("last-name", { required: true })}
+              {...register("lastName", {
+                required: { value: true, message: "Last name is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.lastName?.message)}
+            </p>
           </FormGrid>
           <FormGrid size={{ xs: 12 }}>
             <FormLabel htmlFor="address1" required>
@@ -73,8 +84,13 @@ export const DeliveryDetailsInputForm = () => {
               autoComplete="shipping address-line1"
               required
               size="small"
-              {...register("address1", { required: true })}
+              {...register("address1", {
+                required: { value: true, message: "Address is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.address1?.message)}
+            </p>
           </FormGrid>
           <FormGrid size={{ xs: 12 }}>
             <FormLabel htmlFor="address2">Address line 2</FormLabel>
@@ -97,27 +113,37 @@ export const DeliveryDetailsInputForm = () => {
               id="city"
               // name="city"
               type="city"
-              placeholder="New York"
+              placeholder="City"
               autoComplete="City"
               required
               size="small"
-              {...register("city", { required: true })}
+              {...register("city", {
+                required: { value: true, message: "City is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.city?.message)}
+            </p>
           </FormGrid>
           <FormGrid size={{ xs: 6 }}>
             <FormLabel htmlFor="state" required>
-              State
+              District
             </FormLabel>
             <OutlinedInput
-              id="state"
+              id="district"
               // name="state"
               type="state"
-              placeholder="NY"
+              placeholder="District"
               autoComplete="State"
               required
               size="small"
-              {...register("state", { required: true })}
+              {...register("district", {
+                required: { value: true, message: "District is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.district?.message)}
+            </p>
           </FormGrid>
           <FormGrid size={{ xs: 6 }}>
             <FormLabel htmlFor="zip" required>
@@ -131,23 +157,33 @@ export const DeliveryDetailsInputForm = () => {
               autoComplete="shipping postal-code"
               required
               size="small"
-              {...register("zip", { required: true })}
+              {...register("zip", {
+                required: { value: true, message: "Postal code is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.zip?.message)}
+            </p>
           </FormGrid>
           <FormGrid size={{ xs: 6 }}>
             <FormLabel htmlFor="country" required>
-              Country
+              Province
             </FormLabel>
             <OutlinedInput
-              id="country"
+              id="province"
               // name="country"
-              type="country"
-              placeholder="United States"
-              autoComplete="shipping country"
+              type="province"
+              placeholder="Province"
+              autoComplete="shipping province"
               required
               size="small"
-              {...register("country", { required: true })}
+              {...register("province", {
+                required: { value: true, message: "Province is required" },
+              })}
             />
+            <p style={{ color: "red", fontSize: "small", paddingTop: 1 }}>
+              {JSON.stringify(errors.province?.message)}
+            </p>
           </FormGrid>
           <Box
             sx={{

@@ -10,6 +10,7 @@ import React from "react";
 import ProductDetails from "./Pages/ProductDetails.tsx";
 import MyCart from "./Pages/MyCart.tsx";
 import MyOrders from "./Pages/MyOrders.tsx";
+import DeliveryDetails from "./Pages/DeliveryDetails.tsx";
 
 // Define Material-UI theme
 const theme = createTheme({
@@ -44,7 +45,12 @@ const App: React.FC = () => {
   const location = useLocation();
 
   // Define routes that should not use the theme
-  const excludedRoutes = ["/productDetails", "/myCart", "/myOrders"];
+  const excludedRoutes = [
+    "/productDetails",
+    "/myCart",
+    "/myOrders",
+    "/deliveryDetails",
+  ];
 
   const isThemed = !excludedRoutes.includes(location.pathname);
 
@@ -70,6 +76,7 @@ const App: React.FC = () => {
         <Route path="/productDetails" element={<ProductDetails />} />
         <Route path="/myCart" element={<MyCart />} />
         <Route path="/myOrders" element={<MyOrders />} />
+        <Route path="/deliveryDetails" element={<DeliveryDetails />} />
       </Routes>
     </>
   );
