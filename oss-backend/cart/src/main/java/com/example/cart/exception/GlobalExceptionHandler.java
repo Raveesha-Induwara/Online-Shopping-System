@@ -3,6 +3,7 @@ package com.example.cart.exception;
 import com.example.cart.dto.ResponseDto;
 import com.example.cart.exception.types.CartNotFoundException;
 import com.example.cart.exception.types.ItemNotFoundException;
+import com.example.cart.exception.types.WebClientException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +26,11 @@ public class GlobalExceptionHandler {
         ex.printStackTrace();
         log.error("Cart not find for given user ID!");
         return new ResponseEntity<>(new ResponseDto("500",ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @ExceptionHandler(WebClientException.class)
+    public ResponseEntity<ResponseDto> WebClientException(WebClientException ex) {
+        log.error("WebClientException: {}", ex.getMessage(), ex);
+        return new ResponseEntity<>(new ResponseDto("500","An internal server error occurred: " + ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

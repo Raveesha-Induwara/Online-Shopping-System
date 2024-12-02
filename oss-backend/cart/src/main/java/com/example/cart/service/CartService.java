@@ -5,13 +5,16 @@ import com.example.cart.dto.RequestDto;
 import com.example.cart.dto.UpdateCartDto;
 import com.example.cart.exception.types.CartNotFoundException;
 import com.example.cart.exception.types.ItemNotFoundException;
+import com.example.cart.exception.types.WebClientException;
 import com.example.cart.model.Cart;
 import com.example.cart.model.CartItem;
 import com.example.cart.repo.CartItemRepo;
 import com.example.cart.repo.CartRepo;
+import com.example.inventory.dto.InventoryDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,12 @@ public class CartService {
     @Autowired
     private ModelMapper modelMapper;
     
+    private final WebClient inventoryWebClient;
+    
+    public CartService(WebClient inventoryWebClient) {
+        this.inventoryWebClient = inventoryWebClient;
+    }
+    
     public String addCartItem(RequestDto requestDto) {
         CartItemDto cartItemDto = new CartItemDto();
         cartItemDto.setProductId(requestDto.getProductId());
@@ -42,6 +51,7 @@ public class CartService {
             CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
             cartItem.setCart(cart.get()); // Set the Cart object
             cartItemRepo.save(cartItem);
+            updateInventory(requestDto.getProductId(), requestDto.getQuantity());
             return "Existing cart updated successfully";
         }
         
@@ -53,6 +63,7 @@ public class CartService {
         CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
         cartItem.setCart(newCart); // Set the Cart object
         cartItemRepo.save(cartItem);
+        updateInventory(requestDto.getProductId(), requestDto.getQuantity());
         return "New cart added successfully";
     }
     
@@ -70,6 +81,7 @@ public class CartService {
             cartRepo.save(cart.get());
             
             if(isUpdated.get()) {
+                updateInventory(updateCartDto.getProductId(), updateCartDto.getQuantity());
                 return "Item quantity updated successfully";
             } else {
                 throw new ItemNotFoundException("Item not found in the cart!");
@@ -122,6 +134,24 @@ public class CartService {
             return "Cart deleted successfully";
         } else {
             throw new CartNotFoundException("Cart not found!");
+        }
+    }
+    
+    // update quantity of a product --> inventory service
+    public void updateInventory(long productId, int quantity) {
+        try {
+            InventoryDto inventoryDto = new InventoryDto();
+            inventoryDto.setProductId(productId);
+            inventoryDto.setQuantity(quantity);
+            
+            inventoryWebClient.patch()
+                    .uri("/")
+                    .bodyValue(inventoryDto)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+        } catch (Exception e) {
+            throw new WebClientException("Error occurred while retrieving cart items", e);
         }
     }
 }
