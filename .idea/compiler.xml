@@ -7,10 +7,21 @@
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="apigateway" />
+        <module name="payment" />
+        <module name="discoveryserver" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="discoveryserver" target="17" />
-      <module name="payment" target="17" />
-    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="apigateway" options="-parameters" />
+      <module name="discoveryserver" options="-parameters" />
+      <module name="payment" options="-parameters" />
+    </option>
   </component>
 </project>
