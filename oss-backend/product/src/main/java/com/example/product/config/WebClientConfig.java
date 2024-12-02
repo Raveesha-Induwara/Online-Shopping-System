@@ -18,4 +18,9 @@ public class WebClientConfig {
     public WebClient orderWebClient(WebClient.Builder builder) {
         return builder.baseUrl("http://order/api/v1/orders").build();
     }
+    
+    @Bean
+    public WebClient inventoryWebClient(WebClient.Builder builder) {
+        return builder.baseUrl("http://inventory/api/v1/inventory").build();
+    }
 }
