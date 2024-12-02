@@ -68,8 +68,22 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotActiveException.class)
     public final ResponseEntity<ResponseDto> userNotActiveException(UserNotActiveException ex) {
         ex.printStackTrace();
-        log.error("Given user not active!");
-        return new ResponseEntity<>(new ResponseDto("500","Given User Not Active!"), HttpStatus.INTERNAL_SERVER_ERROR);
+        log.error("Given user not verified!");
+        return new ResponseEntity<>(new ResponseDto("500","Given User Not Verified!"), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public final ResponseEntity<ResponseDto> emailAlreadyExistException(EmailAlreadyExistException ex) {
+        ex.printStackTrace();
+        log.error("Email is already registered!");
+        return new ResponseEntity<>(new ResponseDto("500",ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @ExceptionHandler(InvalidOtpException.class)
+    public final ResponseEntity<ResponseDto> invalidOtpException(InvalidOtpException ex) {
+        ex.printStackTrace();
+        log.error("Invalid OTP!");
+        return new ResponseEntity<>(new ResponseDto("500",ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
     @ExceptionHandler(Throwable.class)
