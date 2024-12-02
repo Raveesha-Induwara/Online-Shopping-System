@@ -2,11 +2,13 @@ package com.example.cart.controller;
 
 import com.example.cart.dto.CartItemDto;
 import com.example.cart.dto.RequestDto;
+import com.example.cart.dto.ResponseDto;
 import com.example.cart.dto.UpdateCartDto;
 import com.example.cart.service.CartService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -23,28 +25,28 @@ public class CartController {
     private CartService cartService;
     
     @PostMapping("/addItem")
-    public String addCartItem(@Valid @RequestBody RequestDto requestDto) {
-        return cartService.addCartItem(requestDto);
+    public ResponseEntity<String> addCartItem(@Valid @RequestBody RequestDto requestDto) {
+        return new ResponseEntity<>(cartService.addCartItem(requestDto), HttpStatus.CREATED);
     }
     
     @GetMapping("/getCart/{userId}")
-    public List<CartItemDto> viewCart(@PathVariable String userId) {
-        return cartService.viewCart(userId);
+    public ResponseEntity<List<CartItemDto>> viewCart(@PathVariable String userId) {
+        return new ResponseEntity<>(cartService.viewCart(userId), HttpStatus.OK);
     }
     
     @PatchMapping("/updateQuantity")
-    public String updateItem(@Valid @RequestBody UpdateCartDto updateCartDto) {
-        return cartService.updateItem(updateCartDto);
+    public ResponseEntity<String> updateItem(@Valid @RequestBody UpdateCartDto updateCartDto) {
+        return new ResponseEntity<>(cartService.updateItem(updateCartDto), HttpStatus.OK);
     }
     
     @DeleteMapping("/delete/{userId}/{productId}")
-    public String deleteItem(@PathVariable String userId, @PathVariable Long productId) {
-        return cartService.deleteItem(userId, productId);
+    public ResponseEntity<String> deleteItem(@PathVariable String userId, @PathVariable Long productId) {
+        return new ResponseEntity<>(cartService.deleteItem(userId, productId), HttpStatus.OK);
     }
     
     @DeleteMapping("/delete/{userId}")
-    public String deleteCart(@PathVariable String userId) {
-        return cartService.deleteCart(userId);
+    public ResponseEntity<String> deleteCart(@PathVariable String userId) {
+        return new ResponseEntity<>(cartService.deleteCart(userId), HttpStatus.OK);
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)

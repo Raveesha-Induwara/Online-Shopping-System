@@ -3,6 +3,8 @@ package com.example.cart.service;
 import com.example.cart.dto.CartItemDto;
 import com.example.cart.dto.RequestDto;
 import com.example.cart.dto.UpdateCartDto;
+import com.example.cart.exception.types.CartNotFoundException;
+import com.example.cart.exception.types.ItemNotFoundException;
 import com.example.cart.model.Cart;
 import com.example.cart.model.CartItem;
 import com.example.cart.repo.CartItemRepo;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class CartService {
@@ -39,7 +42,7 @@ public class CartService {
             CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
             cartItem.setCart(cart.get()); // Set the Cart object
             cartItemRepo.save(cartItem);
-            return "Cart updated successfully";
+            return "Existing cart updated successfully";
         }
         
         // Create a new Cart and add the CartItem
@@ -50,22 +53,30 @@ public class CartService {
         CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
         cartItem.setCart(newCart); // Set the Cart object
         cartItemRepo.save(cartItem);
-        return "Cart added successfully";
+        return "New cart added successfully";
     }
     
     public String updateItem(UpdateCartDto updateCartDto) {
         Optional<Cart> cart = cartRepo.findByUserId(updateCartDto.getUserId());
+        AtomicBoolean isUpdated = new AtomicBoolean(false);
         
         if (cart.isPresent()) {
             cart.get().getCartItem().forEach(cartItem -> {
                 if (cartItem.getProductId() == updateCartDto.getProductId()) {
+                    isUpdated.set(true);
                     cartItem.setQuantity(updateCartDto.getQuantity());
                 }
             });
             cartRepo.save(cart.get());
-            return "Item quantity updated successfully";
+            
+            if(isUpdated.get()) {
+                return "Item quantity updated successfully";
+            } else {
+                throw new ItemNotFoundException("Item not found in the cart!");
+            }
+        } else {
+            throw new CartNotFoundException("Cart not find for given user ID!");
         }
-        return "Item not found in the cart";
     }
     
     public List<CartItemDto> viewCart(String userId) {
@@ -77,25 +88,40 @@ public class CartService {
             });
             
             return cartItemDtoList;
+        } else {
+            throw new CartNotFoundException("Cart not find for given user ID!");
         }
-        return null;
     }
     
     public String deleteItem(String userId, Long productId) {
         Optional<Cart> cart = cartRepo.findByUserId(userId);
+        AtomicBoolean isDeleted = new AtomicBoolean(false);
        
-        cart.ifPresent(value -> value.getCartItem().forEach(cartItem -> {
-            if (cartItem.getProductId() == productId) {
-                cartItemRepo.deleteById(cartItem.getId());
+        if(cart.isPresent()) {
+            cart.get().getCartItem().forEach(cartItem -> {
+                if (cartItem.getProductId() == productId) {
+                    isDeleted.set(true);
+                    cartItemRepo.deleteCartItem(cart.get().getId(), productId);
+                }
+            });
+            if(isDeleted.get()) {
+                return "Item deleted successfully";
+            } else {
+                throw new ItemNotFoundException("Item not found in the cart!");
             }
-        }));
-        return "Item deleted successfully";
+        } else {
+            throw new CartNotFoundException("Cart not find for given user ID!");
+        }
     }
     
     public String deleteCart(String userId) {
         Optional<Cart> cart = cartRepo.findByUserId(userId);
-        cart.get().getCartItem().forEach(cartItem -> cartItemRepo.deleteById(cartItem.getId()));
-        cart.ifPresent(value -> cartRepo.deleteById(value.getId()));
-        return "Cart deleted successfully";
+        
+        if(cart.isPresent()) {
+            cartRepo.deleteById(cart.get().getId());
+            return "Cart deleted successfully";
+        } else {
+            throw new CartNotFoundException("Cart not found!");
+        }
     }
 }
