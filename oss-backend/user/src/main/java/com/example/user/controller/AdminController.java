@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +24,23 @@ public class AdminController {
     private AdminService adminService;
     
     @GetMapping("/getadmins")
-    public List<Admin> getAdmins() {
-        return adminService.getAllAdmins();
+    public ResponseEntity<List<Admin>> getAdmins() {
+        return new ResponseEntity<>(adminService.getAllAdmins(), HttpStatus.OK);
     }
     
     @PostMapping("/addadmin")
-    public AdminDto createAdmin(@Valid @RequestBody AdminDto adminDto) {
-        return adminService.createAdmin(adminDto);
+    public ResponseEntity<AdminDto> createAdmin(@Valid @RequestBody AdminDto adminDto) {
+        return new ResponseEntity<>(adminService.createAdmin(adminDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteadmin")
-    public String deleteAdmin(@Param(value = "email") String email) {
-        return adminService.deleteAdmin(email);
+    public ResponseEntity<String> deleteAdmin(@Param(value = "email") String email) {
+        return new ResponseEntity<>(adminService.deleteAdmin(email), HttpStatus.OK);
     }
     
     @GetMapping("/getadmin")
-    public Optional<Admin> getAdminByEmail(@Param(value = "email") String email) {
-        return adminService.getAdminByEmail(email);
+    public ResponseEntity<Optional<Admin>> getAdminByEmail(@Param(value = "email") String email) {
+        return new ResponseEntity<>(adminService.getAdminByEmail(email), HttpStatus.OK);
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -26,23 +26,23 @@ public class CustomerController {
     private CustomerService customerService;
     
     @GetMapping("/getusers")
-    public List<Customer> getUsers() {
-        return customerService.getAllUsers();
+    public ResponseEntity<List<Customer>> getUsers() {
+        return new ResponseEntity<>(customerService.getAllUsers(), HttpStatus.OK);
     }
     
     @PostMapping("/adduser")
     public ResponseEntity<CustomerDto> createUser(@Valid @RequestBody CustomerDto customerDto) {
-        return new ResponseEntity<>(customerService.createUser(customerDto), HttpStatus.OK);
+        return new ResponseEntity<>(customerService.createUser(customerDto), HttpStatus.CREATED);
     }
     
     @PatchMapping("/updateuser")
-    public UserResponse updateUser(@Valid @RequestBody CustomerUpdateDto customerUpdateDto) {
-        return customerService.updateUser(customerUpdateDto);
+    public ResponseEntity<UserResponse> updateUser(@Valid @RequestBody CustomerUpdateDto customerUpdateDto) {
+        return new ResponseEntity<>(customerService.updateUser(customerUpdateDto), HttpStatus.OK);
     }
     
     @GetMapping("/getuser")
-    public Optional<Customer> getUserByEmail(@Param(value = "email") String email) {
-        return customerService.getUserByEmail(email);
+    public ResponseEntity<Optional<Customer>> getUserByEmail(@Param(value = "email") String email) {
+        return new ResponseEntity<>(customerService.getUserByEmail(email), HttpStatus.OK);
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)

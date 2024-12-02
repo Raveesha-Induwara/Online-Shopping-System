@@ -1,6 +1,8 @@
 package com.example.user.service;
 
 import com.example.user.dto.AdminDto;
+import com.example.user.exception.types.EmailAlreadyFoundException;
+import com.example.user.exception.types.EmailNotFoundException;
 import com.example.user.model.Admin;
 import com.example.user.repo.AdminRepo;
 import org.modelmapper.ModelMapper;
@@ -25,7 +27,7 @@ public class AdminService {
     public AdminDto createAdmin(AdminDto adminDto) {
         Optional<Admin> admin = adminRepo.findByEmail(adminDto.getEmail());
         if(admin.isPresent()) {
-            throw new RuntimeException(adminDto.getEmail() + " mail already registered");
+            throw new EmailAlreadyFoundException(adminDto.getEmail() + " mail already registered");
         }
         adminRepo.save(modelMapper.map(adminDto, Admin.class));
         return adminDto;
@@ -34,7 +36,7 @@ public class AdminService {
     public String deleteAdmin(String email) {
         Optional<Admin> admin = adminRepo.findByEmail(email);
         if(admin.isEmpty()) {
-            return (email + " mail not found");
+            throw new EmailNotFoundException(email + " mail not found");
         }
         adminRepo.deleteByEmail(admin.get().getEmail());
         return "admin deleted";

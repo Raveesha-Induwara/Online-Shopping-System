@@ -5,6 +5,8 @@ import com.example.user.common.SuccessCustomerResponse;
 import com.example.user.common.UserResponse;
 import com.example.user.dto.CustomerDto;
 import com.example.user.dto.CustomerUpdateDto;
+import com.example.user.exception.types.EmailAlreadyFoundException;
+import com.example.user.exception.types.EmailNotFoundException;
 import com.example.user.model.Customer;
 import com.example.user.repo.CustomerRepo;
 import jakarta.transaction.Transactional;
@@ -31,10 +33,10 @@ public class CustomerService {
     public CustomerDto createUser(CustomerDto customerDto) {
         Optional<Customer> user = customerRepo.findByEmail(customerDto.getEmail());
         if(user.isPresent()) {
-            throw new RuntimeException(customerDto.getEmail() + " mail already registered");
+            throw new EmailAlreadyFoundException(customerDto.getEmail() + " mail already registered");
         }
         customerRepo.save(modelMapper.map(customerDto, Customer.class));
-        return customerDto;
+        return null;
     }
     
     public UserResponse updateUser(CustomerUpdateDto customerUpdateDto) {
@@ -49,10 +51,9 @@ public class CustomerService {
                 value.setCity(customerUpdateDto.getCity());
                 return value;
             });
-            
             return new SuccessCustomerResponse(user);
         }
-        return new ErrorUserResponse(customerUpdateDto.getEmail() + " email not found");
+        throw new EmailNotFoundException(customerUpdateDto.getEmail() + " email not found");
     }
     
     public Optional<Customer> getUserByEmail(String email) {
