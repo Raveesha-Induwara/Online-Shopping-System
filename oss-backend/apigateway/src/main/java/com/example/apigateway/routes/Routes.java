@@ -56,6 +56,8 @@ public class Routes {
 
                     .route("product-service", r -> r.path("/api/v1/products").uri("lb://product"))
                     .route("product-service", r -> r.path("/api/v1/products/{id}").uri("lb://product"))
+                    .route("product-service", r -> r.path("/api/v1/categories").uri("lb://product"))
+                    .route("product-service", r -> r.path("/api/v1/categories/{id}").uri("lb://product"))
                     
                     .route("order-service", r -> r.path("/api/v1/orders").uri("lb://order"))
                     .route("order-service", r -> r.path("/api/v1/orders/{id}").uri("lb://order"))
