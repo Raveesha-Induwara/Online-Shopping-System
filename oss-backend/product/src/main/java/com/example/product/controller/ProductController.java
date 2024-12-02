@@ -3,12 +3,18 @@ package com.example.product.controller;
 import com.example.product.dto.ProductRequest;
 import com.example.product.dto.ProductRespond;
 import com.example.product.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -30,14 +36,14 @@ public class ProductController {
 
     //Create a new product
     @PostMapping
-    public ResponseEntity<ProductRequest> createProduct(@RequestBody ProductRequest productRequest){
+    public ResponseEntity<ProductRequest> createProduct(@Valid @RequestBody ProductRequest productRequest){
         productService.createProduct(productRequest);
         return ResponseEntity.ok(productRequest);
     }
 
     //Update a product by id
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductRequest> updateProduct(@PathVariable Long id,@RequestBody ProductRequest productRequest){
+    public ResponseEntity<ProductRequest> updateProduct(@Valid @PathVariable Long id,@RequestBody ProductRequest productRequest){
         productService.updateProduct(id,productRequest);
         return ResponseEntity.ok(productRequest);
     }
@@ -48,5 +54,19 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product deleted successfully");
     }
-
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        
+        Map<String, String> errors = new HashMap<>();
+        
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError)error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        
+        return errors;
+    }
 }

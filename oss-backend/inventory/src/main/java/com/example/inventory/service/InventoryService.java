@@ -37,8 +37,9 @@ public class InventoryService {
         if(inventory.isEmpty()) {
             throw new RuntimeException("Product not found");
         }
+//        Update the quantity
         inventory.map(value -> {
-            value.setQuantity(inventoryDto.getQuantity());
+            value.setQuantity(value.getQuantity() - inventoryDto.getQuantity());
             return value;
         });
         inventoryRepo.save(modelMapper.map(inventory, Inventory.class));
