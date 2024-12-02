@@ -1,38 +1,67 @@
 package com.example.product.service;
 
+import com.example.inventory.dto.InventoryDto;
 import com.example.product.dto.ProductRequest;
 import com.example.product.dto.ProductRespond;
 import com.example.product.exception.type.ProductNotFoundException;
 import com.example.product.exception.type.ProductServiceException;
+import com.example.product.exception.type.WebClientException;
 import com.example.product.model.Product;
 import com.example.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class ProductService {
+    
+    private final WebClient inventoryWebClient;
 
-    private final ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    
+    public ProductService(WebClient inventoryWebClient) {
+        this.inventoryWebClient = inventoryWebClient;
+    }
 
     // Create product service
     @Transactional
-    public void createProduct(ProductRequest productRequest) {
+    public void createProduct(ProductRequest request) {
         try {
             Product product = Product.builder()
-                    .product_name(productRequest.getProduct_name())
-                    .product_description(productRequest.getProduct_description())
-                    .product_category(productRequest.getProduct_category())
-                    .product_price(productRequest.getProduct_price())
+                    .product_name(request.getProduct_name())
+                    .product_description(request.getProduct_description())
+                    .product_category(request.getProduct_category())
+                    .product_price(request.getProduct_price())
                     .build();
             productRepository.save(product);
             log.info("Product created with ID: {}", product.getId());
+            
+            // Add inventory for the product
+            InventoryDto inventoryDto = new InventoryDto();
+            inventoryDto.setProductId(product.getId());
+            inventoryDto.setQuantity(request.getProduct_quantity());
+            
+            try {
+                inventoryWebClient.post()
+                        .uri(uriBuilder -> uriBuilder.path("/addinventory").build())
+                        .bodyValue(inventoryDto)
+                        .retrieve()
+                        .bodyToMono(InventoryDto.class)
+                        .block();
+            } catch (WebClientResponseException e) {
+                if(e.getStatusCode().is5xxServerError()) {
+                    throw new WebClientException("Failed to call Inventory WebClient", e);
+                }
+            }
+            
         } catch (Exception e) {
             log.error("Error occurred while creating product", e);
             throw new ProductServiceException("Failed to create product", e);
@@ -69,22 +98,40 @@ public class ProductService {
 
     // Update product service
     @Transactional
-    public void updateProduct(Long id, ProductRequest productRequest) {
+    public void updateProduct(Long id, ProductRequest request) {
         try {
             Product existingProduct = productRepository.findById(id)
                     .orElseThrow(() -> new ProductNotFoundException("Product not found with ID: " + id));
 
-            if (productRequest.getProduct_name() != null) {
-                existingProduct.setProduct_name(productRequest.getProduct_name());
+            if (request.getProduct_name() != null) {
+                existingProduct.setProduct_name(request.getProduct_name());
             }
-            if (productRequest.getProduct_description() != null) {
-                existingProduct.setProduct_description(productRequest.getProduct_description());
+            if (request.getProduct_description() != null) {
+                existingProduct.setProduct_description(request.getProduct_description());
             }
-            if (productRequest.getProduct_category() != null) {
-                existingProduct.setProduct_category(productRequest.getProduct_category());
+            if (request.getProduct_category() != null) {
+                existingProduct.setProduct_category(request.getProduct_category());
             }
-            if (productRequest.getProduct_price() != null) {
-                existingProduct.setProduct_price(productRequest.getProduct_price());
+            if (request.getProduct_price() != null) {
+                existingProduct.setProduct_price(request.getProduct_price());
+            }
+            
+            // Update inventory for the product
+            InventoryDto inventoryDto = new InventoryDto();
+            inventoryDto.setProductId(id);
+            inventoryDto.setQuantity(request.getProduct_quantity());
+            
+            try {
+                inventoryWebClient.patch()
+                        .uri(uriBuilder -> uriBuilder.path("/").build())
+                        .bodyValue(inventoryDto)
+                        .retrieve()
+                        .bodyToMono(InventoryDto.class)
+                        .block();
+            } catch (WebClientResponseException e) {
+                if(e.getStatusCode().is5xxServerError()) {
+                    throw new WebClientException("Failed to call Inventory WebClient", e);
+                }
             }
 
             productRepository.save(existingProduct);
@@ -123,6 +170,7 @@ public class ProductService {
                 .product_description(product.getProduct_description())
                 .product_category(product.getProduct_category())
                 .product_price(product.getProduct_price())
+                .product_rate(product.getRate())
                 .build();
     }
 }

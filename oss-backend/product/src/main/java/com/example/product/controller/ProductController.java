@@ -19,15 +19,13 @@ public class ProductController {
     //Get the product by the id
     @GetMapping("/{id}")
     public ResponseEntity<ProductRespond> getProductById(@PathVariable long id) {
-        ProductRespond product = productService.getProductById(id);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
     //Get all products
     @GetMapping
     public ResponseEntity<List<ProductRespond>> getAllProducts() {
-        List<ProductRespond> product = productService.getAllProducts();
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     //Create a new product
