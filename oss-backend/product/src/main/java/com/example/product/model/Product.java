@@ -14,13 +14,12 @@ import lombok.NoArgsConstructor;
 //Table name has assigned
 @Table(name = "product")
 public class Product {
-    @Id
-    //Auto generating id for the item
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    //Column values for the product table
+    @Id //Auto generating id for the item
+    @GeneratedValue(strategy = GenerationType.AUTO) //Column values for the product table
     private long id;
     private String product_name;
     private String product_description;
     private String product_category;
     private Integer product_price;
+    private double rate;
 }
