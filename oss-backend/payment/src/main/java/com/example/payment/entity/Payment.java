@@ -1,11 +1,12 @@
 package com.example.payment.entity;
 
-import com.example.payment.util.enums.PaymentMethodType;
-import com.example.payment.util.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "Payments")
@@ -13,6 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Payment {
+
+    @Column(name = "date")
+    private LocalDate paymentDate;
 
     @Id
     @Column(name = "payment_id")
@@ -28,10 +32,7 @@ public class Payment {
     @Column(name = "amount",nullable = false)
     private double amount;
 
-    @Column(name = "payment_method",nullable = false)
-    private PaymentMethodType paymentMethod;
-
-    @Column(name = "payment_status",nullable = false)
-    private PaymentStatus paymentStatus;
+//    @Column(name = "payment_method",nullable = false)
+//    private PaymentMethodType paymentMethod;
 
 }
