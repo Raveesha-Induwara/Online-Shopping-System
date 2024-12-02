@@ -9,6 +9,8 @@ import { styled } from "@mui/system";
 import { Card, Paper, Box } from "@mui/material";
 import { PrimaryButton } from "./PrimaryButton";
 import { FieldErrors, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
@@ -18,8 +20,21 @@ const FormGrid = styled(Grid)(() => ({
 export const DeliveryDetailsInputForm = () => {
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
+  const navigate = useNavigate();
+  const [details, setDetails] = useState({});
 
-  const onSubmit = handleSubmit((data) => alert(JSON.stringify(data)));
+  const onSubmit = handleSubmit((data) => {
+    setDetails({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      address1: data.address1,
+      address2: data.address2,
+      city: data.city,
+      district: data.district,
+      province: data.province,
+    });
+  });
+  navigate("/deliveryDetails", { state: details });
 
   return (
     <Paper

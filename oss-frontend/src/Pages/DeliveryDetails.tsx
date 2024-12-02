@@ -13,11 +13,14 @@ import { PrimaryButton } from "../Components/PrimaryButton";
 import { DeliveryDetailsInputForm } from "../Components/DeliveryDetailsInputForm";
 import { NavBar } from "../Components/NavBar";
 import { DeliveryData } from "../assets/Data/DeliveryData";
+import { useLocation } from "react-router-dom";
 
 const deliveryData = DeliveryData;
 
 export default function DeliveryDetails() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const details = location.state; // Access the passed state
 
   const handleOpen = () => {
     setOpen(true);
@@ -106,7 +109,8 @@ export default function DeliveryDetails() {
               </Dialog>
             </Box>
             <Typography variant="body1" color="textSecondary">
-              {deliveryData.address}
+              {details.address1}, {details.address2}, {details.city},
+              {details.district}, {details.province}
             </Typography>
           </Paper>
 
