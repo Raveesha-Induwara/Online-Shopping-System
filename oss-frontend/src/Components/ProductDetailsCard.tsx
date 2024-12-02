@@ -2,6 +2,7 @@ import { Box, IconButton, Paper, Rating, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
 import { Add, AddShoppingCart, Remove } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface ProductDetailsCardProps {
   title: string;
@@ -16,9 +17,12 @@ export const ProductDetailsCard = ({
   description,
   rating,
 }: ProductDetailsCardProps) => {
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
 
-  const navigateToPaymentDetails = () => {};
+  const navigateToPaymentDetails = () => {
+    navigate("/deliveryDetails");
+  };
   return (
     <Paper
       elevation={10}
@@ -61,7 +65,7 @@ export const ProductDetailsCard = ({
             >
               {price}
             </Typography>
-            <IconButton>
+            <IconButton onClick={() => navigate("/myCart")}>
               <AddShoppingCart />
             </IconButton>
           </Box>

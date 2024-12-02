@@ -15,7 +15,9 @@ import {
   Search,
   ShoppingCart,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 export const NavBar = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [text, setText] = useState("");
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,6 +95,7 @@ export const NavBar = () => {
               color="inherit"
               aria-label="logo"
               sx={{ mr: 3 }}
+              onClick={() => navigate("/myCart")}
             >
               <Badge badgeContent={4} color="error">
                 <ShoppingCart />
@@ -115,7 +118,13 @@ export const NavBar = () => {
               onClose={handleClose}
             >
               <MenuItem onClick={() => {}}>Profile</MenuItem>
-              <MenuItem onClick={() => {}}>My orders</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/myOrders");
+                }}
+              >
+                My orders
+              </MenuItem>
               <MenuItem onClick={() => {}}>Logout</MenuItem>
             </Menu>
           </Box>

@@ -147,7 +147,7 @@ export default function DeliveryDetails() {
                 }}
               >
                 <img
-                  src="././src/assets/Images/maxi3.jpg"
+                  src="././src/assets/Images/maxi1.jpg"
                   style={{ width: 150, height: 150, objectFit: "contain" }}
                 />
                 <Typography variant="body1" color="textSecondary">

@@ -20,6 +20,7 @@ import {
 import { PrimaryButton } from "../Components/PrimaryButton";
 import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
 import { CartItems } from "../assets/Data/MyCartData";
+import { NavBar } from "../Components/NavBar";
 
 const cartItems = CartItems;
 
@@ -63,7 +64,17 @@ export default function MyCart() {
 
   return (
     <div>
-      <TableContainer component={Paper}>
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1100,
+          backgroundColor: "white",
+        }}
+      >
+        <NavBar />
+      </Box>
+      <TableContainer component={Paper} sx={{ paddingTop: 10 }}>
         <Table>
           <TableHead sx={{ background: "#185A9D", color: "white" }}>
             <TableRow>
@@ -164,7 +175,7 @@ export default function MyCart() {
           }}
         >
           <Box sx={{ marginTop: 2, textAlign: "right", paddingRight: 2 }}>
-            <Typography variant="h6">
+            <Typography variant="h6" color="black">
               Total: LKR <strong>{calculateTotal()}</strong>
             </Typography>
           </Box>

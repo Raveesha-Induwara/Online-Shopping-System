@@ -16,6 +16,7 @@ import { PrimaryButton } from "../Components/PrimaryButton";
 import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
 import { strict } from "assert";
 import { MyOrdersData } from "../assets/Data/MyOrdersData";
+import { NavBar } from "../Components/NavBar";
 
 const myOrders = MyOrdersData;
 
@@ -24,7 +25,17 @@ export default function MyOrders() {
 
   return (
     <div>
-      <TableContainer component={Paper}>
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1100,
+          backgroundColor: "white",
+        }}
+      >
+        <NavBar />
+      </Box>
+      <TableContainer component={Paper} sx={{ paddingTop: 10 }}>
         <Table>
           <TableHead sx={{ background: "#185A9D", color: "white" }}>
             <TableRow>
