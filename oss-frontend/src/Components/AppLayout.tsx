@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import CategoriesContent from "../pages/Categories/Categories";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   IconButton,
   Box,
-  // Badge,
-  // InputBase,
   Menu,
   MenuItem,
   Drawer,
@@ -18,18 +16,35 @@ import {
 } from "@mui/material";
 import {
   AccountCircle,
-  // CatchingPokemon,
-  // Search,
   ShoppingCart,
   Dashboard,
   People,
   Category,
   LocalMall,
 } from "@mui/icons-material";
+// import DashboardPage from "../pages/Dashboard/Dashboard";
+// import UsersPage from "../pages/Users/Users";
+// import ProductsPage from "../pages/Products/Products";
+// import OrdersPage from "../pages/Orders/Orders";
+import CategoriesContent from "../pages/Categories/Categories";
 
 export const AppLayout = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [text, setText] = useState("");
+  const location = useLocation();
+
+  // Sidebar items and paths
+  const sidebarItems = [
+    { text: "Dashboard", icon: <Dashboard />, path: "/dashboard" },
+    { text: "Users", icon: <People />, path: "/users" },
+    { text: "Products", icon: <LocalMall />, path: "/products" },
+    { text: "Orders", icon: <ShoppingCart />, path: "/orders" },
+    { text: "Categories", icon: <Category />, path: "/categories" },
+  ];
+
+  // Determine the current selected item's name based on the location
+  const currentItem =
+    sidebarItems.find((item) => item.path === location.pathname)?.text ||
+    "App Layout";
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,18 +53,6 @@ export const AppLayout = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.currentTarget.value);
-  };
-
-  const sidebarItems = [
-    { text: "Dashboard", icon: <Dashboard /> },
-    { text: "Users", icon: <People /> },
-    { text: "Products", icon: <LocalMall /> },
-    { text: "Orders", icon: <ShoppingCart /> },
-    { text: "Categories", icon: <Category />, selected: true },
-  ];
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -73,17 +76,19 @@ export const AppLayout = () => {
           </Typography>
         </Toolbar>
         <List>
-          {sidebarItems.map((item, index) => (
+          {sidebarItems.map((item) => (
             <ListItem
               button
               key={item.text}
+              component={Link}
+              to={item.path}
               sx={{
-                backgroundColor: item.selected ? "#ffffff33" : "transparent",
                 "&:hover": { backgroundColor: "#ffffff55" },
+                backgroundColor: location.pathname === item.path ? "#ffffff33" : "transparent",
               }}
             >
               <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+              <ListItemText sx={{ color: "white" }} primary={item.text} />
             </ListItem>
           ))}
         </List>
@@ -101,39 +106,8 @@ export const AppLayout = () => {
         >
           <Toolbar>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              Categories
+              {currentItem}
             </Typography>
-            {/* <Box
-              component="div"
-              sx={{
-                background: "white",
-                position: "relative",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                borderRadius: 1,
-              }}
-            >
-              <InputBase
-                placeholder="Enter category..."
-                inputProps={{ "aria-label": "search" }}
-                sx={{ px: 1 }}
-                onChange={onChangeText}
-              />
-              <IconButton onClick={() => console.log("New Text", text)}>
-                <Search sx={{ color: "darkgray" }} />
-              </IconButton>
-            </Box> */}
-            {/* <IconButton
-              size="large"
-              color="inherit"
-              aria-label="cart"
-              sx={{ ml: 2 }}
-            >
-              <Badge badgeContent={4} color="error">
-                <ShoppingCart />
-              </Badge>
-            </IconButton> */}
             <IconButton
               size="large"
               color="inherit"
@@ -158,9 +132,13 @@ export const AppLayout = () => {
 
         {/* Page Content */}
         <Box sx={{ padding: 3 }}>
-          <Typography variant="body1">
-              <CategoriesContent />
-          </Typography>
+          <Routes>
+            {/* <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/orders" element={<OrdersPage />} /> */}
+            <Route path="/categories" element={<CategoriesContent />} />
+          </Routes>
         </Box>
       </Box>
     </Box>

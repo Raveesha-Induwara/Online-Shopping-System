@@ -43,7 +43,7 @@ const UpdateCategory: React.FC<UpdateCategory> = ({
             <button className="popup-btn" onClick={handleUpdate}>
               Update
             </button>
-            <button className="popup-btn" onClick={onClose}>
+            <button className="popup-btn-cancel" onClick={onClose}>
               Cancel
             </button>
           </div>

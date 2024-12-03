@@ -44,8 +44,19 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    width: 45%;
+    margin-top: 20px;
   }
-  
+  .popup-btn-cancel{
+    background-color: #ccc;
+    width: 45%;
+    margin-top: 20px;
+  }
+
+  .popup-btn-cancel:hover{
+    background-color: #bbb;
+  }
+
   .popup-btn:hover {
     background-color: #185A9D;
   }

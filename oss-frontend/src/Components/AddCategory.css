@@ -1,4 +1,3 @@
-/* Popup Overlay */
 .add-popup-overlay {
     position: fixed;
     top: 0;
@@ -12,7 +11,6 @@
     z-index: 1000;
   }
   
-  /* Popup Content */
   .add-popup-content {
     background: white;
     padding: 20px;
@@ -21,7 +19,6 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
   
-  /* Popup Header */
   .popup-header {
     display: flex;
     justify-content: space-between;
@@ -41,7 +38,6 @@
     cursor: pointer;
   }
   
-  /* Form Styles */
   .add-category-form {
     display: flex;
     flex-direction: column;

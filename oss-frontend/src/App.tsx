@@ -1,26 +1,18 @@
-import { AppLayout } from './Components/AppLayout';
-import CategoriesContent from './pages/Categories/Categories';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AppLayout } from "./Components/AppLayout";
+import "./App.css";
 
 function App() {
   return (
-    <>
+    <Router>
       <div className="OuterDiv">
-
-        <AppLayout>
-          <CategoriesContent/>
-        </AppLayout>
-
-        <div className="content">
-          
-        </div>
-
-        {/* Footer */}
+        <AppLayout />
         <footer className="footer">
           <p>&copy; 2024 My App. All rights reserved.</p>
         </footer>
       </div>
-    </>
+    </Router>
   );
 }
 

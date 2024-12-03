@@ -1,6 +1,5 @@
 import React from "react";
-import "./CategoryView.css";
-import { IoMdCloseCircle } from "react-icons/io";    
+import "./CategoryView.css";   
 
 interface CategoryView {
   categoryId: string;
