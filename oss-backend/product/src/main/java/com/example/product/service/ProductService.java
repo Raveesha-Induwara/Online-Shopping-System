@@ -95,6 +95,19 @@ public class ProductService {
             throw new ProductServiceException("Failed to retrieve product with ID: " + id, e);
         }
     }
+    
+    public List<Product> getProductByCategory(String category) {
+        try {
+            List<Product> products = productRepository.findByCategory(category);
+            if (products.isEmpty()) {
+                throw new ProductNotFoundException("Product not found with category: " + category);
+            }
+            return products;
+        } catch (Exception e) {
+            log.error("Error occurred while retrieving product with category: {}", category, e);
+            throw new ProductServiceException("Failed to retrieve product with category: " + category, e);
+        }
+    }
 
     // Update product service
     @Transactional

@@ -8,6 +8,7 @@ import com.example.product.exception.type.ProductServiceException;
 import com.example.product.model.Category;
 import com.example.product.model.Product;
 import com.example.product.repository.CategoryRepo;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,11 +34,13 @@ public class CategoryService {
         return category;
     }
     
+    @Transactional
     public String createCategory(CategoryDto categoryDto) {
         categoryRepo.save(modelMapper.map(categoryDto, Category.class));
         return "New category created";
     }
     
+    @Transactional
     public String updateCategory(UpdateCategoryDto request) {
         Category existingCategory = categoryRepo.findById(request.getId())
                                           .orElseThrow(() -> new ProductNotFoundException("Category not found with ID: " + request.getId()));
@@ -51,5 +54,18 @@ public class CategoryService {
         
         categoryRepo.save(existingCategory);
         return "Category updated";
+    }
+    
+    @Transactional
+    public String deleteCategory(Long id) {
+        try {
+            if (!categoryRepo.existsById(id)) {
+                throw new ProductNotFoundException("Cannot delete, product not found with ID: " + id);
+            }
+            categoryRepo.deleteById(id);
+            return ("Category deleted successfully");
+        } catch (Exception e) {
+            throw new ProductServiceException("Failed to delete category with ID: " + id, e);
+        }
     }
 }

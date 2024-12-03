@@ -43,6 +43,11 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.updateCategory(updateCategoryDto), HttpStatus.OK);
     }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable long id){
+        return ResponseEntity.ok(categoryService.deleteCategory(id));
+    }
+    
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
