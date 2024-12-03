@@ -1,0 +1,14 @@
+.bimage {
+    width: 100%;       /* Container width */
+    height: 50vh;      
+    overflow: hidden;  
+    display: flex;
+    
+  }
+  
+  .bimage img {
+    width: 500%;        /* Full width */
+    height: 100%;       /* Full height */
+    object-fit: contain; /* Ensure the entire image is visible */
+  }
+  
