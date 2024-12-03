@@ -11,6 +11,7 @@ import com.example.cart.model.CartItem;
 import com.example.cart.repo.CartItemRepo;
 import com.example.cart.repo.CartRepo;
 import com.example.inventory.dto.InventoryDto;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class CartService {
         this.inventoryWebClient = inventoryWebClient;
     }
     
+    @Transactional
     public String addCartItem(RequestDto requestDto) {
         CartItemDto cartItemDto = new CartItemDto();
         cartItemDto.setProductId(requestDto.getProductId());
@@ -67,6 +69,7 @@ public class CartService {
         return "New cart added successfully";
     }
     
+    @Transactional
     public String updateItem(UpdateCartDto updateCartDto) {
         Optional<Cart> cart = cartRepo.findByUserId(updateCartDto.getUserId());
         AtomicBoolean isUpdated = new AtomicBoolean(false);
@@ -105,6 +108,7 @@ public class CartService {
         }
     }
     
+    @Transactional
     public String deleteItem(String userId, Long productId) {
         Optional<Cart> cart = cartRepo.findByUserId(userId);
         AtomicBoolean isDeleted = new AtomicBoolean(false);
@@ -126,6 +130,7 @@ public class CartService {
         }
     }
     
+    @Transactional
     public String deleteCart(String userId) {
         Optional<Cart> cart = cartRepo.findByUserId(userId);
         
@@ -138,6 +143,7 @@ public class CartService {
     }
     
     // update quantity of a product --> inventory service
+    @Transactional
     public void updateInventory(long productId, int quantity) {
         try {
             InventoryDto inventoryDto = new InventoryDto();
@@ -151,7 +157,7 @@ public class CartService {
                     .bodyToMono(String.class)
                     .block();
         } catch (Exception e) {
-            throw new WebClientException("Error occurred while retrieving cart items", e);
+            throw new WebClientException("Error occurred while updating item quantity with productID: " + productId, e);
         }
     }
 }
