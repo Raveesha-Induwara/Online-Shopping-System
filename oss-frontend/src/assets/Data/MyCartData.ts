@@ -12,7 +12,7 @@ function createData(
 export const CartItems = [
   createData(
     1,
-    "././src/assets/Images/maxi3.jpg",
+    "../../src/assets/Images/maxi3.jpg",
     "Slate Maxi - Gown",
     "Slate Maxi - Gown",
     6000,
@@ -20,7 +20,7 @@ export const CartItems = [
   ),
   createData(
     2,
-    "././src/assets/Images/maxi2.jpg",
+    "../../src/assets/Images/maxi2.jpg",
     "Slate Maxi - Gown2",
     "Slate Maxi - Gown2",
     5000,
@@ -28,7 +28,7 @@ export const CartItems = [
   ),
   createData(
     3,
-    "././src/assets/Images/maxi1.jpg",
+    "../../src/assets/Images/maxi1.jpg",
     "Slate Maxi - Gown3",
     "Slate Maxi - Gown3",
     7000,

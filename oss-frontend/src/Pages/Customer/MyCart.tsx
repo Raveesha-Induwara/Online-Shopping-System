@@ -17,10 +17,10 @@ import {
   DialogTitle,
   Button,
 } from "@mui/material";
-import { PrimaryButton } from "../Components/PrimaryButton";
+import { PrimaryButton } from "../../Components/PrimaryButton";
 import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
-import { CartItems } from "../assets/Data/MyCartData";
-import { NavBar } from "../Components/NavBar";
+import { CartItems } from "../../assets/Data/MyCartData";
+import { NavBar } from "../../Components/NavBar";
 
 const cartItems = CartItems;
 

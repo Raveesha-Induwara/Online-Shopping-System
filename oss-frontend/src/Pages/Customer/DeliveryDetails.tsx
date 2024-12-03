@@ -9,10 +9,10 @@ import {
   DialogContentText,
   Divider,
 } from "@mui/material";
-import { PrimaryButton } from "../Components/PrimaryButton";
-import { DeliveryDetailsInputForm } from "../Components/DeliveryDetailsInputForm";
-import { NavBar } from "../Components/NavBar";
-import { DeliveryData } from "../assets/Data/DeliveryData";
+import { PrimaryButton } from "../../Components/PrimaryButton";
+import { DeliveryDetailsInputForm } from "../../Components/DeliveryDetailsInputForm";
+import { NavBar } from "../../Components/NavBar";
+import { DeliveryData } from "../../assets/Data/DeliveryData";
 import { useLocation } from "react-router-dom";
 
 const deliveryData = DeliveryData;
@@ -20,7 +20,13 @@ const deliveryData = DeliveryData;
 export default function DeliveryDetails() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const details = location.state; // Access the passed state
+  const details = location.state || {
+    address1: " ",
+    address2: " ",
+    city: " ",
+    district: " ",
+    province: " ",
+  }; // Access the passed state
 
   const handleOpen = () => {
     setOpen(true);
@@ -151,7 +157,7 @@ export default function DeliveryDetails() {
                 }}
               >
                 <img
-                  src="././src/assets/Images/maxi1.jpg"
+                  src="../../src/assets/Images/maxi1.jpg"
                   style={{ width: 150, height: 150, objectFit: "contain" }}
                 />
                 <Typography variant="body1" color="textSecondary">

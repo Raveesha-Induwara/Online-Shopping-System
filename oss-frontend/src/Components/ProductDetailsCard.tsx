@@ -21,7 +21,7 @@ export const ProductDetailsCard = ({
   const [count, setCount] = useState(0);
 
   const navigateToPaymentDetails = () => {
-    navigate("/deliveryDetails");
+    navigate("/customer/deliveryDetails");
   };
   return (
     <Paper

@@ -34,7 +34,7 @@ export const DeliveryDetailsInputForm = () => {
       province: data.province,
     });
   });
-  navigate("/deliveryDetails", { state: details });
+  navigate("/customer/deliveryDetails", { state: details });
 
   return (
     <Paper

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../../Components/PageHeader";
 import {
   Table,
   TableBody,
@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import UsersService from "../assets/Data/UsersService";
+import UsersService from "../../assets/Data/UsersService";
 import GroupIcon from "@mui/icons-material/Group";
 
 // Interfaces for types

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import PageHeader from "../Components/PageHeader";
+import PageHeader from "../../Components/PageHeader";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Table,
@@ -19,7 +19,7 @@ import {
   DialogActions,
   SelectChangeEvent,
 } from "@mui/material";
-import OrderService from "../assets/Data/OrdersService";
+import OrderService from "../../assets/Data/OrdersService";
 
 interface Product {
   productId: string;

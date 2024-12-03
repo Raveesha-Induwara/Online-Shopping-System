@@ -95,7 +95,7 @@ export const NavBar = () => {
               color="inherit"
               aria-label="logo"
               sx={{ mr: 3 }}
-              onClick={() => navigate("/myCart")}
+              onClick={() => navigate("/customer/myCart")}
             >
               <Badge badgeContent={4} color="error">
                 <ShoppingCart />
@@ -120,7 +120,7 @@ export const NavBar = () => {
               <MenuItem onClick={() => {}}>Profile</MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate("/myOrders");
+                  navigate("/customer/myOrders");
                 }}
               >
                 My orders

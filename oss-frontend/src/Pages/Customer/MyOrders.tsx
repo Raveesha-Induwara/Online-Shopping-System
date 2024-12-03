@@ -12,11 +12,11 @@ import {
   Alert,
   AlertTitle,
 } from "@mui/material";
-import { PrimaryButton } from "../Components/PrimaryButton";
+import { PrimaryButton } from "../../Components/PrimaryButton";
 import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
 import { strict } from "assert";
-import { MyOrdersData } from "../assets/Data/MyOrdersData";
-import { NavBar } from "../Components/NavBar";
+import { MyOrdersData } from "../../assets/Data/MyOrdersData";
+import { NavBar } from "../../Components/NavBar";
 
 const myOrders = MyOrdersData;
 

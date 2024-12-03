@@ -40,23 +40,23 @@ export default function SideMenu() {
 
   return (
     <div className={classes.SideMenu}>
-      <Link to="/dashboard" className={classes.menuItem}>
+      <Link to="/admin/dashboard" className={classes.menuItem}>
         <DashboardIcon />
         Dashboard
       </Link>
-      <Link to="/users" className={classes.menuItem}>
+      <Link to="/admin/users" className={classes.menuItem}>
         <GroupIcon />
         Users
       </Link>
-      <Link to="/products" className={classes.menuItem}>
+      <Link to="/admin/products" className={classes.menuItem}>
         <InventoryIcon />
         Products
       </Link>
-      <Link to="/orders" className={classes.menuItem}>
+      <Link to="/admin/orders" className={classes.menuItem}>
         <ShoppingCartIcon />
         Orders
       </Link>
-      <Link to="/categories" className={classes.menuItem}>
+      <Link to="/admin/categories" className={classes.menuItem}>
         <CategoryIcon />
         Categories
       </Link>
