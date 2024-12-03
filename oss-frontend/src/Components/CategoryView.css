@@ -1,0 +1,80 @@
+.view-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    z-index: 1000;
+  }
+  
+  .view-popup-content {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    width: 400px;
+    height: fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    margin-top: 150px;
+  }
+
+  .cat-details-header{
+    margin: 10px;
+    margin-left: 0px;
+  }
+  
+  p{
+    margin-top: 5px;
+  }
+
+  ul{
+    margin-left: 50px;
+  }
+  
+  .popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .update-btn {
+    background-color: #185A9D;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 45%;
+  }
+  
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 45%;
+  }
+  
+  .close-btn {
+    /* margin-top: 0px;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 80px;
+    width: fit-content; */
+    padding: 10px;
+    font-size: 16px;
+    background-color: #2e2e2e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+  }
+  
