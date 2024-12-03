@@ -1,35 +1,92 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+{/*import "./App.css";
+import SideMenu from "./components/SideMenu";
+import { makeStyles } from "@mui/styles";
+import Header from "./components/Header";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import Orders from "./pages/Orders";
+import { Routes, Route } from "react-router-dom";
+import Users from "./pages/Users";
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0);
+// Define Material-UI theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#333996",
+      light: "#3c44b126",
+    },
+    secondary: {
+      main: "#f83245",
+      light: "#f8324526",
+    },
+    background: {
+      default: "linear-gradient(45deg, #185A9D 30%, #43CEA2 90%)",
+    },
+  },
+  shape: {
+    borderRadius: 12, // Material-UI expects a number, not a string
+  },
+});
+
+// Define custom styles for the nav bar
+const useStyles = makeStyles(() => ({
+  appMain: {
+    paddingLeft: "20%",
+    width: "100%",
+  },
+}));
+
+const App: React.FC = () => {
+  const classes = useStyles();
 
   return (
+    <ThemeProvider theme={theme}>
+      <SideMenu />
+      <div className={classes.appMain}>
+        <Header />
+        <Routes>
+          <Route path="/dashboard" element={<div>Dashboard Page</div>} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/products" element={<div>Products</div>} />
+          <Route path="/orders" element={<Orders />} /> {/* Orders Page */}
+          //<Route path="/categories" element={<div>Categories Page</div>} />
+       // </Routes>
+      //  <CssBaseline />
+    //  </div>
+   // </ThemeProvider>
+  //);
+//};
+// <Route path="/products" element={<Products/>} />
+//export default App;
+
+
+import { AppLayout } from './components/AppLayout';
+import ProductsContent from './pages/Products/Products';  
+import './App.css';
+
+function App() {
+  return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="OuterDiv">
+
+       <AppLayout>
+         <ProductsContent/>
+        </AppLayout>
+
+        <div className="content">
+          
+        </div>
+
+        {/* Footer */}
+        <footer className="footer">
+          <p>&copy; 2024 My App. All rights reserved.</p>
+        </footer>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
 
 export default App;
+
+
+
