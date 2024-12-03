@@ -1,31 +1,34 @@
 import { Box } from "@mui/material";
 import "./App.css";
 import { NavBar } from "./Components/NavBar";
-//import ProductDisplay from './Components/ProductDisplay'
 import Sidebar from "./Components/SideBar";
 import Background from "./Components/Background";
 import RelatedProducts from "./pages/MainPage/RelatedProducts.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Category } from "@mui/icons-material";
+import CategoryPage from "./pages/Category";
+import { Footer } from "./Components/Footer.tsx";
 
 function App() {
   return (
     <>
       <Router>
-        <div>
-          <Box>
-            <NavBar />
-
-            <Background></Background>
-            <Sidebar />
-            {/* <hr className="line-mainpage"></hr> */}
-            <RelatedProducts />
-
-            <Routes>
-              <Route path="/Category" element={<Category />} />
-            </Routes>
-          </Box>
-        </div>
+        <NavBar />
+        <Routes>
+          {/* Main Page */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Background />
+                <Sidebar />
+                <RelatedProducts />
+              </>
+            }
+          />
+          {/* Category Page */}
+          <Route path="/category/:id" element={<CategoryPage />} />
+        </Routes>
+        <Footer />
       </Router>
     </>
   );

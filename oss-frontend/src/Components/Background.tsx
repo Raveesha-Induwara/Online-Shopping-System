@@ -14,7 +14,7 @@ const SwipingBackground = () => {
       showArrows={false}
     >
       <div className="bimage">
-        <img src="/bg2.png" alt="bg2" height={"100%"} width={"100%"} />
+        <img src="/bg2.png" alt="bg2" />
       </div>
       <div className="bimage">
         <img src="/bg3.png" alt="bg3" height={"100%"} width={"100%"} />

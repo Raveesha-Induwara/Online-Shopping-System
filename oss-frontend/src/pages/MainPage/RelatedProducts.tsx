@@ -15,7 +15,7 @@ const RelatedProducts = () => {
   // Group products by category
   const groupedData = relatedData.categories.map((category: Category) => ({
     category,
-    products: relatedData.products.slice(0, 5), // Fetch only 4 products per category
+    products: relatedData.products.slice(0, 5),
   }));
 
   return (
@@ -26,7 +26,7 @@ const RelatedProducts = () => {
         sx={{
           mb: 2,
           textAlign: "left",
-          marginTop: "5%",
+          margin:"5%"
         }}
       >
         Related Products
@@ -34,7 +34,7 @@ const RelatedProducts = () => {
 
       <Box>
         {groupedData.map((group, index) => (
-          <Grid container spacing={3} sx={{ mb: 5 }} key={index}>
+          <Grid container spacing={3} sx={{ mb: 5 }} key={index}marginLeft="2%" >
             {/* Category Column */}
             <Grid item xs={3}>
               <Card
@@ -44,6 +44,7 @@ const RelatedProducts = () => {
                   textAlign: "center",
                   padding: 2,
                   backgroundColor: "#f5f5f5",
+                  
                 }}
               >
                 <CardMedia
