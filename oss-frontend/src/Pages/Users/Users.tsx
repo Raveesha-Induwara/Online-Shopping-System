@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../../Components/PageHeader";
+// import PageHeader from "../../Components/PageHeader";
 import {
   Table,
   TableBody,
@@ -90,11 +90,11 @@ const Users: React.FC = () => {
 
   return (
     <>
-      <PageHeader
+      {/* <PageHeader
         title="Users"
         subTitle="Manage all users"
         icon={<GroupIcon />}
-      />
+      /> */}
       <div style={{ margin: "20px" }}>
         <TableContainer component={Paper}>
           <Table>

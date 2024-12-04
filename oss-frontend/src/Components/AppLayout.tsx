@@ -26,7 +26,7 @@ import {
 // import UsersPage from "../pages/Users/Users";
 // import ProductsPage from "../pages/Products/Products";
 // import OrdersPage from "../pages/Orders/Orders";
-import CategoriesContent from "../pages/Categories/Categories";
+import CategoriesContent from "../Pages/Categories/Categories";
 
 export const AppLayout = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -84,7 +84,8 @@ export const AppLayout = () => {
               to={item.path}
               sx={{
                 "&:hover": { backgroundColor: "#ffffff55" },
-                backgroundColor: location.pathname === item.path ? "#ffffff33" : "transparent",
+                backgroundColor:
+                  location.pathname === item.path ? "#ffffff33" : "transparent",
               }}
             >
               <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>

@@ -1,10 +1,11 @@
-.bg-color{
-  background-color:  white;
+.bg-color {
+  background-color: white;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+}
 /* Reset and ensure full height and width */
 * {
   margin: 0;
@@ -12,20 +13,22 @@
   box-sizing: border-box;
 }
 .form-wrapper {
-  background-color: rgb(255, 255, 255); 
-  width: 40%; 
-  border-radius: 20px; 
+  background-color: rgb(255, 255, 255);
+  width: 40%;
+  border-radius: 20px;
   margin: 100px auto;
-  align-items: center; 
-  border: 2px solid #185A9D; 
+  align-items: center;
+  border: 2px solid #185a9d;
+}
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   font-family: "Inter", sans-serif;
   background-color: #f4f4f9;
 }
-.error-msg{
+.error-msg {
   color: red;
   margin-top: 0%;
   margin-bottom: 0%;
@@ -53,7 +56,7 @@ html, body {
 
 /* Footer styling */
 .footer {
-  background-color: #185A9D;
+  background-color: #185a9d;
   color: white;
   text-align: center;
   padding: 8px 0;

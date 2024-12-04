@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AdminLayout from "./Layouts/AdminLayout";
+import AppLayout from "./Layouts/AdminLayout";
 import CustomerLayout from "./Layouts/CustomerLayout";
 import ProductDetails from "./Pages/Customer/ProductDetails";
 import MyCart from "./Pages/Customer/MyCart";
@@ -13,7 +13,7 @@ const App: React.FC = () => {
   return (
     <Routes>
       {/* Admin App */}
-      <Route path="/admin/*" element={<AdminLayout />} />
+      <Route path="/admin/*" element={<AppLayout />} />
 
       {/* Customer App */}
       <Route path="/customer/*" element={<CustomerLayout />} />

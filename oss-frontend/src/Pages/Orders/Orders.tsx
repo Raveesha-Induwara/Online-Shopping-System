@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import PageHeader from "../../Components/PageHeader";
+// import PageHeader from "../components/PageHeader";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Table,
@@ -94,11 +94,6 @@ export default function Orders() {
 
   return (
     <>
-      <PageHeader
-        title="Orders"
-        subTitle="Manage all customer orders"
-        icon={<ShoppingCartIcon />}
-      />
       <div style={{ margin: "20px" }}>
         <TableContainer component={Paper}>
           <Table>
