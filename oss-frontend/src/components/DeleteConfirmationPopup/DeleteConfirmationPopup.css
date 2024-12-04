@@ -1,0 +1,23 @@
+.delete-confirmation-popup {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .delete-confirmation-popup .MuiDialogTitle-root {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .delete-confirmation-popup .MuiDialogContent-root {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .delete-confirmation-popup .MuiDialogActions-root {
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .delete-confirmation-popup .MuiButton-root {
+    margin: 0 8px;
+  }
+  
