@@ -28,6 +28,7 @@ import Orders from "../Pages/Orders/Orders";
 // import ProductsPage from "../pages/Products/Products";
 // import OrdersPage from "../pages/Orders/Orders";
 import CategoriesContent from "../Pages/Categories/Categories";
+import ProductsContent from "../pages/Products/Products";
 
 const AppLayout = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -137,7 +138,7 @@ const AppLayout = () => {
           <Routes>
             {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
             <Route path="/users" element={<Users />} />
-            {/* <Route path="/products" element={<ProductsPage />} /> */}
+            <Route path="/products" element={<ProductsContent />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/categories" element={<CategoriesContent />} />
           </Routes>
