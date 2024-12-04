@@ -45,7 +45,7 @@ const CategorySection = () => {
   return (
     <div>
       {/* Main Category Content */}
-      <Box sx={{ textAlign: "center", mt: 5 }}>
+      <Box sx={{ textAlign: "center", mt: 1 }}>
         <Grid container spacing={3} justifyContent="center">
           {categories.map((category, index) => (
             <Grid
@@ -71,6 +71,7 @@ const CategorySection = () => {
                   overflow: "hidden",
                   mb: 1,
                   boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                  border:"7.5px solid #1289A7",
                 }}
               >
                 <img

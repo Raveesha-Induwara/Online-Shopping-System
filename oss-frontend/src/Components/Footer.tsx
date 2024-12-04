@@ -11,19 +11,20 @@ export const Footer: React.FC = () => {
         textAlign: "Justify",
       }}
     >
-      <Grid container spacing={50}>
+      <Grid container spacing={10}>
         {/* About Section */}
         <Grid item xs={12} sm={6}>
           <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 1 }}>
             ABOUT
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: 2, lineHeight: 1.8 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          FlowMart, your one-stop online marketplace for a seamless shopping experience.
+          Our platform is designed with user-friendliness and efficiency in mind, making it easy for customers to
+           explore and purchase their favorite items from the comfort of their homes.
           </Typography>
           <Box>
             <img
-              src="../../public/pngkey.com-payment-methods-png-3987066.png"
+              src="/footer.png"
               alt="Payment Methods"
               style={{ width: "300px" }}
             />
@@ -31,12 +32,12 @@ export const Footer: React.FC = () => {
         </Grid>
 
         {/* Contact Section */}
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+        <Grid item xs={12} sm={6} textAlign={"right"}>
+          <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 1, textAlign:"right" }}>
             CONTACT
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: 1 }}>
-            XYZ, New Delhi, India
+            No.12, Colombo 07, Srilanka
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: 1 }}>
             Pin code - 110005
@@ -45,19 +46,7 @@ export const Footer: React.FC = () => {
             +91 123456789
           </Typography>
           <Box sx={{ marginTop: 2 }}>
-            {/* Social Media Icons */}
-            <a href="#" style={{ marginRight: 10, color: "white" }}>
-              <i className="fab fa-facebook"></i>
-            </a>
-            <a href="#" style={{ marginRight: 10, color: "white" }}>
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="#" style={{ marginRight: 10, color: "white" }}>
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" style={{ color: "white" }}>
-              <i className="fab fa-youtube"></i>
-            </a>
+           
           </Box>
         </Grid>
       </Grid>
@@ -70,7 +59,7 @@ export const Footer: React.FC = () => {
           color: "black",
         }}
       >
-        Copyright &copy; 2024 All rights reserved | Design by UI DEV
+        Copyright &copy; 2024 All rights reserved | Design by Flow Mart
       </Typography>
     </Box>
   );

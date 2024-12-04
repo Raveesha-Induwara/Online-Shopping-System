@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import "./App.css";
 import { NavBar } from "./Components/NavBar";
-import Sidebar from "./Components/SideBar";
+import Sidebar from "./Components/CategoryBar.tsx";
 import Background from "./Components/Background";
 import RelatedProducts from "./pages/MainPage/RelatedProducts.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

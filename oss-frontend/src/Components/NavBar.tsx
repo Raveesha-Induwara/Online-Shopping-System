@@ -15,6 +15,9 @@ import {
   Grid,
   TextField,
   Button,
+  Avatar,
+  Typography,
+  Divider,
 } from "@mui/material";
 import {
   AccountCircle,
@@ -34,17 +37,18 @@ interface UserProfile {
 }
 
 export const NavBar = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    firstName: "Andrew",
+    firstName: "Anne",
     lastName: "Turing",
-    email: "andrew.turing@cryptographyinc.com",
-    phone: "555-237-2384",
+    email: "anne.turing@gmail.com",
+    phone: "725-528-458",
     address: "123 Main St, Anytown USA",
-    dateOfBirth: "1912-06-23",
-    gender: "Male",
+    dateOfBirth: "1994-06-23",
+    gender: "Female",
   });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,8 +67,15 @@ export const NavBar = () => {
     setOpen(false);
   };
 
-  const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.currentTarget.value);
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setUserProfile((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -112,7 +123,7 @@ export const NavBar = () => {
               placeholder="Search here…"
               inputProps={{ "aria-label": "search" }}
               sx={{ px: 1 }}
-              onChange={onChangeText}
+              onChange={(e) => setText(e.target.value)}
             />
             <Box sx={{ background: "#185A9D" }}>
               <IconButton onClick={() => console.log("New Text", text)}>
@@ -165,68 +176,100 @@ export const NavBar = () => {
               maxWidth="sm"
               fullWidth
             >
-              <DialogTitle>My Profile</DialogTitle>
+              <DialogTitle sx={{ textAlign: "center" }}>My Profile</DialogTitle>
               <DialogContent>
-                <Grid container spacing={2}>
+                <Box sx={{ textAlign: "center", mb: 2 }}>
+                  <Avatar
+                    sx={{
+                      width: 80,
+                      height: 80,
+                      margin: "0 auto",
+                      mb: 1,
+                    }}
+                    src="https://img.freepik.com/free-photo/horizontal-portrait-smiling-happy-young-pleasant-looking-female-wears-denim-shirt-stylish-glasses-with-straight-blonde-hair-expresses-positiveness-poses_176420-13176.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid"
+                  />
+                  <Typography variant="h6">
+                    {userProfile.firstName} {userProfile.lastName}
+                  </Typography>
+                </Box>
+                <Divider />
+                <Grid container spacing={2} sx={{ mt: 2 }}>
                   <Grid item xs={6}>
                     <TextField
                       label="First Name"
+                      name="firstName"
                       value={userProfile.firstName}
-                      InputProps={{ readOnly: true }}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
                       fullWidth
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
                       label="Last Name"
+                      name="lastName"
                       value={userProfile.lastName}
-                      InputProps={{ readOnly: true }}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
                       fullWidth
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       label="Email"
+                      name="email"
                       value={userProfile.email}
-                      InputProps={{ readOnly: true }}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Phone"
-                      value={userProfile.phone}
-                      InputProps={{ readOnly: true }}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Address"
-                      value={userProfile.address}
-                      InputProps={{ readOnly: true }}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
                       fullWidth
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
-                      label="Date of Birth"
-                      value={userProfile.dateOfBirth}
-                      InputProps={{ readOnly: true }}
+                      label="Phone"
+                      name="phone"
+                      value={userProfile.phone}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
                       fullWidth
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
                       label="Gender"
+                      name="gender"
                       value={userProfile.gender}
-                      InputProps={{ readOnly: true }}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Address"
+                      name="address"
+                      value={userProfile.address}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="Date of Birth"
+                      name="dateOfBirth"
+                      value={userProfile.dateOfBirth}
+                      onChange={handleInputChange}
+                      InputProps={{ readOnly: !editMode }}
                       fullWidth
                     />
                   </Grid>
                 </Grid>
               </DialogContent>
               <DialogActions>
+                <Button onClick={toggleEditMode}>
+                  {editMode ? "Save" : "Edit"}
+                </Button>
                 <Button onClick={handleCloseProfile}>Close</Button>
               </DialogActions>
             </Dialog>
