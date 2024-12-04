@@ -7,7 +7,7 @@ const SwipingBackground = () => {
     <Carousel
       autoPlay
       infiniteLoop
-      interval={2000}
+      interval={6000}
       showThumbs={false}
       showStatus={false}
       showIndicators={false}

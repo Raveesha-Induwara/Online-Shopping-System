@@ -113,9 +113,10 @@ const RelatedProducts = () => {
           textAlign: "center",
           marginTop: "4%",
           marginLeft: "5%",
+          color:"#185a9d"
         }}
       >
-        Our Best Selling Products
+        Related Products
       </Typography>
 
       <Box>
@@ -129,6 +130,7 @@ const RelatedProducts = () => {
               textAlign="left"
               marginLeft="3%"
               textTransform="uppercase"
+              color="#40739e"
               sx={{ mb: 2, cursor: "pointer" }}
               onClick={() => handleCategoryClick(group.category.name)}
             >
