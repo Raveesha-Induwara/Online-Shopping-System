@@ -28,7 +28,7 @@ import Orders from "../Pages/Orders/Orders";
 // import ProductsPage from "../pages/Products/Products";
 // import OrdersPage from "../pages/Orders/Orders";
 import CategoriesContent from "../Pages/Categories/Categories";
-import ProductsContent from "../pages/Products/Products";
+import ProductsContent from "../Pages/Products/Products";
 
 const AppLayout = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
