@@ -23,12 +23,12 @@ import {
   LocalMall,
 } from "@mui/icons-material";
 // import DashboardPage from "../pages/Dashboard/Dashboard";
-import Users from "../Pages/Users/Users";
-import Orders from "../Pages/Orders/Orders";
+import Users from "../Pages/Admin/Users/Users";
+import Orders from "../Pages/Admin/Orders/Orders";
 // import ProductsPage from "../pages/Products/Products";
 // import OrdersPage from "../pages/Orders/Orders";
-import CategoriesContent from "../Pages/Categories/Categories";
-import ProductsContent from "../Pages/Products/Products";
+import CategoriesContent from "../Pages/Admin/Categories/Categories";
+import ProductsContent from "../Pages/Admin/Products/Products";
 import "../AdminApp.css";
 
 const AppLayout = () => {

@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { ProductDetailsCard } from "../../Components/ProductDetailsCard";
-import { RelatedProductList } from "../../Components/RelatedProductList";
-import { RelatedProductData } from "../../assets/Data/RelatedProducts";
-import { ProductDetailsData } from "../../assets/Data/ProductDetailsData";
-import { NavBar } from "../../Components/NavBar";
+import { ProductDetailsCard } from "../../../Components/ProductDetailsCard";
+import { RelatedProductList } from "../../../Components/RelatedProductList";
+import { RelatedProductData } from "../../../assets/Data/RelatedProducts";
+import { ProductDetailsData } from "../../../assets/Data/ProductDetailsData";
+import { NavBar } from "../../../Components/NavBar";
 
 const productData = ProductDetailsData;
 const relatedProductData = RelatedProductData;
@@ -40,7 +40,7 @@ export default function ProductDetails() {
             }}
           >
             <img
-              src="../src/assets/Images/maxi1.jpg" // Replace with your image path
+              src="../../src/assets/Images/maxi1.jpg" // Replace with your image path
               alt="Description"
               style={{
                 width: "100%", // Make the image fill the container

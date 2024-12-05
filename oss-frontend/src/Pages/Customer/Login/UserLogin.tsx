@@ -2,32 +2,26 @@ import { useState } from "react";
 import { Container, Button, TextField, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { NavBar } from "../../Components/NavBar-reg";
+import { NavBar } from "../../../Components/NavBar-reg";
 import { useNavigate } from "react-router-dom";
-import "../../Pages/Customer/Login.css";
+import "../Login/Login.css";
 
 type FormValue = {
-  firstname: string;
-  lastname: string;
   email: string;
   password: string;
 };
 
-const Registrationform = () => {
+const LoginForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>();
-  const [data, setData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-  });
+  const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  const onSubmit: SubmitHandler<FormValue> = (data) => {
-    navigate("/customer/RegistrationOTP");
+  const onSubmit: SubmitHandler<FormValue> = (data) => {};
+  const handleForgotPasswordClick = () => {
+    navigate("/customer/passwordResetOTP");
   };
 
   return (
@@ -48,66 +42,12 @@ const Registrationform = () => {
                       borderRadius: "18px 18px 0px 0px",
                     }}
                   >
-                    Register Customer
+                    User Login
                   </Typography>
                 </Box>
+
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Box sx={{ padding: "20px" }}>
-                    <TextField
-                      fullWidth
-                      sx={{
-                        width: "100%",
-                        // backgroundColor: 'black', // Background color
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "gray",
-                          },
-                        },
-                      }}
-                      size="small"
-                      label="First Name"
-                      placeholder="Enter your first name"
-                      {...register("firstname", {
-                        required: "First Name is required",
-                      })}
-                    />
-                    {errors.firstname && (
-                      <p className="error-msg">{errors.firstname.message}</p>
-                    )}
-                    <TextField
-                      fullWidth
-                      sx={{
-                        width: "100%",
-                        marginTop: "20px",
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "gray",
-                          },
-                        },
-                      }}
-                      size="small"
-                      label="Last Name"
-                      placeholder="Enter your last name"
-                      {...register("lastname", {
-                        required: "Last Name is required",
-                      })}
-                    />
-                    {errors.lastname && (
-                      <p className="error-msg">{errors.lastname.message}</p>
-                    )}
-
                     <TextField
                       fullWidth
                       sx={{
@@ -139,7 +79,6 @@ const Registrationform = () => {
                     {errors.email && (
                       <p className="error-msg">{errors.email.message}</p>
                     )}
-
                     <TextField
                       fullWidth
                       sx={{
@@ -173,6 +112,27 @@ const Registrationform = () => {
                       <p className="error-msg">{errors.password.message}</p>
                     )}
 
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        marginTop: 1,
+                        color: "grey",
+                      }}
+                    >
+                      <Typography
+                        // variant="h6"
+                        fontSize={15}
+                        // component="div"
+                        sx={{ cursor: "pointer" }}
+                        onClick={handleForgotPasswordClick}
+                      >
+                        Forgot Password
+                      </Typography>
+                    </Box>
+
                     <Button
                       style={{ marginTop: "20px" }}
                       sx={{ backgroundColor: "#185A9D" }}
@@ -180,7 +140,7 @@ const Registrationform = () => {
                       variant="contained"
                       fullWidth
                     >
-                      Submit
+                      Login
                     </Button>
                   </Box>
                 </form>
@@ -192,4 +152,4 @@ const Registrationform = () => {
     </div>
   );
 };
-export default Registrationform;
+export default LoginForm;

@@ -1,12 +1,15 @@
 import React from "react";
-import "./DeleteCategory.css";
+import "../Components/DeleteCategory.css";
 
 interface DeleteConfirmationPopupProps {
   onClose: () => void;
   onConfirm: () => void;
 }
 
-const DeleteConfirmationPopup: React.FC<DeleteConfirmationPopupProps> = ({ onClose, onConfirm }) => {
+const DeleteConfirmationPopup: React.FC<DeleteConfirmationPopupProps> = ({
+  onClose,
+  onConfirm,
+}) => {
   return (
     <div className="delete-popup-overlay">
       <div className="delete-popup">

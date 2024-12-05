@@ -9,10 +9,10 @@ import {
   DialogContentText,
   Divider,
 } from "@mui/material";
-import { PrimaryButton } from "../../Components/PrimaryButton";
-import { DeliveryDetailsInputForm } from "../../Components/DeliveryDetailsInputForm";
-import { NavBar } from "../../Components/NavBar";
-import { DeliveryData } from "../../assets/Data/DeliveryData";
+import { PrimaryButton } from "../../../Components/PrimaryButton";
+import { DeliveryDetailsInputForm } from "../../../Components/DeliveryDetailsInputForm";
+import { NavBar } from "../../../Components/NavBar";
+import { DeliveryData } from "../../../assets/Data/DeliveryData";
 import { useLocation } from "react-router-dom";
 
 const deliveryData = DeliveryData;

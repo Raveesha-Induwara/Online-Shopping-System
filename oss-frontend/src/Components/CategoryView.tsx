@@ -1,5 +1,5 @@
 import React from "react";
-import "./CategoryView.css";   
+import "../Components/CategoryView.css";
 
 interface CategoryView {
   categoryId: string;
@@ -29,10 +29,19 @@ const CategoryView: React.FC<CategoryView> = ({
             </div> */}
         <h2 className="cat-details-header">Category Details</h2>
         <div>
-          <p><strong>Category ID:</strong> {categoryId}</p>
-          <p><strong>Category Name:</strong> {categoryName}</p>
-          <p><strong>Categoty Description: </strong>{categoryDescription}</p>
-          <p><strong>Product IDs:</strong></p>
+          <p>
+            <strong>Category ID:</strong> {categoryId}
+          </p>
+          <p>
+            <strong>Category Name:</strong> {categoryName}
+          </p>
+          <p>
+            <strong>Categoty Description: </strong>
+            {categoryDescription}
+          </p>
+          <p>
+            <strong>Product IDs:</strong>
+          </p>
           <p>
             <ul>
               {productIds.map((id) => (
@@ -40,13 +49,14 @@ const CategoryView: React.FC<CategoryView> = ({
               ))}
             </ul>
           </p>
-          
         </div>
         {/* <div className="popup-buttons">
           <button className="update-btn">Update</button>
           <button className="delete-btn">Delete</button>
         </div> */}
-        <button className="close-btn" onClick={onClose}>Close</button>
+        <button className="close-btn" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );

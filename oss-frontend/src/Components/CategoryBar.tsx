@@ -39,7 +39,7 @@ const CategorySection = () => {
   const navigate = useNavigate();
 
   const handleCategoryClick = (categoryId: number) => {
-    navigate(`/category/${categoryId}`);
+    navigate(`/customer/category/${categoryId}`);
   };
 
   return (
@@ -71,7 +71,7 @@ const CategorySection = () => {
                   overflow: "hidden",
                   mb: 1,
                   boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                  border:"7.5px solid #1289A7",
+                  border: "7.5px solid #1289A7",
                 }}
               >
                 <img
@@ -84,7 +84,7 @@ const CategorySection = () => {
                   }}
                 />
               </Box>
-              <Typography variant="body1" fontWeight="bold">
+              <Typography variant="body1" fontWeight="bold" color="black">
                 {category.name}
               </Typography>
             </Grid>

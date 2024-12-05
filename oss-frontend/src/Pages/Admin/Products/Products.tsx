@@ -3,10 +3,10 @@ import "./Products.css"; // You can change the CSS filename as needed
 
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-import AddProductPopup from "../../Components/AddProduct/AddProduct"; // Ensure to update the component path as needed
+import AddProductPopup from "../../../Components/AddProduct/AddProduct"; // Ensure to update the component path as needed
 //import UpdateProductPopup from "../../components/UpdateProduct/UpdateProduct";
 //import ProductDetails from "../../components/ProductDetails/ProductDetails";
-import ProductDetails from "../../Components/ProductDetails/ProductDetails";
+import ProductDetails from "../../../Components/ProductDetails/ProductDetails";
 
 const ProductsContent: React.FC = () => {
   const products = [

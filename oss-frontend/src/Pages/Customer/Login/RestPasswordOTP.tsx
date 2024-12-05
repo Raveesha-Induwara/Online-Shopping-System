@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Container, Button, TextField, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { NavBar } from "../../Components/NavBar-reg";
+import { NavBar } from "../../../Components/NavBar-reg";
 import { useNavigate } from "react-router-dom";
-import "../../Pages/Customer/Login.css";
+import "../Login/Login.css";
 
 type FormValue = {
   email: string;

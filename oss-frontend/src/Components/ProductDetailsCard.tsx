@@ -65,7 +65,7 @@ export const ProductDetailsCard = ({
             >
               {price}
             </Typography>
-            <IconButton onClick={() => navigate("/myCart")}>
+            <IconButton onClick={() => navigate("/customer/myCart")}>
               <AddShoppingCart />
             </IconButton>
           </Box>

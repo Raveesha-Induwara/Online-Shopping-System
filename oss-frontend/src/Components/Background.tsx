@@ -14,18 +14,14 @@ const SwipingBackground = () => {
       showArrows={false}
     >
       <div className="bimage">
-        <img src="/bg1.png" alt="bg2"  height={"100%"} width={"100%"}  />
+        <img src="/bg1.png" alt="bg2" height={"100%"} width={"100%"} />
       </div>
       <div className="bimage">
         <img src="/back2.png" alt="bg3" height={"100%"} width={"100%"} />
       </div>
       <div className="bimage">
-        <img
-          src="/bg3.png"
-          alt="Background 3"
-          height={"100%"}></img>
-        
-      </div> 
+        <img src="/bg3.png" alt="Background 3" height={"100%"}></img>
+      </div>
     </Carousel>
   );
 };

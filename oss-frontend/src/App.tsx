@@ -2,10 +2,10 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import AppLayout from "./Layouts/AdminLayout";
 import CustomerLayout from "./Layouts/CustomerLayout";
-import ProductDetails from "./Pages/Customer/ProductDetails";
+import ProductDetails from "./Pages/Customer/OrderProduct/ProductDetails";
 import MyCart from "./Pages/Customer/MyCart";
 import MyOrders from "./Pages/Customer/MyOrders";
-import DeliveryDetails from "./Pages/Customer/DeliveryDetails";
+import DeliveryDetails from "./Pages/Customer/OrderProduct/DeliveryDetails";
 import Users from "./Pages/Admin/Users";
 import Orders from "./Pages/Admin/Orders";
 

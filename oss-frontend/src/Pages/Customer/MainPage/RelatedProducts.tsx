@@ -9,8 +9,12 @@ import {
   IconButton,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { relatedData, Category, Product } from "../../assets/relatedProducts";
-import { useNavigate } from "react-router-dom"; 
+import {
+  relatedData,
+  Category,
+  Product,
+} from "../../../assets/relatedProducts";
+import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
@@ -42,16 +46,15 @@ const CustomNextArrow = ({ onClick }: { onClick?: () => void }) => (
       top: "50%",
       zIndex: 1,
       transform: "translateY(-50%)",
-      color: "black", 
+      color: "black",
     }}
   >
     <ArrowForwardIos />
   </IconButton>
 );
 
-
 const RelatedProducts = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Group products by category
   const groupedData = relatedData.categories.map((category: Category) => ({
@@ -97,10 +100,8 @@ const RelatedProducts = () => {
     ],
   };
 
-  
-
   const handleCategoryClick = (categoryName: string) => {
-    navigate(`/category/${categoryName.toLowerCase()}`); 
+    navigate(`/customer/category/${categoryName.toLowerCase()}`);
   };
 
   return (
@@ -113,7 +114,7 @@ const RelatedProducts = () => {
           textAlign: "center",
           marginTop: "4%",
           marginLeft: "5%",
-          color:"#185a9d"
+          color: "#185a9d",
         }}
       >
         Related Products
@@ -122,7 +123,6 @@ const RelatedProducts = () => {
       <Box>
         {groupedData.map((group, index) => (
           <Box key={index} sx={{ mb: 5, mx: "2%" }}>
-
             {/* Category Section */}
             <Typography
               variant="h6"

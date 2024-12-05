@@ -25,6 +25,7 @@ import {
   Search,
   ShoppingCart,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface UserProfile {
   firstName: string;
@@ -41,6 +42,7 @@ export const NavBar = () => {
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const navigate = useNavigate();
   const [userProfile, setUserProfile] = useState<UserProfile>({
     firstName: "Anne",
     lastName: "Turing",
@@ -145,6 +147,7 @@ export const NavBar = () => {
               color="inherit"
               aria-label="logo"
               sx={{ mr: 3 }}
+              onClick={() => navigate("/customer/myCart")}
             >
               <Badge badgeContent={4} color="error">
                 <ShoppingCart />
@@ -167,7 +170,13 @@ export const NavBar = () => {
               onClose={handleClose}
             >
               <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
-              <MenuItem onClick={() => {}}>My orders</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/customer/myOrders");
+                }}
+              >
+                My orders
+              </MenuItem>
               <MenuItem onClick={() => {}}>Logout</MenuItem>
             </Menu>
             <Dialog

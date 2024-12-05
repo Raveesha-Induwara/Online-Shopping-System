@@ -9,9 +9,10 @@ import {
   Rating,
   Box,
 } from "@mui/material";
-import { products } from "../Components/CategoryProducts.ts";
+import { products } from "../../../Components/CategoryProducts.ts";
 
 const CategoryPage: React.FC = () => {
+  const navigate = useNavigate();
   // const { categoryId } = useParams<{ categoryId: string }>();
   // const navigate = useNavigate();
 
@@ -28,6 +29,7 @@ const CategoryPage: React.FC = () => {
         fontWeight="bold"
         marginBottom="30px"
         gutterBottom
+        color="black"
       >
         Dresses
       </Typography>
@@ -47,6 +49,9 @@ const CategoryPage: React.FC = () => {
                     transform: "scale(1.05)",
                   },
                 }}
+                onClick={() =>
+                  navigate(`/customer/productDetails/${product.id}`)
+                }
               >
                 <CardMedia
                   component="img"

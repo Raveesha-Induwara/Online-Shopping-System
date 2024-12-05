@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./UpdateCategory.css";
+import "../Components/UpdateCategory.css";
 
 interface UpdateCategory {
   category: { id: string; name: string; description: string } | null;

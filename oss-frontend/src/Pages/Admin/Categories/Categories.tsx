@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Categories.css";
-import AddCategoryPopup from "../../Components/AddCategory";
-import UpdateCategoryPopup from "../../Components/UpdateCategory";
-import CategoryViewPopup from "../../Components/CategoryView";
-import DeleteConfirmationPopup from "../../Components/DeleteCategory";
+import AddCategoryPopup from "../../../Components/AddCategory";
+import UpdateCategory from "../../../Components/UpdateCategory";
+import CategoryViewPopup from "../../../Components/CategoryView";
+import DeleteConfirmationPopup from "../../../Components/DeleteCategory";
 
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
@@ -11,8 +11,18 @@ import { BiSolidDetail } from "react-icons/bi";
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState([
-    { id: "C001", name: "Ladies frock", description: "GFLOCK", productIds: ["P001", "P002"] },
-    { id: "C002", name: "Trousers", description: "Huf & Dee", productIds: ["P003", "P004"] },
+    {
+      id: "C001",
+      name: "Ladies frock",
+      description: "GFLOCK",
+      productIds: ["P001", "P002"],
+    },
+    {
+      id: "C002",
+      name: "Trousers",
+      description: "Huf & Dee",
+      productIds: ["P003", "P004"],
+    },
   ]);
 
   const [isAddPopupOpen, setAddPopupOpen] = useState(false);
@@ -30,24 +40,26 @@ const Categories: React.FC = () => {
     setAddPopupOpen(!isAddPopupOpen);
   };
 
-  const handleUpdatePopupOpen = (category: typeof categories[0]) => {
+  const handleUpdatePopupOpen = (category: (typeof categories)[0]) => {
     setSelectedCategory(category);
     setUpdatePopupOpen(true);
   };
 
-  const handleViewPopupOpen = (category: typeof categories[0]) => {
+  const handleViewPopupOpen = (category: (typeof categories)[0]) => {
     setSelectedCategory(category);
     setViewPopupOpen(true);
   };
 
-  const handleDeletePopupOpen = (category: typeof categories[0]) => {
+  const handleDeletePopupOpen = (category: (typeof categories)[0]) => {
     setSelectedCategory(category);
     setDeletePopupOpen(true);
   };
 
   const handleDeleteCategory = () => {
     if (selectedCategory) {
-      setCategories((prev) => prev.filter((cat) => cat.id !== selectedCategory.id));
+      setCategories((prev) =>
+        prev.filter((cat) => cat.id !== selectedCategory.id)
+      );
       setDeletePopupOpen(false);
     }
   };
@@ -111,7 +123,7 @@ const Categories: React.FC = () => {
 
       {isAddPopupOpen && <AddCategoryPopup onClose={handleAddPopupToggle} />}
       {isUpdatePopupOpen && selectedCategory && (
-        <UpdateCategoryPopup
+        <UpdateCategory
           category={selectedCategory}
           onClose={() => setUpdatePopupOpen(false)}
           onUpdate={() => {}}

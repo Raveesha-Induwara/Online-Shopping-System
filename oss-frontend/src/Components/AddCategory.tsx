@@ -1,5 +1,5 @@
 import React from "react";
-import "./AddCategory.css";
+import "../Components/AddCategory.css";
 
 interface AddCategory {
   onClose: () => void;

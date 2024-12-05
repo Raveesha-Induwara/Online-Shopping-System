@@ -2,22 +2,24 @@ import { useState } from "react";
 import { Container, Button, TextField, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { NavBar } from "../../Components/NavBar-reg";
-import "../../Pages/Customer/Login.css";
+import { NavBar } from "../../../Components/NavBar-reg";
+import "../Login/Login.css";
 
 type FormValue = {
-  newpassword: string;
-  confirmpassword: string;
+  otp: string;
 };
 
-const PasswordReset = () => {
+const RegistrationOTP = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>();
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({ otp: "" });
   const onSubmit: SubmitHandler<FormValue> = (data) => {};
+  const handleResend = () => {
+    // alert("Text clicked!");
+  };
 
   return (
     <div>
@@ -37,10 +39,9 @@ const PasswordReset = () => {
                       borderRadius: "18px 18px 0px 0px",
                     }}
                   >
-                    Password Reset
+                    Registration - OTP Verification
                   </Typography>
                 </Box>
-
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Box sx={{ padding: "20px" }}>
                     <TextField
@@ -61,54 +62,41 @@ const PasswordReset = () => {
                         },
                       }}
                       size="small"
-                      label="New Password"
-                      type="password"
-                      placeholder="Enter new password"
-                      {...register("newpassword", {
-                        required: "New password is required",
+                      label="OTP"
+                      type="otp"
+                      placeholder="Enter your OTP"
+                      {...register("otp", {
+                        required: "OTP is required",
                         minLength: {
                           value: 6,
-                          message: "Password should be atleast 6 characters",
+                          message: "OTP should be 6 digits",
                         },
                       })}
                     />
-                    {errors.newpassword && (
-                      <p className="error-msg">{errors.newpassword.message}</p>
+                    {errors.otp && (
+                      <p className="error-msg">{errors.otp.message}</p>
                     )}
-                    <TextField
-                      fullWidth
+
+                    <Box
                       sx={{
-                        width: "100%",
-                        marginTop: "20px",
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "gray",
-                          },
-                        },
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        marginTop: 1,
+                        color: "grey",
                       }}
-                      size="small"
-                      label="Confirm Password"
-                      type="password"
-                      placeholder="Confirm your password"
-                      {...register("confirmpassword", {
-                        required: "Password confirmation is required",
-                        minLength: {
-                          value: 6,
-                          message: "Password should be atleast 6 characters",
-                        },
-                      })}
-                    />
-                    {errors.confirmpassword && (
-                      <p className="error-msg">
-                        {errors.confirmpassword.message}
-                      </p>
-                    )}
+                    >
+                      <Typography
+                        // variant="h6"
+                        fontSize={15}
+                        // component="div"
+                        sx={{ cursor: "pointer" }}
+                        onClick={handleResend}
+                      >
+                        Resend OTP
+                      </Typography>
+                    </Box>
 
                     <Button
                       style={{ marginTop: "20px" }}
@@ -129,4 +117,4 @@ const PasswordReset = () => {
     </div>
   );
 };
-export default PasswordReset;
+export default RegistrationOTP;
