@@ -3,7 +3,7 @@ import { Container, Button, TextField, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NavBar } from "../../Components/NavBar-reg";
-import "../../App.css";
+import "../../Pages/Customer/Login.css";
 
 type FormValue = {
   newpassword: string;

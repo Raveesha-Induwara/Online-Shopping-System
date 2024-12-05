@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NavBar } from "../../Components/NavBar-reg";
 import { useNavigate } from "react-router-dom";
-import "../../App.css";
+import "../../Pages/Customer/Login.css";
 
 type FormValue = {
   email: string;
