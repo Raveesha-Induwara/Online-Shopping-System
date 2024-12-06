@@ -10,29 +10,28 @@ import { FieldErrors, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface DeliveryDetailsProps {
+  closeDialog: () => void;
+}
+
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
 }));
 
-export const DeliveryDetailsInputForm = () => {
+export const DeliveryDetailsInputForm = ({
+  closeDialog,
+}: DeliveryDetailsProps) => {
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const navigate = useNavigate();
   const [details, setDetails] = useState({});
 
   const onSubmit = handleSubmit((data) => {
-    setDetails({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      address1: data.address1,
-      address2: data.address2,
-      city: data.city,
-      district: data.district,
-      province: data.province,
-    });
+    setDetails({ data });
+    navigate("/customer/deliveryDetails", { state: data });
+    closeDialog();
   });
-  navigate("/customer/deliveryDetails", { state: details });
 
   return (
     <Paper

@@ -110,7 +110,9 @@ export default function DeliveryDetails() {
               </IconButton>
               <Dialog open={open} onClose={() => handleClose()}>
                 <DialogContentText>
-                  <DeliveryDetailsInputForm />
+                  <DeliveryDetailsInputForm
+                    closeDialog={() => setOpen(false)}
+                  />
                 </DialogContentText>
               </Dialog>
             </Box>
