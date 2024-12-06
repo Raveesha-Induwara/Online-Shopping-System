@@ -23,26 +23,31 @@ public class OrderController {
     @Autowired
     private final OrderService orderService;
     
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/{id}")
     public ResponseEntity<OrderRespond> getOrderById(@PathVariable long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public ResponseEntity<List<OrderRespond>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest){
         return ResponseEntity.ok(orderService.createOrder(orderRequest));
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:5173")
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateOrder(@PathVariable Long id, @RequestBody UpdateOrderDto updateOrderDto){
         return ResponseEntity.ok(orderService.updateOrder(id, updateOrderDto));
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOrder(@PathVariable long id){
         return ResponseEntity.ok(orderService.deleteOrder(id));

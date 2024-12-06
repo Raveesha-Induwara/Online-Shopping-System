@@ -23,21 +23,25 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
     
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/inventories")
     public List<Inventory> getAllInventory() {
         return inventoryService.getAllInventory();
     }
     
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/getinventory/{productId}")
     public Optional<Inventory> getInventory(@PathVariable Long productId) {
         return inventoryService.getInventory(productId);
     }
     
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/addinventory")
     public InventoryDto addInventory(@Valid @RequestBody InventoryDto inventoryDto) {
         return inventoryService.addInventory(inventoryDto);
     }
     
+    @CrossOrigin(origins = "http://localhost:5173")
     @PatchMapping("/")
     public Optional<Inventory> updateInventory(@Valid @RequestBody InventoryDto inventoryDto) {
         return inventoryService.updateInventory(inventoryDto);
