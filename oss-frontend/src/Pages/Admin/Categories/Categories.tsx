@@ -1,40 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import AddCategoryPopup from "../../../Components/AddCategory/AddCategory";
 import UpdateCategory from "../../../Components/UpdateCategory";
 import CategoryViewPopup from "../../../Components/CategoryView/CategoryView";
 import DeleteConfirmationPopup from "../../../Components/DeleteCategory/DeleteCategory";
-
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
 import { BiSolidDetail } from "react-icons/bi";
+import axios from "../../../service/api-client";
+
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+}
 
 const Categories: React.FC = () => {
-  const [categories, setCategories] = useState([
-    {
-      id: "C001",
-      name: "Ladies frock",
-      description: "GFLOCK",
-      productIds: ["P001", "P002"],
-    },
-    {
-      id: "C002",
-      name: "Trousers",
-      description: "Huf & Dee",
-      productIds: ["P003", "P004"],
-    },
-  ]);
-
+  const [categories, setCategories] = useState<Array<Category>>([]);
   const [isAddPopupOpen, setAddPopupOpen] = useState(false);
   const [isUpdatePopupOpen, setUpdatePopupOpen] = useState(false);
   const [isViewPopupOpen, setViewPopupOpen] = useState(false);
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<{
-    id: string;
-    name: string;
-    description: string;
-    productIds: string[];
-  } | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category>();
+
+  useEffect(() => {
+    axios
+      .get(`/categories`)
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        alert("An error occurred while fetching data" + error.message);
+      });
+  }, []);
 
   const handleAddPopupToggle = () => {
     setAddPopupOpen(!isAddPopupOpen);
@@ -134,7 +132,6 @@ const Categories: React.FC = () => {
           categoryId={selectedCategory.id}
           categoryName={selectedCategory.name}
           categoryDescription={selectedCategory.description}
-          productIds={selectedCategory.productIds}
           onClose={() => setViewPopupOpen(false)}
         />
       )}

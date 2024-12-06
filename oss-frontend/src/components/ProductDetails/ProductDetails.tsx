@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./ProductDetails.css";
 import DeleteConfirmationPopup from "../DeleteConfirmationPopup/DeleteConfirmationPopup";
@@ -6,17 +5,15 @@ import DeleteConfirmationPopup from "../DeleteConfirmationPopup/DeleteConfirmati
 //import UpdateProductPopup from "../UpdateProduct/UpdateProduct";
 import UpdateProduct from "../UpdateProduct/UpdateProduct";
 
-
-
-
 interface ProductDetailsProps {
   product: {
     id: string;
-    name: string;
-    description: string;
-    price: string;
-    image?: string;
-    category?: string;
+    image: string;
+    product_name: string;
+    product_description: string;
+    product_category: string;
+    product_price: string;
+    product_quantity: number;
   };
   onClose: () => void;
   onUpdate: () => void;
@@ -29,32 +26,31 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   onUpdate,
   onDelete,
 }) => {
-    const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
-    const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
-    const handleOpenUpdatePopup = () => {
-      setIsUpdatePopupOpen(true); // Open the UpdateProduct popup
-    };
-  
-    const handleCloseUpdatePopup = () => {
-      setIsUpdatePopupOpen(false); // Close the UpdateProduct popup
-    };
+  const handleOpenUpdatePopup = () => {
+    setIsUpdatePopupOpen(true); // Open the UpdateProduct popup
+  };
 
-    const handleOpenDeletePopup = () => {
-        setIsDeletePopupOpen(true);
-      };
-    
-      const handleCloseDeletePopup = () => {
-        setIsDeletePopupOpen(false);
-        onClose(); // Close ProductDetails popup if "No" is clicked
-      };
-    
-      const handleConfirmDelete = () => {
-        setIsDeletePopupOpen(false);
-        alert("This Product is Successfully Deleted");
-        onDelete(); // Trigger the onDelete callback
-      };
-  
+  const handleCloseUpdatePopup = () => {
+    setIsUpdatePopupOpen(false); // Close the UpdateProduct popup
+  };
+
+  const handleOpenDeletePopup = () => {
+    setIsDeletePopupOpen(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    setIsDeletePopupOpen(false);
+    onClose(); // Close ProductDetails popup if "No" is clicked
+  };
+
+  const handleConfirmDelete = () => {
+    setIsDeletePopupOpen(false);
+    alert("This Product is Successfully Deleted");
+    onDelete(); // Trigger the onDelete callback
+  };
 
   return (
     <div className="details-popup-overlay">
@@ -76,16 +72,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               <strong>Product ID:</strong> {product.id}
             </p>
             <p>
-              <strong>Product Name:</strong> {product.name}
+              <strong>Product Name:</strong> {product.product_name}
             </p>
             <p>
-              <strong>Description:</strong> {product.description}
+              <strong>Description:</strong> {product.product_description}
             </p>
             <p>
-              <strong>Category:</strong> {product.category || "N/A"}
+              <strong>Category:</strong> {product.product_category || "N/A"}
             </p>
             <p>
-              <strong>Price:</strong> {product.price}
+              <strong>Price:</strong> {product.product_price}
             </p>
           </div>
           <div className="details-product-actions">
@@ -97,8 +93,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             </button>
           </div>
         </div>
-    {/* Conditionally render the UpdateProduct popup */}
-    {isUpdatePopupOpen && (
+        {/* Conditionally render the UpdateProduct popup */}
+        {isUpdatePopupOpen && (
           <UpdateProduct product={product} onClose={handleCloseUpdatePopup} />
         )}
 
@@ -109,9 +105,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             onClose={handleCloseDeletePopup}
             onConfirm={handleConfirmDelete}
           />
-      )}
-
-    </div>
+        )}
+      </div>
     </div>
   );
 };

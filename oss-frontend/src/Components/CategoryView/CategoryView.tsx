@@ -5,7 +5,6 @@ interface CategoryView {
   categoryId: string;
   categoryName: string;
   categoryDescription: string;
-  productIds: string[];
   onClose: () => void;
 }
 
@@ -13,7 +12,6 @@ const CategoryView: React.FC<CategoryView> = ({
   categoryId,
   categoryName,
   categoryDescription,
-  productIds,
   onClose,
 }) => {
   return (
@@ -42,18 +40,18 @@ const CategoryView: React.FC<CategoryView> = ({
           <p>
             <strong>Product IDs:</strong>
           </p>
-          <p>
+          {/* <p>
             <ul>
               {productIds.map((id) => (
                 <li key={id}>{id}</li>
               ))}
             </ul>
-          </p>
+          </p> */}
         </div>
-        {/* <div className="popup-buttons">
+        <div className="popup-buttons">
           <button className="update-btn">Update</button>
           <button className="delete-btn">Delete</button>
-        </div> */}
+        </div>
         <button className="close-btn" onClick={onClose}>
           Close
         </button>

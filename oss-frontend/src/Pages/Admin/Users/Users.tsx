@@ -15,8 +15,8 @@ import {
   Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import UsersService from "../../../assets/Data/UsersService";
 import GroupIcon from "@mui/icons-material/Group";
+import axios from "../../../service/api-client";
 
 // Interfaces for types
 interface OrderSummary {
@@ -25,12 +25,14 @@ interface OrderSummary {
 }
 
 interface User {
-  userId: string;
-  username: string;
-  orderSummary: OrderSummary;
-  mobile: string;
-  email: string;
-  address: string;
+  customerId: string,
+  firstName: string,
+  lastName: string,
+  mobileNo: string,
+  email: string,
+  homeNo: string,
+  street: string,
+  city: string
 }
 
 // Custom styles
@@ -58,35 +60,40 @@ const useStyles = makeStyles({
 
 const Users: React.FC = () => {
   const classes = useStyles();
-  const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  // const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState<Array<User>>([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const data = await UsersService.getUsers();
-        setUsers(data as User[]);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    fetchUsers();
+    axios
+      .get(`/customers/getusers`)
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        alert("An error occurred while fetching data");
+        console.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const handleRowClick = (user: User) => {
     setSelectedUser(user);
   };
 
-  const handleDeleteUser = async () => {
-    if (!selectedUser) return;
-    try {
-      const remainingUsers = await UsersService.deleteUser(selectedUser.userId);
-      setUsers(remainingUsers as User[]);
-      setSelectedUser(null);
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
+  // const handleDeleteUser = async () => {
+  //   if (!selectedUser) return;
+  //   try {
+  //     const remainingUsers = await UsersService.deleteUser(selectedUser.customerId);
+  //     setUsers(remainingUsers as User[]);
+  //     setSelectedUser(null);
+  //   } catch (error) {
+  //     console.error("Error deleting user:", error);
+  //   }
+  // };
 
   return (
     <>
@@ -102,20 +109,21 @@ const Users: React.FC = () => {
               <TableRow style={{ backgroundColor: "#d9d7d7" }}>
                 <TableCell align="center">User ID</TableCell>
                 <TableCell align="center">Username</TableCell>
-                <TableCell align="center">Order Summary</TableCell>
+                <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Mobile No.</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.map((user) => (
                 <TableRow
-                  key={user.userId}
+                  key={user.customerId}
                   className={classes.tableRow}
                   onClick={() => handleRowClick(user)}
                 >
-                  <TableCell align="center">{user.userId}</TableCell>
-                  <TableCell align="center">{user.username}</TableCell>
-                  <TableCell align="center" className={classes.orderSummary}>
+                  <TableCell align="center">{user.customerId}</TableCell>
+                  <TableCell align="center">{user.firstName + " " + user.lastName}</TableCell>
+                  <TableCell align="center">{user.email}</TableCell>
+                  {/* <TableCell align="center" className={classes.orderSummary}>
                     <div className={classes.orderSummaryRow}>
                       <strong>Products:</strong>{" "}
                       {user.orderSummary.products.join(", ")}
@@ -124,8 +132,8 @@ const Users: React.FC = () => {
                       <strong>Total Price:</strong> $
                       {user.orderSummary.totalPrice.toFixed(2)}
                     </div>
-                  </TableCell>
-                  <TableCell align="center">{user.mobile}</TableCell>
+                  </TableCell> */}
+                  <TableCell align="center">{user.mobileNo}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -143,26 +151,26 @@ const Users: React.FC = () => {
             <DialogTitle>User Details</DialogTitle>
             <DialogContent>
               {[
-                { label: "User ID", value: selectedUser.userId },
-                { label: "Username", value: selectedUser.username },
+                { label: "User ID", value: selectedUser.customerId },
+                { label: "Username", value: selectedUser.firstName + " " + selectedUser.lastName },
                 {
                   label: "Order Summary",
                   value: (
                     <>
-                      <div>
+                      {/* <div>
                         <strong>Products:</strong>{" "}
                         {selectedUser.orderSummary.products.join(", ")}
                       </div>
                       <div>
                         <strong>Total Price:</strong> $
                         {selectedUser.orderSummary.totalPrice.toFixed(2)}
-                      </div>
+                      </div> */}
                     </>
                   ),
                 },
-                { label: "Mobile Number", value: selectedUser.mobile },
+                { label: "Mobile Number", value: selectedUser.mobileNo },
                 { label: "Email Address", value: selectedUser.email },
-                { label: "Address", value: selectedUser.address },
+                { label: "Address", value: selectedUser.homeNo + ", " + selectedUser.street + ", " + selectedUser.city },
               ].map((detail, index) => (
                 <div key={index} className={classes.detailItem}>
                   <strong>{detail.label}:</strong> {detail.value}
@@ -171,9 +179,9 @@ const Users: React.FC = () => {
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setSelectedUser(null)}>Close</Button>
-              <Button color="error" onClick={handleDeleteUser}>
+              {/* <Button color="error">
                 Delete
-              </Button>
+              </Button> */}
             </DialogActions>
           </>
         )}

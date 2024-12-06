@@ -1,33 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Button, TextField, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NavBar } from "../../../Components/NavBar-reg";
 import { useNavigate } from "react-router-dom";
 import "../Login/Login.css";
+import axios from "../../../service/api-client";
 
 type FormValue = {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };
 
-const Registrationform = () => {
+const RegistrationForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormValue> = (data) => {
-    navigate("/customer/RegistrationOTP");
+    axios
+      .post(`/auth/signup/client/create-otp`, { email: data.email })
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        setError("An error occurred while fetching data");
+        console.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    // navigate("/customer/RegistrationOTP");
   };
 
   return (
@@ -73,12 +89,12 @@ const Registrationform = () => {
                       size="small"
                       label="First Name"
                       placeholder="Enter your first name"
-                      {...register("firstname", {
+                      {...register("firstName", {
                         required: "First Name is required",
                       })}
                     />
-                    {errors.firstname && (
-                      <p className="error-msg">{errors.firstname.message}</p>
+                    {errors.firstName && (
+                      <p className="error-msg">{errors.firstName.message}</p>
                     )}
                     <TextField
                       fullWidth
@@ -100,12 +116,12 @@ const Registrationform = () => {
                       size="small"
                       label="Last Name"
                       placeholder="Enter your last name"
-                      {...register("lastname", {
+                      {...register("lastName", {
                         required: "Last Name is required",
                       })}
                     />
-                    {errors.lastname && (
-                      <p className="error-msg">{errors.lastname.message}</p>
+                    {errors.lastName && (
+                      <p className="error-msg">{errors.lastName.message}</p>
                     )}
 
                     <TextField
@@ -131,7 +147,7 @@ const Registrationform = () => {
                       {...register("email", {
                         required: "Email is required",
                         pattern: {
-                          value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                          value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                           message: "Invalid Email",
                         },
                       })}
@@ -192,4 +208,4 @@ const Registrationform = () => {
     </div>
   );
 };
-export default Registrationform;
+export default RegistrationForm;
