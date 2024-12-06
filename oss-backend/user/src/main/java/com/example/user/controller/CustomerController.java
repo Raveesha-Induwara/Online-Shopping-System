@@ -26,31 +26,30 @@ public class CustomerController {
     private CustomerService customerService;
     
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("/getusers")
     public ResponseEntity<List<Customer>> getUsers() {
         return new ResponseEntity<>(customerService.getAllUsers(), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping("/adduser")
     public ResponseEntity<CustomerDto> createUser(@Valid @RequestBody CustomerDto customerDto) {
         return new ResponseEntity<>(customerService.createUser(customerDto), HttpStatus.CREATED);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PatchMapping("/updateuser")
     public ResponseEntity<UserResponse> updateUser(@Valid @RequestBody CustomerUpdateDto customerUpdateDto) {
         return new ResponseEntity<>(customerService.updateUser(customerUpdateDto), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("/getuser")
     public ResponseEntity<Optional<Customer>> getUserByEmail(@Param(value = "email") String email) {
         return new ResponseEntity<>(customerService.getUserByEmail(email), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {

@@ -24,25 +24,25 @@ public class AuthController {
     @Autowired
     private AuthAdminService authAdminService;
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping(value = "/signup/client/create-otp")
     public ResponseEntity<LoginOtpResponseDto> createSignupOtp(@Valid @RequestBody LoginOtpRequestDto request) {
         return new ResponseEntity<>(authCustomerService.createSignupOtp(request), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping(value = "/login/client")
     public ResponseEntity<LoginResponseDto> handlerClientLogin(@Valid @RequestBody LoginRequestDto request) {
         return new ResponseEntity<>(authCustomerService.login(request), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping(value = "/signup/client")
     public ResponseEntity<AuthResponse> handlerClientSignUp(@Valid @RequestBody SignUpRequestDto request) {
         return new ResponseEntity<>(authCustomerService.signUp(request), HttpStatus.CREATED);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping(value = "/request-otp/client")
     public ResponseEntity<LoginOtpResponseDto> requestOtp(@Valid @RequestBody OtpRequestDto request) {
         return new ResponseEntity<>(authCustomerService.requestOtp(request), HttpStatus.OK);
@@ -53,13 +53,13 @@ public class AuthController {
 //        return new ResponseEntity<>(authCustomerService.refreshToken(request), HttpStatus.OK);
 //    }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping(value = "/signup/admin")
     public ResponseEntity<AuthResponse> handlerAdminSignUp(@Valid @RequestBody SignUpRequestDto request) {
         return new ResponseEntity<>(authAdminService.signUp(request), HttpStatus.CREATED);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping(value = "/login/admin")
     public ResponseEntity<LoginResponseDto> handlerAdminLogin(@Valid @RequestBody LoginRequestDto request) {
         return new ResponseEntity<>(authAdminService.login(request), HttpStatus.OK);

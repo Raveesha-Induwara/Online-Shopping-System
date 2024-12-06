@@ -27,7 +27,7 @@ public class PaymentController {
     //for create payment link for online payment
     //input order details
     //output stripe session link
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping ("link")
     public ResponseEntity<StandardResponse> createPaymentLink(@RequestBody OrderDTO orderDTO) throws StripeException {
         PaymentResponse response = paymentService.createPaymentLink(orderDTO);
@@ -38,7 +38,7 @@ public class PaymentController {
 
     //save payment details inside database
     //no input or return
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping("")
     public ResponseEntity<StandardResponse> savePayment(@RequestBody OrderDTO orderDTO) {
         paymentService.savePayment(orderDTO);
@@ -51,7 +51,7 @@ public class PaymentController {
     //get all payments by paging
     //input page number
     //return payment list
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("page/{pageNo}")
     public ResponseEntity<StandardResponse> getAllPaymentsByPage(@PathVariable(value = "pageNo") int pageNo) {
         PaginatedResponseItemDTO response = paymentService.getAllPaymentsByPage(pageNo);
@@ -60,20 +60,20 @@ public class PaymentController {
 
     //get all payments without paging
     //no input return list of paymentDTO
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("")
     public ResponseEntity<StandardResponse> getAllPayments() {
         List<PaymentDTO> payments = paymentService.getAllPayments();
         return new ResponseEntity<StandardResponse>(new StandardResponse(200, "success", payments), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @DeleteMapping("{id}")
     public ResponseEntity<StandardResponse> deletePayment(@PathVariable(value = "id") int paymentId) {
         return new ResponseEntity<StandardResponse>(new StandardResponse(200, "successfuly deleted", paymentService.deletePayment(paymentId)), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PatchMapping("{id}")
     public ResponseEntity<StandardResponse> updatePayment(@PathVariable(value = "id") int paymentId, @RequestBody UpdatePaymentRequestDTO updatePaymentRequestDTO) {
         return new ResponseEntity<StandardResponse>(new StandardResponse(200, "successfuly updated", paymentService.updatePayment(paymentId, updatePaymentRequestDTO)),HttpStatus.OK);

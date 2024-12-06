@@ -24,31 +24,31 @@ public class CartController {
     @Autowired
     private CartService cartService;
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping("/addItem")
     public ResponseEntity<String> addCartItem(@Valid @RequestBody RequestDto requestDto) {
         return new ResponseEntity<>(cartService.addCartItem(requestDto), HttpStatus.CREATED);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("/getCart/{userId}")
     public ResponseEntity<List<CartItemDto>> viewCart(@PathVariable String userId) {
         return new ResponseEntity<>(cartService.viewCart(userId), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PatchMapping("/updateQuantity")
     public ResponseEntity<String> updateItem(@Valid @RequestBody UpdateCartDto updateCartDto) {
         return new ResponseEntity<>(cartService.updateItem(updateCartDto), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @DeleteMapping("/delete/{userId}/{productId}")
     public ResponseEntity<String> deleteItem(@PathVariable String userId, @PathVariable Long productId) {
         return new ResponseEntity<>(cartService.deleteItem(userId, productId), HttpStatus.OK);
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<String> deleteCart(@PathVariable String userId) {
         return new ResponseEntity<>(cartService.deleteCart(userId), HttpStatus.OK);
