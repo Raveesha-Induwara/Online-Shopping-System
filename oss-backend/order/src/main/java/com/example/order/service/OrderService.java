@@ -1,10 +1,7 @@
 package com.example.order.service;
 
 import com.example.cart.dto.CartItemDto;
-import com.example.order.dto.OrderItemRespond;
-import com.example.order.dto.OrderRequest;
-import com.example.order.dto.OrderRespond;
-import com.example.order.dto.UpdateOrderDto;
+import com.example.order.dto.*;
 import com.example.order.enums.DeliveryAssign;
 import com.example.order.enums.OrderStatus;
 import com.example.order.exception.type.ItemNotFoundException;
@@ -32,7 +29,7 @@ public class OrderService {
     private WebClientService webClientService;
     
     @Transactional
-    public String createOrder(OrderRequest orderRequest) {
+    public PaymentResponseDTO createOrder(OrderRequest orderRequest) {
         Order newOrder = new Order();
         newOrder.setOrderDate(new Date());
         newOrder.setUserId(orderRequest.getUserId());
@@ -59,7 +56,9 @@ public class OrderService {
         
         // delete cart
         webClientService.deleteCart(orderRequest.getUserId());
-        return ("order created with id: " + newOrder.getOrderId());
+
+        //create payment link from payment-service and return it
+        return  webClientService.getPaymentLink(orderRequest.getTotalAmount());
     }
 
     public List<OrderRespond> getAllOrders() {
