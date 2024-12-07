@@ -7,45 +7,95 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 interface RelatedProductCardProps {
-  image: string;
-  title: string;
-  rating: number;
-  price: string;
+  id: number;
+  name: string;
+  description: string;
+  category: string;
+  imagUrl: string;
+  rate: number;
+  price: number;
 }
 export const RelatedProductCard = ({
-  image,
-  title,
-  rating,
+  id,
+  name,
+  description,
+  category,
+  imagUrl,
+  rate,
   price,
 }: RelatedProductCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <ButtonBase sx={{ display: "block", textAlign: "inherit" }} disableRipple>
-      <Card sx={{ maxWidth: 300 }}>
+      <Card
+        onClick={() =>
+          navigate(`/customer/productDetails/${id}`, {
+            state: {
+              id: id,
+              name: name,
+              description: description,
+              category: category,
+              imageUrl: imagUrl,
+              price: price,
+              rate: rate,
+            },
+          })
+        }
+        sx={{
+          maxWidth: 200,
+          borderRadius: 2,
+          boxShadow: 3,
+          overflow: "hidden",
+          transition: "transform 0.2s",
+          "&:hover": {
+            transform: "scale(1.05)",
+          },
+        }}
+      >
         <CardMedia
           component="img"
-          image={image}
-          sx={{
-            height: 250,
-            width: "100%",
-            objectFit: "contain", // Keeps the whole image visible
-          }}
+          height="210"
+          image={imagUrl}
+          alt={name}
         />
         <CardContent>
-          <Typography
-            variant="subtitle1"
-            fontWeight={700}
-            sx={{ color: "text.secondary" }}
-          >
-            {title}
+          <Typography fontSize="17px" sx={{ fontWeight: "bold" }}>
+            {name}
           </Typography>
-          <Rating name="read-only" value={rating} readOnly size="small" />
-          <Typography variant="subtitle2" fontWeight={700} color="#CA270A">
-            {price}
+          <Rating
+            value={~~rate}
+            precision={0.5}
+            readOnly
+            size="small"
+            sx={{ marginY: 1 }}
+          />
+          <Typography fontSize="15px" color="#8c7ae6">
+            ${price}
           </Typography>
         </CardContent>
+
+        {/* Add to Cart Button */}
+        <IconButton
+          color="primary"
+          aria-label="add to cart"
+          sx={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            background: "#ffffff",
+            "&:hover": {
+              background: "#f0f0f0",
+            },
+          }}
+          onClick={() => {}} // Add to Cart Functionality
+        >
+          <AddCircleOutlineIcon />
+        </IconButton>
       </Card>
     </ButtonBase>
   );

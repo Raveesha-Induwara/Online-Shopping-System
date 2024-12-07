@@ -26,4 +26,9 @@ public class ProductRequest {
     
     @NotNull(message = "Product quantity is required")
     private Integer product_quantity;
+    
+    @NotNull(message = "Product rte is required")
+    private Integer product_rate;
+    
+    private String product_image;
 }

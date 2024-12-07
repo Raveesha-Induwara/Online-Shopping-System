@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-// import PageHeader from "../components/PageHeader";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Table,
   TableBody,
@@ -20,25 +18,24 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import OrderService from "../../../assets/Data/OrdersService";
+import axios from "axios";
 
-interface Product {
+interface OrderItem {
+  id: string;
   productId: string;
   name: string;
+  description: string;
   image: string;
   quantity: number;
-  price: string;
+  price: number;
 }
 
 interface Order {
   orderId: string;
   customerId: string;
-  products: Product[];
-  status: string;
-  mobile: string;
-  pinCode: string;
-  orderedDate: string;
-  totalDiscount: string;
-  totalAmount: string;
+  orderStatus: string;
+  deliveryAssigned: string;
+  orderItems: OrderItem[];
 }
 
 export default function Orders() {
@@ -46,17 +43,17 @@ export default function Orders() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
 
+  // Fetch orders
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const data = await OrderService.getOrders();
-        setOrders(data as Order[]);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
-
-    fetchOrders();
+    try {
+      axios
+        .get("http://localhost:8085/api/v1/orders/${}")
+        .then((res) => {
+          setOrders(res.data);
+        });
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
   }, []);
 
   const handleStatusChange = async (

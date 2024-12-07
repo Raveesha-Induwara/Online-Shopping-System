@@ -4,14 +4,31 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid2";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
-import { Card, Paper, Box } from "@mui/material";
+import { Paper, Box } from "@mui/material";
 import { PrimaryButton } from "./PrimaryButton";
-import { FieldErrors, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface DeliveryDetailsProps {
   closeDialog: () => void;
+}
+
+interface User {
+  customerId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  mobileNo: string;
+  address: string;
+  gender: string;
+  dateOfBirth: string;
+  imageUrl: string;
+  city: string;
+  postalCode: string;
+  district: string;
+  province: string;
 }
 
 const FormGrid = styled(Grid)(() => ({
@@ -25,10 +42,29 @@ export const DeliveryDetailsInputForm = ({
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const navigate = useNavigate();
-  const [details, setDetails] = useState({});
+  const [userData, setUserData] = useState<User>();
+
+  useEffect(() => {
+    try {
+      axios
+        .get("http://localhost:8082/api/v1/customers/getuser", {
+          params: {
+            email: "rinduwara0@gmail.com",
+          },
+        })
+        .then((response) => {
+          setUserData(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
 
   const onSubmit = handleSubmit((data) => {
-    setDetails({ data });
+    setUserData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
     navigate("/customer/deliveryDetails", { state: data });
     closeDialog();
   });
@@ -50,7 +86,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="firstName"
-              // name="first-name"
+              value={userData?.firstName}
               type="name"
               placeholder="First name"
               autoComplete="first name"
@@ -70,7 +106,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="lastName"
-              // name="last-name"
+              value={userData?.lastName}
               type="last-name"
               placeholder="Last name"
               autoComplete="last name"
@@ -90,7 +126,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="address1"
-              // name="address1"
+              value={userData?.address}
               type="address1"
               placeholder="Street name and number"
               autoComplete="shipping address-line1"
@@ -122,7 +158,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="city"
-              // name="city"
+              value={userData?.city}
               type="city"
               placeholder="City"
               autoComplete="City"
@@ -142,7 +178,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="district"
-              // name="state"
+              value={userData?.district}
               type="state"
               placeholder="District"
               autoComplete="State"
@@ -162,7 +198,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="zip"
-              // name="zip"
+              value={userData?.postalCode}
               type="zip"
               placeholder="12345"
               autoComplete="shipping postal-code"
@@ -182,7 +218,7 @@ export const DeliveryDetailsInputForm = ({
             </FormLabel>
             <OutlinedInput
               id="province"
-              // name="country"
+              value={userData?.province}
               type="province"
               placeholder="Province"
               autoComplete="shipping province"

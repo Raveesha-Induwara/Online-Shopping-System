@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Button, TextField, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NavBar } from "../../../Components/NavBar-reg";
 import { useNavigate } from "react-router-dom";
 import "../Login/Login.css";
-import axios from "../../../service/api-client";
+import axios from "axios";
 
 type FormValue = {
   firstName: string;
@@ -23,7 +23,7 @@ const RegistrationForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({
+  const [data, setData] = useState<FormValue>({
     firstName: "",
     lastName: "",
     email: "",
@@ -32,18 +32,28 @@ const RegistrationForm = () => {
 
   const onSubmit: SubmitHandler<FormValue> = (data) => {
     axios
-      .post(`/auth/signup/client/create-otp`, { email: data.email })
+      .post("http://localhost:8088/api/v1/auth/signup/client/create-otp", {
+        email: data.email,
+      })
       .then((response) => {
-        setData(response.data);
+        alert(response.data.message);
+        localStorage.setItem("userEmail", data.email);
+        setError("");
+        navigate("/customer/RegistrationOTP", {
+          state: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            password: data.password,
+          },
+        });
       })
       .catch((error) => {
-        setError("An error occurred while fetching data");
-        console.error(error.message);
+        setError(error.response.data.result);
       })
       .finally(() => {
         setLoading(false);
       });
-    // navigate("/customer/RegistrationOTP");
   };
 
   return (
@@ -152,9 +162,10 @@ const RegistrationForm = () => {
                         },
                       })}
                     />
-                    {errors.email && (
+                    {errors.email && error == "" && (
                       <p className="error-msg">{errors.email.message}</p>
                     )}
+                    {error != "" && <p className="error-msg">{error}</p>}
 
                     <TextField
                       fullWidth

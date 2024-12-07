@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { NavBar } from "../../../Components/NavBar-reg";
 import { useNavigate } from "react-router-dom";
 import "../Login/Login.css";
+import axios from "axios";
 
 type FormValue = {
   email: string;
@@ -17,11 +18,35 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>();
-  const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  const onSubmit: SubmitHandler<FormValue> = (data) => {};
+  const [data, setData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleForgotPasswordClick = () => {
     navigate("/customer/passwordResetOTP");
+  };
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => {
+    axios
+      .post("http://localhost:8088/api/v1/auth/login/client", {
+        email: data.email,
+        password: data.password,
+      })
+      .then((response) => {
+        setError("");
+        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("cartItemCount", "0");
+        navigate("/customer/dashboard");
+      })
+      .catch((error) => {
+        setError(error.response.data.result);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -71,7 +96,7 @@ const LoginForm = () => {
                       {...register("email", {
                         required: "Email is required",
                         pattern: {
-                          value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                          value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                           message: "Invalid Email",
                         },
                       })}
@@ -111,6 +136,7 @@ const LoginForm = () => {
                     {errors.password && (
                       <p className="error-msg">{errors.password.message}</p>
                     )}
+                    {error != "" && <p className="error-msg">{error}</p>}
 
                     <Box
                       sx={{
@@ -139,7 +165,7 @@ const LoginForm = () => {
                       type="submit"
                       variant="contained"
                       fullWidth
-                      onClick={() => {navigate("/customer/dashboard")}}
+                      onClick={() => {}}
                     >
                       Login
                     </Button>

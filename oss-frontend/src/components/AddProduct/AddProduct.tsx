@@ -62,7 +62,7 @@ const AddProductPopup: React.FC<AddProductPopupProps> = ({ onClose }) => {
             type="text"
             id="product-title"
             placeholder="Enter product title"
-            onChange={handleInputChange}
+            // onChange={handleInputChange}
           />
           <div className="error"></div>
 
@@ -70,7 +70,7 @@ const AddProductPopup: React.FC<AddProductPopupProps> = ({ onClose }) => {
           <textarea
             id="product-description"
             placeholder="Enter product description"
-            onChange={handleInputChange}
+            // onChange={handleInputChange}
           ></textarea>
 
           <label htmlFor="product-category">Product Category</label>

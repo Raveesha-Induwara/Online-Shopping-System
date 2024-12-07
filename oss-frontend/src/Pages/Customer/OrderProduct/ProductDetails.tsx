@@ -1,15 +1,12 @@
 import { Box } from "@mui/material";
-import React from "react";
 import { ProductDetailsCard } from "../../../Components/ProductDetailsCard";
 import { RelatedProductList } from "../../../Components/RelatedProductList";
-import { RelatedProductData } from "../../../assets/Data/RelatedProducts";
-import { ProductDetailsData } from "../../../assets/Data/ProductDetailsData";
 import { NavBar } from "../../../Components/NavBar";
-
-const productData = ProductDetailsData;
-const relatedProductData = RelatedProductData;
+import { useLocation } from "react-router-dom";
 
 export default function ProductDetails() {
+  const location = useLocation();
+
   return (
     <>
       <Box
@@ -40,7 +37,7 @@ export default function ProductDetails() {
             }}
           >
             <img
-              src="../../src/assets/Images/maxi1.jpg" // Replace with your image path
+              src={location.state.imageUrl} // Replace with your image path
               alt="Description"
               style={{
                 width: "100%", // Make the image fill the container
@@ -50,10 +47,11 @@ export default function ProductDetails() {
           </Box>
           <Box>
             <ProductDetailsCard
-              title={productData.title}
-              price={productData.price}
-              description={productData.description}
-              rating={productData.rating}
+              id={location.state.id}
+              title={location.state.name}
+              price={location.state.price}
+              description={location.state.description}
+              rating={location.state.rate}
             />
           </Box>
         </Box>
@@ -66,7 +64,7 @@ export default function ProductDetails() {
           }}
           paddingTop={3}
         >
-          <RelatedProductList items={relatedProductData} />
+          <RelatedProductList category={location.state.category} />
         </Box>
       </Box>
     </>

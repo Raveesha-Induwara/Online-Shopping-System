@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -18,30 +18,73 @@ import {
   Button,
 } from "@mui/material";
 import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
-import { CartItems } from "../../../assets/Data/MyCartData";
 import { NavBar } from "../../../Components/NavBar";
+import axios from "axios";
 
-const cartItems = CartItems;
+interface Cart {
+  productId: number;
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+}
 
 export default function MyCart() {
-  const [rows, setRows] = useState(cartItems);
+  const [rows, setRows] = useState<Array<Cart>>([]);
   const [open, setOpen] = useState<null | number>(null);
+  const userId = localStorage.getItem("userId");
+  localStorage.setItem("cartItemCount", rows.length.toString());
 
-  //update quantity of each product in the cart
-  const updateQuantity = (id: number, increment: number) => {
-    setRows((prevRows) =>
-      prevRows.map((rowObj) =>
-        rowObj.id === id
-          ? { ...rowObj, quantity: Math.max(0, rowObj.quantity + increment) }
-          : rowObj
-      )
-    );
-    console.log("rows", rows);
+  // get cart data
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8087/api/v1/carts/getCart/${userId}`)
+      .then((response) => {
+        setRows(response.data);
+      });
+  }, [userId]);
+
+  // update quantity of each product in the cart
+  const updateQuantity = (id: number, quantity: number) => {
+    axios
+      .patch(`http://localhost:8087/api/v1/carts/updateQuantity`, {
+        userId: userId,
+        productId: id,
+        quantity: quantity,
+      })
+      .then((response) => {
+        console.log("Quantity updated", response.data);
+        axios
+          .get(`http://localhost:8087/api/v1/carts/getCart/${userId}`)
+          .then((response) => {
+            setRows(response.data);
+          });
+      });
   };
 
   const deleteProductFromCart = (id: number) => {
-    setRows((prevRows) => prevRows.filter((rowObj) => rowObj.id !== id));
+    axios
+      .delete(`http://localhost:8087/api/v1/carts/delete/${userId}/${id}`)
+      .then((response) => {
+        console.log("Item deleted from cart", response.data);
+        axios
+          .get(`http://localhost:8087/api/v1/carts/getCart/${userId}`)
+          .then((response) => {
+            setRows(response.data);
+          });
+      });
     handleClose();
+  };
+
+  const placeOrder = () => {
+    axios
+      .post(`http://localhost:8085/api/v1/orders`, {
+        userId: userId,
+        totalAmount: calculateTotal(),
+      })
+      .then((response) => {
+        console.log("Order placed", response.data);
+      });
   };
 
   const handleOpen = (id: number) => {
@@ -89,12 +132,13 @@ export default function MyCart() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.name}>
+                <TableRow key={row.productId}>
                   <TableCell>
-                    <img
-                      src={row.product}
+                    {/* <img
+                      src={row.name}
                       style={{ width: 100, height: 100, objectFit: "contain" }}
-                    />
+                    /> */}
+                    {row.productId}
                   </TableCell>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.description}</TableCell>
@@ -110,14 +154,18 @@ export default function MyCart() {
                     >
                       <IconButton
                         size="small"
-                        onClick={() => updateQuantity(row.id, -1)}
+                        onClick={() =>
+                          updateQuantity(row.productId, row.quantity - 1)
+                        }
                       >
                         <Remove />
                       </IconButton>
                       <Typography>{row.quantity}</Typography>
                       <IconButton
                         size="small"
-                        onClick={() => updateQuantity(row.id, 1)}
+                        onClick={() =>
+                          updateQuantity(row.productId, row.quantity + 1)
+                        }
                       >
                         <Add />
                       </IconButton>
@@ -127,12 +175,12 @@ export default function MyCart() {
                     <IconButton
                       size="small"
                       color="error"
-                      onClick={() => handleOpen(row.id)}
+                      onClick={() => handleOpen(row.productId)}
                     >
                       <DeleteForeverOutlined />
                     </IconButton>
                     <Dialog
-                      open={open === row.id}
+                      open={open === row.productId}
                       onClose={() => handleClose()}
                     >
                       <DialogTitle>
@@ -147,7 +195,7 @@ export default function MyCart() {
                       <DialogActions>
                         <Button
                           variant="outlined"
-                          onClick={() => deleteProductFromCart(row.id)}
+                          onClick={() => deleteProductFromCart(row.productId)}
                         >
                           Confirm
                         </Button>
@@ -187,7 +235,7 @@ export default function MyCart() {
             <Button
               variant="contained"
               color="error"
-              onClick={() => handleClose()}
+              onClick={() => placeOrder()}
             >
               <strong>Checkout ({rows.length})</strong>
             </Button>

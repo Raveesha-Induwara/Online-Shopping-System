@@ -1,13 +1,38 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React, { ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { RelatedProductCard } from "./RelatedProductCard";
-import { RelatedProductData } from "../assets/Data/RelatedProducts";
+import axios from "axios";
 
 interface RelatedProductListProps {
-  items: { image: string; title: string; rating: number; price: string }[];
+  category: string;
 }
 
-export const RelatedProductList = ({ items }: RelatedProductListProps) => {
+interface Product {
+  id: number;
+  product_name: string;
+  product_description: string;
+  product_category: string;
+  imagUrl: string;
+  product_price: number;
+  rate: 0;
+}
+
+export const RelatedProductList = ({ category }: RelatedProductListProps) => {
+  const [relatedProducts, setRelatedProducts] = useState<Array<Product>>([]);
+
+  useEffect(() => {
+    try {
+      axios
+        .get(`http://localhost:8083/api/v1/products/category/${category}`)
+        .then((response) => {
+          setRelatedProducts(response.data);
+          console.log(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  }, [category]);
+  
   return (
     <>
       <Box
@@ -27,12 +52,15 @@ export const RelatedProductList = ({ items }: RelatedProductListProps) => {
           Related Products :
         </Typography>
         <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
-          {items.map((item) => (
+          {relatedProducts.map((item) => (
             <RelatedProductCard
-              image={item.image}
-              title={item.title}
-              rating={item.rating}
-              price={item.price}
+              id={item.id}
+              imagUrl={item.imagUrl}
+              name={item.product_name}
+              description={item.product_description}
+              category={item.product_category}
+              rate={item.rate}
+              price={item.product_price}
             />
           ))}
         </Stack>

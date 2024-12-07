@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -26,15 +26,17 @@ import {
   ShoppingCart,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface UserProfile {
+  customerId: string;
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  mobileNo: string;
   address: string;
-  dateOfBirth: string;
   gender: string;
+  dateOfBirth: string;
 }
 
 export const NavBar = () => {
@@ -43,12 +45,15 @@ export const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
+  const userEmail = localStorage.getItem("userEmail");
+  const cartItemCount = localStorage.getItem("cartItemCount");
   const [userProfile, setUserProfile] = useState<UserProfile>({
+    customerId: "1",
     firstName: "Anne",
     lastName: "Turing",
     email: "anne.turing@gmail.com",
-    phone: "725-528-458",
-    address: "123 Main St, Anytown USA",
+    mobileNo: "725-528-458",
+    address: "123 Main St Anytown",
     dateOfBirth: "1994-06-23",
     gender: "Female",
   });
@@ -63,6 +68,19 @@ export const NavBar = () => {
 
   const handleOpenProfile = () => {
     setOpen(true);
+    try {
+        axios
+          .get("http://localhost:8082/api/v1/customers/getuser", {
+            params: {
+              email: userEmail,
+            },
+          })
+          .then((response) => {
+            setUserProfile(response.data);
+          });
+      } catch (error) {
+        alert(error);
+      }
   };
 
   const handleCloseProfile = () => {
@@ -70,6 +88,30 @@ export const NavBar = () => {
   };
 
   const toggleEditMode = () => {
+    if (editMode == true) {
+      try {
+        axios
+          .patch(
+            "http://localhost:8082/api/v1/customers/updateuser",
+            {
+              customerId: userProfile.customerId,
+              firstName: userProfile.firstName,
+              lastName: userProfile.lastName,
+              email: userProfile.email,
+              mobileNo: userProfile.mobileNo,
+              address: userProfile.address,
+              gender: userProfile.gender,
+              dateOfBirth: userProfile.dateOfBirth,
+            }
+          )
+          .then((response) => {
+            setUserProfile(response.data);
+            // handleCloseProfile();
+          });
+      } catch (error) {
+        alert(error);
+      }
+    }
     setEditMode(!editMode);
   };
 
@@ -105,6 +147,7 @@ export const NavBar = () => {
               edge="start"
               color="inherit"
               aria-label="logo"
+              onClick={() => navigate("/customer/dashboard")}
             >
               <CatchingPokemon />
             </IconButton>
@@ -149,7 +192,7 @@ export const NavBar = () => {
               sx={{ mr: 3 }}
               onClick={() => navigate("/customer/myCart")}
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={parseInt(cartItemCount)} color="error">
                 <ShoppingCart />
               </Badge>
             </IconButton>
@@ -201,7 +244,7 @@ export const NavBar = () => {
                       margin: "0 auto",
                       mb: 1,
                     }}
-                    src="https://img.freepik.com/free-photo/horizontal-portrait-smiling-happy-young-pleasant-looking-female-wears-denim-shirt-stylish-glasses-with-straight-blonde-hair-expresses-positiveness-poses_176420-13176.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid"
+                    src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                   />
                   <Typography variant="h6">
                     {userProfile.firstName} {userProfile.lastName}
@@ -243,7 +286,7 @@ export const NavBar = () => {
                     <TextField
                       label="Phone"
                       name="phone"
-                      value={userProfile.phone}
+                      value={userProfile.mobileNo}
                       onChange={handleInputChange}
                       InputProps={{ readOnly: !editMode }}
                       fullWidth

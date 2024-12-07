@@ -7,7 +7,7 @@ import DeleteConfirmationPopup from "../../../Components/DeleteCategory/DeleteCa
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
 import { BiSolidDetail } from "react-icons/bi";
-import axios from "../../../service/api-client";
+import axios from "axios";
 
 interface Category {
   id: string;
@@ -25,7 +25,7 @@ const Categories: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`/categories`)
+      .get("http://localhost:8083/api/v1/categories")
       .then((response) => {
         setCategories(response.data);
       })

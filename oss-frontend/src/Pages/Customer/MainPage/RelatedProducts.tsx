@@ -1,4 +1,4 @@
-import Slider from "react-slick"
+import Slider from "react-slick";
 import {
   Box,
   Typography,
@@ -9,16 +9,29 @@ import {
   IconButton,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import {
-  relatedData,
-  Category,
-  Product,
-} from "../../../assets/relatedProducts";
 import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface Product {
+  id: number;
+  product_name: string;
+  product_description: string;
+  product_category: string;
+  imagUrl: string;
+  product_price: number;
+  product_rate: number;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  imageUrl: string;
+}
 
 // Custom Arrow Components
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
@@ -55,12 +68,38 @@ const CustomNextArrow = ({ onClick }: { onClick?: () => void }) => (
 
 const RelatedProducts = () => {
   const navigate = useNavigate();
+  const [productData, SetProductData] = useState<Array<Product>>([]);
+  const [categories, setCategories] = useState<Array<Category>>([]);
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
+
+  // get categories
+  useEffect(() => {
+    try {
+      axios.get("http://localhost:8083/api/v1/categories").then((response) => {
+        setCategories(response.data);
+      });
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
+  // get products
+  useEffect(() => {
+    try {
+      axios.get("http://localhost:8083/api/v1/products").then((response) => {
+        SetProductData(response.data);
+      });
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
 
   // Group products by category
-  const groupedData = relatedData.categories.map((category: Category) => ({
-    category,
-    products: relatedData.products,
-  }));
+  // const groupedData = categories.map((category: Category) => ({
+  //   category,
+  //   products: relatedData.products,
+  // }));
 
   // Carousel settings
   const carouselSettings = {
@@ -101,7 +140,31 @@ const RelatedProducts = () => {
   };
 
   const handleCategoryClick = (categoryName: string) => {
-    navigate(`/customer/category/${categoryName.toLowerCase()}`);
+    navigate(`/customer/category/${categoryName}`, {
+      state: { name: categoryName },
+    });
+  };
+
+  const AddItemToCart = (
+    userId: string | null,
+    productId: number,
+    name: string,
+    description: string,
+    price: number,
+    quantity: number
+  ) => {
+    // try {
+    //   axios.post(`http://localhost:8083/api/v1/carts/addItem`, {
+    //     userId,
+    //     productId,
+    //     name,
+    //     description,
+    //     price,
+    //     quantity,
+    //   });
+    // } catch (error) {
+    //   alert(`Error adding item to cart: ${error}`);
+    // }
   };
 
   return (
@@ -121,7 +184,7 @@ const RelatedProducts = () => {
       </Typography>
 
       <Box>
-        {groupedData.map((group, index) => (
+        {categories.map((category, index) => (
           <Box key={index} sx={{ mb: 5, mx: "2%" }}>
             {/* Category Section */}
             <Typography
@@ -132,66 +195,92 @@ const RelatedProducts = () => {
               textTransform="uppercase"
               color="#40739e"
               sx={{ mb: 2, cursor: "pointer" }}
-              onClick={() => handleCategoryClick(group.category.name)}
+              onClick={() => handleCategoryClick(category.name)}
             >
-              {group.category.name}
+              {category.name}
             </Typography>
-            <Slider {...carouselSettings}>
-              {group.products.map((product: Product, productIndex: number) => (
-                <Card
-                  key={productIndex}
-                  onClick={() => navigate(`/customer/productDetails/${product.categoryId}`)}
-                  sx={{
-                    maxWidth: 200,
-                    borderRadius: 2,
-                    boxShadow: 3,
-                    overflow: "hidden",
-                    transition: "transform 0.2s",
-                    "&:hover": {
-                      transform: "scale(1.05)",
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="210"
-                    image={product.img}
-                    alt={product.name}
-                  />
-                  <CardContent>
-                    <Typography fontSize="17px" sx={{ fontWeight: "bold" }}>
-                      {product.name}
-                    </Typography>
-                    <Rating
-                      value={product.rating}
-                      precision={0.5}
-                      readOnly
-                      size="small"
-                      sx={{ marginY: 1 }}
-                    />
-                    <Typography fontSize="15px" color="#8c7ae6">
-                      ${product.price}
-                    </Typography>
-                  </CardContent>
 
-                  {/* Add to Cart Button */}
-                  <IconButton
-                    color="primary"
-                    aria-label="add to cart"
+            {/* Products */}
+            <Slider {...carouselSettings}>
+              {productData
+                .filter((product) => product.product_category === category.name)
+                .map((product: Product, index: number) => (
+                  <Card
+                    key={index}
+                    onClick={() =>
+                      navigate(`/customer/productDetails/${product.id}`, {
+                        state: {
+                          id: product.id,
+                          name: product.product_name,
+                          description: product.product_description,
+                          category: product.product_category,
+                          imageUrl: product.imagUrl,
+                          price: product.product_price,
+                          rate: product.product_rate,
+                        },
+                      })
+                    }
                     sx={{
-                      position: "absolute",
-                      top: 10,
-                      right: 10,
-                      background: "#ffffff",
+                      maxWidth: 200,
+                      borderRadius: 2,
+                      boxShadow: 3,
+                      overflow: "hidden",
+                      transition: "transform 0.2s",
                       "&:hover": {
-                        background: "#f0f0f0",
+                        transform: "scale(1.05)",
                       },
                     }}
                   >
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </Card>
-              ))}
+                    <CardMedia
+                      component="img"
+                      height="210"
+                      image={product.imagUrl}
+                      alt={product.product_name}
+                    />
+                    <CardContent>
+                      <Typography fontSize="17px" sx={{ fontWeight: "bold" }}>
+                        {product.product_name}
+                      </Typography>
+                      <Rating
+                        value={~~product.product_rate}
+                        precision={0.5}
+                        readOnly
+                        size="small"
+                        sx={{ marginY: 1 }}
+                      />
+                      <Typography fontSize="15px" color="#8c7ae6">
+                        ${product.product_price}
+                      </Typography>
+                    </CardContent>
+
+                    {/* Add to Cart Button */}
+                    <IconButton
+                      color="primary"
+                      aria-label="add to cart"
+                      sx={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        background: "#ffffff",
+                        "&:hover": {
+                          background: "#f0f0f0",
+                        },
+                        onClick: () => {
+                          AddItemToCart(
+                            userId,
+                            product.id,
+                            product.product_name,
+                            product.product_description,
+                            product.product_price,
+                            1
+                          );
+                        },
+                      }}
+                    >
+                      <AddCircleOutlineIcon />
+                    </IconButton>
+                  </Card>
+                ))}
             </Slider>
           </Box>
         ))}

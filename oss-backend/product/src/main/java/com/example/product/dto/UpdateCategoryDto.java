@@ -20,4 +20,7 @@ public class UpdateCategoryDto {
     
     @NotNull(message = "Category description is required")
     private String description;
+    
+    @NotNull(message = "ImageUrl is required")
+    private String imageUrl;
 }

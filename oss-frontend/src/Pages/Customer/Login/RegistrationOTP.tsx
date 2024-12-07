@@ -4,7 +4,8 @@ import Grid from "@mui/material/Grid2";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NavBar } from "../../../Components/NavBar-reg";
 import "../Login/Login.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 type FormValue = {
   otp: string;
@@ -17,10 +18,38 @@ const RegistrationOTP = () => {
     formState: { errors },
   } = useForm<FormValue>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState({ otp: "" });
-  const onSubmit: SubmitHandler<FormValue> = (data) => {};
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleResend = () => {
     alert("Text clicked!");
+  };
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => {
+    axios
+      .post("http://localhost:8088/api/v1/auth/signup/client", {
+        firstName: location.state.firstName,
+        lastName: location.state.lastName,
+        email: location.state.email,
+        password: location.state.password,
+        otp: data.otp,
+      })
+      .then((response) => {
+        alert(response.data.message);
+        setError("");
+        localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("cartItemCount", '0');
+        navigate("/customer");
+      })
+      .catch((error) => {
+        setError(error.response.data.result);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

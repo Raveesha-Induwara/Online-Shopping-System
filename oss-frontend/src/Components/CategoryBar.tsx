@@ -1,51 +1,42 @@
 import { Box, Typography, Grid } from "@mui/material";
-
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../service/api-client";
 
-const categories = [
-  {
-    id: 1,
-    name: "Shoes",
-    img: "https://img.freepik.com/free-photo/shoes_1203-8154.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid",
-  },
-  {
-    id: 2,
-    name: "Mobile",
-    img: "https://img.freepik.com/free-vector/smartphone-with-gradient-wallpaper_23-2147846501.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid",
-  },
-  {
-    id: 3,
-    name: "Laptops",
-    img: "https://img.freepik.com/free-vector/realistic-display-monitor-laptop-tablet-smarphone_1017-19787.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid",
-  },
-  {
-    id: 4,
-    name: "Frocks",
-    img: "https://img.freepik.com/premium-photo/blue-female-dress_692498-2219.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid",
-  },
-  {
-    id: 5,
-    name: "Tshirts",
-    img: "https://img.freepik.com/premium-photo/ector-think-positive-be-positive-typography-tshirt-design_1080184-378.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid",
-  },
-  {
-    id: 6,
-    name: "Accessories",
-    img: "https://img.freepik.com/premium-photo/gold-jewelry-displayed-store_674594-18761.jpg?uid=R175029146&ga=GA1.1.271898324.1727930328&semt=ais_hybrid",
-  },
-];
+interface category {
+  id: number;
+  name: string;
+  imageUrl: string;
+}
 
 const CategorySection = () => {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState<Array<category>>([]);
 
-  const handleCategoryClick = (categoryId: number) => {
-    navigate(`/customer/category/${categoryId}`);
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          "http://localhost:8083/api/v1/categories"
+        )
+        .then((response) => {
+          setCategories(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
+  const handleCategoryClick = (categoryName: string) => {
+    navigate(`/customer/category/${categoryName}`, {
+      state: { name: categoryName },
+    });
   };
 
   return (
     <div>
       {/* Main Category Content */}
-      <Box sx={{ textAlign: "center", mt: 1 }}>
+      <Box sx={{ textAlign: "center", mt: -3 }}>
         <Grid container spacing={3} justifyContent="center">
           {categories.map((category, index) => (
             <Grid
@@ -61,7 +52,7 @@ const CategorySection = () => {
                 alignItems: "center",
                 cursor: "pointer",
               }}
-              onClick={() => handleCategoryClick(category.id)}
+              onClick={() => handleCategoryClick(category.name)}
             >
               <Box
                 sx={{
@@ -75,7 +66,7 @@ const CategorySection = () => {
                 }}
               >
                 <img
-                  src={category.img}
+                  src={category.imageUrl}
                   alt={category.name}
                   style={{
                     width: "100%",

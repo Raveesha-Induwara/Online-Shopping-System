@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import AddProductPopup from "../../../Components/AddProduct/AddProduct"; // Ensure to update the component path as needed
 //import UpdateProductPopup from "../../components/UpdateProduct/UpdateProduct";
 import ProductDetails from "../../../Components/ProductDetails/ProductDetails";
-import axios from "../../../service/api-client";
+import axios from "axios";
 
 interface Product {
   id: 1,
@@ -24,7 +24,7 @@ const ProductsContent: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`/products`)
+      .get("http://localhost:8083/api/v1/products")
       .then((response) => {
         setProductData(response.data);
       })
@@ -109,6 +109,7 @@ const ProductsContent: React.FC = () => {
       </table>
 
       {isPopupOpen && <AddProductPopup onClose={handlePopupToggle} />}
+      
       {selectedProduct && (
         <ProductDetails
           product={selectedProduct}

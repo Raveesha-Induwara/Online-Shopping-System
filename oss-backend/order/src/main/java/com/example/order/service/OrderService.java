@@ -73,6 +73,17 @@ public class OrderService {
             throw e;
         }
     }
+    
+    public List<OrderRespond> getOrdersByUserId(String userId) {
+        List<Order> order = orderRepo.findByUserId(userId);
+        if(order.isEmpty()) {
+            log.error("Error occurred while retrieving order with userId: {}", userId);
+            throw new OrderNotFoundException("Order not found with userId: " + userId);
+        }
+        List<OrderRespond> orderRespond = new ArrayList<>();
+        order.forEach(o -> orderRespond.add(mapToOrderResponse(o)));
+        return orderRespond;
+    }
 
     public OrderRespond getOrderById(Long id) {
         Optional<Order> order = orderRepo.findById(id);

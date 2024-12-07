@@ -30,6 +30,12 @@ public class OrderController {
     }
     
     @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<OrderRespond>> getOrdersByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(orderService.getOrdersByUserId(userId));
+    }
+    
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping
     public ResponseEntity<List<OrderRespond>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());

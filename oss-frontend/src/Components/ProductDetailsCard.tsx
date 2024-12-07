@@ -1,28 +1,71 @@
 import { Box, IconButton, Paper, Rating, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
 import { Add, AddShoppingCart, Remove } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface ProductDetailsCardProps {
+  id: number;
   title: string;
-  price: string;
+  price: number;
   description: string;
   rating: number;
 }
 
 export const ProductDetailsCard = ({
+  id,
   title,
   price,
   description,
   rating,
 }: ProductDetailsCardProps) => {
   const navigate = useNavigate();
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
+  const [stock, setStock] = useState(0);
+  const userId = localStorage.getItem("userId");
+
+  // get categories
+  useEffect(() => {
+    try {
+      axios
+        .get(`http://localhost:8086/api/v1/inventory/getinventory/${id}`)
+        .then((response) => {
+          setStock(response.data.quantity);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  }, [id]);
 
   const navigateToPaymentDetails = () => {
-    navigate("/customer/deliveryDetails");
+    navigate("/customer/deliveryDetails", {
+      state: { productId: id, quantity: count },
+    });
   };
+
+  const AddItemToCart = (
+    userId: string | null,
+    productId: number,
+    name: string,
+    description: string,
+    price: number,
+    quantity: number
+  ) => {
+    try {
+      axios.post(`http://localhost:8087/api/v1/carts/addItem`, {
+        userId,
+        productId,
+        name,
+        description,
+        price,
+        quantity,
+      });
+    } catch (error) {
+      alert(`Error adding item to cart: ${error}`);
+    }
+  };
+
   return (
     <Paper
       elevation={10}
@@ -65,7 +108,7 @@ export const ProductDetailsCard = ({
             >
               {price}
             </Typography>
-            <IconButton onClick={() => navigate("/customer/myCart")}>
+            <IconButton onClick={() => AddItemToCart(userId, id, title, description, price, count)}>
               <AddShoppingCart />
             </IconButton>
           </Box>
@@ -142,14 +185,20 @@ export const ProductDetailsCard = ({
               </Box>
               <Box>
                 {/* Stock */}
-                <Typography variant="body2">Stock : 100</Typography>
-                <Typography variant="body2" sx={{color: "red"}}>Out of stock</Typography>
+                {stock > 0 ? (
+                  <Typography variant="body2">Stock : {stock}</Typography>
+                ) : (
+                  <Typography variant="body2" sx={{ color: "red" }}>
+                    Out of stock
+                  </Typography>
+                )}
               </Box>
             </Box>
             <Box>
               <PrimaryButton
                 title="Buy now"
-                onClick={async () => navigateToPaymentDetails()}
+                isDisabled={count === 0 || stock === 0 ? true : false}
+                onClick={() => navigateToPaymentDetails()}
               />
             </Box>
           </Box>

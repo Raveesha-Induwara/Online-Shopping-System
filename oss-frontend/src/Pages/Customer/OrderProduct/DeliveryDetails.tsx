@@ -1,32 +1,86 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Paper,
   Typography,
   Dialog,
   IconButton,
-  DialogContent,
   DialogContentText,
   Divider,
 } from "@mui/material";
 import { PrimaryButton } from "../../../Components/PrimaryButton";
 import { DeliveryDetailsInputForm } from "../../../Components/DeliveryDetailsInputForm";
 import { NavBar } from "../../../Components/NavBar";
-import { DeliveryData } from "../../../assets/Data/DeliveryData";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
-const deliveryData = DeliveryData;
+interface Product {
+  id: number;
+  product_name: string;
+  product_description: string;
+  product_category: string;
+  imagUrl: string;
+  product_price: number;
+  rate: 0;
+}
+interface User {
+  customerId: string,
+  email: string,
+  firstName: string,
+  lastName: string,
+  mobileNo: string,
+  address: string,
+  gender: string,
+  dateOfBirth: string,
+  imageUrl: string
+}
 
 export default function DeliveryDetails() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const details = location.state || {
-    address1: " ",
-    address2: " ",
-    city: " ",
-    district: " ",
-    province: " ",
-  }; // Access the passed state
+  const { productId, quantity } = location.state;
+  const [productData, SetProductData] = useState<Product>();
+  const [userDetails, setUserDetails] = useState<User>();
+  const totalAmount = productData?.product_price * quantity + 300;
+
+  // Access the passed state
+  // const details = location.state || {
+  //   address1: " ",
+  //   address2: " ",
+  //   city: " ",
+  //   district: " ",
+  //   province: " ",
+  // }; // Access the passed state
+
+  // get products details
+  useEffect(() => {
+    try {
+      axios
+        .get(`http://localhost:8083/api/v1/products/${productId}`)
+        .then((response) => {
+          SetProductData(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  }, [productId]);
+
+  // get user details
+  useEffect(() => {
+    try {
+      axios
+        .get(`http://localhost:8082/api/v1/customers/getuser`, {
+          params: {
+            email: "rinduwara0@gmail.com",
+          },
+        })
+        .then((response) => {
+          setUserDetails(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -34,7 +88,10 @@ export default function DeliveryDetails() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  // Avishka API ---> totalAmount
   const navigateToPayment = () => {};
+
   return (
     <div>
       <Box
@@ -101,24 +158,23 @@ export default function DeliveryDetails() {
               >
                 Shipping and Billing
               </Typography>
-              <IconButton
+              {/* <IconButton
                 size="small"
                 color="error"
                 onClick={() => handleOpen()}
               >
                 Edit
-              </IconButton>
-              <Dialog open={open} onClose={() => handleClose()}>
+              </IconButton> */}
+              {/* <Dialog open={open} onClose={() => handleClose()}>
                 <DialogContentText>
                   <DeliveryDetailsInputForm
                     closeDialog={() => setOpen(false)}
                   />
                 </DialogContentText>
-              </Dialog>
+              </Dialog> */}
             </Box>
             <Typography variant="body1" color="textSecondary">
-              {details.address1}, {details.address2}, {details.city},
-              {details.district}, {details.province}
+              {userDetails?.address}
             </Typography>
           </Paper>
 
@@ -156,18 +212,19 @@ export default function DeliveryDetails() {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "stretch",
+                  gap: 2,
                 }}
               >
                 <img
-                  src="../../src/assets/Images/maxi1.jpg"
+                  src={productData?.imagUrl}
                   style={{ width: 150, height: 150, objectFit: "contain" }}
                 />
                 <Typography variant="body1" color="textSecondary">
-                  {deliveryData.description}
+                  {productData?.product_description}
                 </Typography>
               </Box>
-              <Box>LKR {deliveryData.price}</Box>
-              <Box>Qty : {deliveryData.quantity}</Box>
+              <Box>LKR {productData?.product_price}</Box>
+              <Box>Qty : {quantity}</Box>
             </Box>
           </Paper>
         </Box>
@@ -202,10 +259,10 @@ export default function DeliveryDetails() {
             }}
           >
             <Typography variant="body1" color="textSecondary">
-              Items total (1 item)
+              Items total ({quantity} item)
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              LKR {deliveryData.price}
+              LKR {productData?.product_price * quantity}
             </Typography>
           </Box>
           <Box
@@ -221,7 +278,7 @@ export default function DeliveryDetails() {
               Delivery Fee
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              LKR {deliveryData.deliveryFee}
+              LKR 300
             </Typography>
           </Box>
           <Divider />
@@ -238,7 +295,7 @@ export default function DeliveryDetails() {
               Total :
             </Typography>
             <Typography variant="body1" color="error">
-              LKR {deliveryData.price + deliveryData.deliveryFee}
+              LKR {totalAmount}
             </Typography>
           </Box>
           <Box

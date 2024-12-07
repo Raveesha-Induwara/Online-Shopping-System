@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -12,16 +11,43 @@ import {
   Alert,
   AlertTitle,
 } from "@mui/material";
-import { PrimaryButton } from "../../Components/PrimaryButton";
-import { Add, Remove, DeleteForeverOutlined } from "@mui/icons-material";
-import { strict } from "assert";
-import { MyOrdersData } from "../../../assets/Data/MyOrdersData";
 import { NavBar } from "../../../Components/NavBar";
+import axios from "axios";
 
-const myOrders = MyOrdersData;
+interface OrderItem {
+  id: number;
+  productId: number;
+  name: number;
+  description: string;
+  price: number;
+  quantity: number;
+}
+interface Order {
+  orderId: number;
+  orderStatus: string;
+  orderDate: string;
+  totalAmount: number;
+  deliveryAssigned: string;
+  orderItems: Array<OrderItem>;
+}
 
 export default function MyOrders() {
-  const [rows, setRows] = useState(myOrders);
+  const [orders, setOrders] = useState<Array<Order>>([]);
+  const userId = localStorage.getItem("userId");
+
+  // Fetch orders
+  useEffect(() => {
+    try {
+      axios
+        .get(`http://localhost:8085/api/v1/orders/user/${userId}`)
+        .then((res) => {
+          setOrders(res.data);
+          console.log("Orders:", res.data);
+        });
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  }, [userId]);
 
   return (
     <div>
@@ -44,60 +70,90 @@ export default function MyOrders() {
                   Order ID
                 </TableCell>
                 <TableCell sx={{ color: "white", textAlign: "center" }}>
-                  Product
+                  Product ID
                 </TableCell>
                 <TableCell sx={{ color: "white", textAlign: "center" }}>
-                  Name
+                  Product Name
                 </TableCell>
                 <TableCell sx={{ color: "white", textAlign: "center" }}>
                   Description
                 </TableCell>
                 <TableCell sx={{ color: "white", textAlign: "center" }}>
-                  Status
-                </TableCell>
-                <TableCell sx={{ color: "white", textAlign: "center" }}>
-                  Price
-                </TableCell>
-                <TableCell sx={{ color: "white", textAlign: "center" }}>
-                  Quantity
-                </TableCell>
-                <TableCell sx={{ color: "white", textAlign: "center" }}>
                   Order Date
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Order Status
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Delivery Status
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Total Amount
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell sx={{ textAlign: "center" }}>{row.id}</TableCell>
+              {orders.map((order: Order) => (
+                <TableRow key={order.orderId}>
                   <TableCell sx={{ textAlign: "center" }}>
-                    <img
-                      src={row.product}
+                    {order.orderId}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {order.orderItems.map((item) => (
+                      <Table>
+                        <TableRow sx={{ textAlign: "left" }}>
+                          {item.productId}
+                        </TableRow>
+                      </Table>
+                    ))}
+                    {/* <img
+                      src={order.orderItems[0].id}
                       style={{ width: 100, height: 100, objectFit: "contain" }}
-                    />
+                    /> */}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{row.name}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-                    {row.description}
+                    {order.orderItems.map((item) => (
+                      <TableRow sx={{ textAlign: "left" }}>
+                        {item.name}
+                      </TableRow>
+                    ))}
                   </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {order.orderItems.map((item) => (
+                      <TableRow sx={{ textAlign: "left" }}>
+                        {item.description}
+                      </TableRow>
+                    ))}
+                  </TableCell>
+
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {order.orderDate.split("T")[0]}
+                  </TableCell>
+
                   <TableCell sx={{ width: 3 }}>
                     <Alert
                       severity={
-                        row.status === "Delivered" ? "success" : "warning"
+                        order.orderStatus === "PENDING" ? "success" : "warning"
                       }
                       icon={false}
                     >
-                      <AlertTitle>{row.status}</AlertTitle>
+                      <AlertTitle>{order.orderStatus}</AlertTitle>
                     </Alert>
                   </TableCell>
+
                   <TableCell sx={{ textAlign: "center" }}>
-                    LKR {row.price}
+                    <Alert
+                      severity={
+                        order.orderStatus === "ASSIGNED" ? "success" : "warning"
+                      }
+                      icon={false}
+                    >
+                      <AlertTitle>{order.deliveryAssigned}</AlertTitle>
+                    </Alert>
                   </TableCell>
+
                   <TableCell sx={{ textAlign: "center" }}>
-                    {row.quantity}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {row.orderDate}
+                    LKR {order.totalAmount}
                   </TableCell>
                 </TableRow>
               ))}
