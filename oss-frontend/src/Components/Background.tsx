@@ -7,14 +7,14 @@ const SwipingBackground = () => {
     <Carousel
       autoPlay
       infiniteLoop
-      interval={6000}
+      interval={9000}
       showThumbs={false}
       showStatus={false}
       showIndicators={false}
       showArrows={false}
     >
       <div className="bimage">
-        <img src="/bg1.png" alt="bg2"  height={"100%"} width={"100%"}  />
+        <img src="/1.png" alt="bg2"  height={"100%"} width={"100%"}  />
       </div>
       <div className="bimage">
         <img src="/back2.png" alt="bg3" height={"100%"} width={"100%"} />
