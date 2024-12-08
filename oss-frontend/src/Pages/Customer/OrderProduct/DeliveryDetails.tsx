@@ -3,13 +3,13 @@ import {
   Box,
   Paper,
   Typography,
-  Dialog,
-  IconButton,
-  DialogContentText,
+  // Dialog,
+  // IconButton,
+  // DialogContentText,
   Divider,
 } from "@mui/material";
 import { PrimaryButton } from "../../../Components/PrimaryButton";
-import { DeliveryDetailsInputForm } from "../../../Components/DeliveryDetailsInputForm";
+// import { DeliveryDetailsInputForm } from "../../../Components/DeliveryDetailsInputForm";
 import { NavBar } from "../../../Components/NavBar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -24,15 +24,15 @@ interface Product {
   rate: 0;
 }
 interface User {
-  customerId: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  mobileNo: string,
-  address: string,
-  gender: string,
-  dateOfBirth: string,
-  imageUrl: string
+  customerId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  mobileNo: string;
+  address: string;
+  gender: string;
+  dateOfBirth: string;
+  imageUrl: string;
 }
 
 export default function DeliveryDetails() {
@@ -42,6 +42,9 @@ export default function DeliveryDetails() {
   const [productData, SetProductData] = useState<Product>();
   const [userDetails, setUserDetails] = useState<User>();
   const totalAmount = productData?.product_price * quantity + 300;
+  const userId = localStorage.getItem("userId");
+  const userEmail = localStorage.getItem("userEmail");
+  const [paymentUrl, setPaymentUrl] = useState<string>();
 
   // Access the passed state
   // const details = location.state || {
@@ -71,7 +74,7 @@ export default function DeliveryDetails() {
       axios
         .get(`http://localhost:8082/api/v1/customers/getuser`, {
           params: {
-            email: "rinduwara0@gmail.com",
+            email: userEmail,
           },
         })
         .then((response) => {
@@ -80,17 +83,51 @@ export default function DeliveryDetails() {
     } catch (error) {
       alert(error);
     }
-  }, []);
+  }, [userEmail]);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const AddItemToCart = async (
+    userId: string | null,
+    productId: number | undefined,
+    name: string | undefined,
+    description: string | undefined,
+    price: number | undefined,
+    quantity: number | undefined
+  ) => {
+    try {
+      await axios.post(`http://localhost:8087/api/v1/carts/addItem`, {
+        userId,
+        productId,
+        name,
+        description,
+        price,
+        quantity,
+      });
+        placeOrder(totalAmount);
+    } catch (error) {
+      alert(`Error adding item to cart: ${error}`);
+    }
   };
 
-  // Avishka API ---> totalAmount
-  const navigateToPayment = () => {};
+  // navigate to payment
+  const placeOrder = (amount: number) => {
+    axios
+      .post(`http://localhost:8085/api/v1/orders`, {
+        userId: "221195ef-9826-40f9-86f6-fbea3dc94563",
+        totalAmount: amount,
+      })
+      .then((response) => {
+        console.log("Order placed", response.data);
+        setPaymentUrl(response.data.data.payment_url);
+        window.location.href = response.data.data.payment_url;
+      });
+  };
+
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <div>
@@ -309,7 +346,16 @@ export default function DeliveryDetails() {
           >
             <PrimaryButton
               title="Proceed to pay"
-              onClick={async () => navigateToPayment()}
+              onClick={async () => {
+                AddItemToCart(
+                  userId,
+                  productId,
+                  productData?.product_name,
+                  productData?.product_description,
+                  totalAmount,
+                  quantity
+                );
+              }}
             />
           </Box>
         </Paper>

@@ -33,6 +33,7 @@ export default function MyCart() {
   const [rows, setRows] = useState<Array<Cart>>([]);
   const [open, setOpen] = useState<null | number>(null);
   const userId = localStorage.getItem("userId");
+  const [paymentUrl, setPaymentUrl] = useState<string>(); 
   localStorage.setItem("cartItemCount", rows.length.toString());
 
   // get cart data
@@ -84,6 +85,8 @@ export default function MyCart() {
       })
       .then((response) => {
         console.log("Order placed", response.data);
+        setPaymentUrl(response.data.data.payment_url);
+        window.location.href = response.data.data.payment_url;
       });
   };
 

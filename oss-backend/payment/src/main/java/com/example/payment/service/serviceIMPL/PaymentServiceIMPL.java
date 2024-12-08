@@ -62,7 +62,7 @@ public class PaymentServiceIMPL implements PaymentService {
                     SessionCreateParams.
                             PaymentMethodType.CARD). //define only card payment
                     setMode(SessionCreateParams.Mode.PAYMENT). //define for one time payment only
-                    setSuccessUrl(YOUR_DOMAIN + "?success=true"). // success url
+                    setSuccessUrl("http://localhost:5173/customer/myOrders" + "?success=true"). // success url
                     setCancelUrl(YOUR_DOMAIN + "?canceled=true"). //failed url
                     addLineItem(SessionCreateParams.LineItem.builder().
                     setQuantity(1L).setPriceData(SessionCreateParams.LineItem.PriceData.builder()

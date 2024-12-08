@@ -47,6 +47,12 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(orderRequest));
     }
     
+//    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
+//    @PostMapping
+//    public ResponseEntity<Object> createUnitOrder(@RequestBody OrderRequest orderRequest){
+//        return ResponseEntity.ok(orderService.createOrder(orderRequest));
+//    }
+    
     @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateOrder(@PathVariable Long id, @RequestBody UpdateOrderDto updateOrderDto){
