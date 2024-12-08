@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql
+    container_name: oss-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./data/mysql:/var/lib/mysql/data
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  product-service:
+    build:
+      context: ./product
+      dockerfile: Dockerfile
+    image: raveesha001/oss-product-service
+    container_name: oss-product-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  cart-service:
+    build:
+      context: ./cart
+      dockerfile: Dockerfile
+    image: raveesha001/oss-cart-service
+    container_name: oss-cart-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  order-service:
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    image: raveesha001/oss-order-service
+    container_name: oss-order-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  inventory-service:
+    build:
+      context: ./inventory
+      dockerfile: Dockerfile
+    image: raveesha001/oss-inventory-service
+    container_name: oss-inventory-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  payment-service:
+    build:
+      context: ./payment
+      dockerfile: Dockerfile
+    image: raveesha001/oss-payment-service
+    container_name: oss-payment-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  user-service:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    image: raveesha001/oss-user-service
+    container_name: oss-user-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    image: raveesha001/oss-auth-service
+    container_name: oss-auth-service
+    ports:
+      - "8088:8088"
+    depends_on:
+      - mysql
+      - discovery-server
+      - api-gateway
+
+  api-gateway:
+    build:
+      context: ./apigateway
+      dockerfile: Dockerfile
+    image: raveesha001/oss-api-gateway
+    container_name: oss-api-gateway
+    ports:
+      - "8081:9000"
+    depends_on:
+      - discovery-server
+
+  discovery-server:
+    build:
+      context: ./discoveryserver
+      dockerfile: Dockerfile
+    image: raveesha001/oss-discovery-server
+    container_name: oss-discovery-server
+    ports:
+      - "8761:8761"
