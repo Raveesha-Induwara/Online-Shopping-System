@@ -1,27 +1,21 @@
-package com.example.payment.dto;
-
+package com.example.payment.dto.request;
 
 import com.example.payment.util.enums.PaymentMethodType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PaymentDTO {
-
-    private LocalDate paymentDate;
-
-    private int paymentId;
+public class PaymentSaveRequestDTO {
 
     private int orderId;
 
     private String customerId;
 
-    private double amount;
+    private double Amount;
 
     private PaymentMethodType paymentMethod;
+
 }

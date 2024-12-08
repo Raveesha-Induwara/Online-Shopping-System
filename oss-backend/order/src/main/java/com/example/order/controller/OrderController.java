@@ -43,7 +43,7 @@ public class OrderController {
     
     @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<Object> createOrder(@RequestBody OrderRequest orderRequest){
         return ResponseEntity.ok(orderService.createOrder(orderRequest));
     }
     

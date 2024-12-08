@@ -1,19 +1,19 @@
 package com.example.payment.service;
 
-import com.example.payment.dto.OrderDTO;
 import com.example.payment.dto.PaymentDTO;
+import com.example.payment.dto.request.PaymentRequestDTO;
+import com.example.payment.dto.request.PaymentSaveRequestDTO;
 import com.example.payment.dto.request.UpdatePaymentRequestDTO;
 import com.example.payment.dto.response.PaginatedResponseItemDTO;
 import com.example.payment.dto.response.PaymentResponse;
-import com.example.payment.entity.Payment;
 import com.stripe.exception.StripeException;
 
 import java.util.List;
 
 public interface PaymentService {
-    PaymentResponse createPaymentLink(OrderDTO orderDTO) throws StripeException;
+    PaymentResponse createPaymentLink(PaymentRequestDTO paymentRequest) throws StripeException;
 
-    void savePayment(OrderDTO orderDTO);
+    void savePayment(PaymentSaveRequestDTO paymentSaveRequestDTO);
 
     PaginatedResponseItemDTO getAllPaymentsByPage(int pageNo);
 

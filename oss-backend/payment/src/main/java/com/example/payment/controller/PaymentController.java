@@ -1,7 +1,8 @@
 package com.example.payment.controller;
 
-import com.example.payment.dto.OrderDTO;
 import com.example.payment.dto.PaymentDTO;
+import com.example.payment.dto.request.PaymentRequestDTO;
+import com.example.payment.dto.request.PaymentSaveRequestDTO;
 import com.example.payment.dto.request.UpdatePaymentRequestDTO;
 import com.example.payment.dto.response.PaginatedResponseItemDTO;
 import com.example.payment.dto.response.PaymentResponse;
@@ -29,8 +30,8 @@ public class PaymentController {
     //output stripe session link
     @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping ("link")
-    public ResponseEntity<StandardResponse> createPaymentLink(@RequestBody OrderDTO orderDTO) throws StripeException {
-        PaymentResponse response = paymentService.createPaymentLink(orderDTO);
+    public ResponseEntity<StandardResponse> createPaymentLink(@RequestBody PaymentRequestDTO paymentRequest) throws StripeException {
+        PaymentResponse response = paymentService.createPaymentLink(paymentRequest);
         // return  new ResponseEntity<StandardResponse>(new StandardResponse(200,"success","hello"),HttpStatus.OK);
         return new ResponseEntity<StandardResponse>(new StandardResponse(200, "success", response), HttpStatus.OK);
     }
@@ -40,8 +41,8 @@ public class PaymentController {
     //no input or return
     @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping("")
-    public ResponseEntity<StandardResponse> savePayment(@RequestBody OrderDTO orderDTO) {
-        paymentService.savePayment(orderDTO);
+    public ResponseEntity<StandardResponse> savePayment(@RequestBody PaymentSaveRequestDTO paymentSaveRequestDTO) {
+        paymentService.savePayment(paymentSaveRequestDTO);
         return new ResponseEntity<StandardResponse>(new StandardResponse(
                 200,
                 "Success",
