@@ -1,6 +1,6 @@
 package com.example.order.service;
 
-import com.example.cart.dto.CartItemDto;
+import com.example.order.dto.CartItemDto;
 import com.example.order.dto.*;
 import com.example.order.enums.DeliveryAssign;
 import com.example.order.enums.OrderStatus;

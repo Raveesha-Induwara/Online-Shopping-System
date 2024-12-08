@@ -1,6 +1,6 @@
 package com.example.order.service;
 
-import com.example.cart.dto.CartItemDto;
+import com.example.order.dto.CartItemDto;
 import com.example.order.dto.PaymentResponseDTO;
 import com.example.order.exception.type.WebClientException;
 import jakarta.transaction.Transactional;

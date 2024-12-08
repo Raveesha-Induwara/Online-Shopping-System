@@ -1,6 +1,6 @@
 package com.example.product.service;
 
-import com.example.inventory.dto.InventoryDto;
+import com.example.product.dto.InventoryDto;
 import com.example.product.dto.ProductRequest;
 import com.example.product.dto.ProductRespond;
 import com.example.product.exception.type.ProductNotFoundException;

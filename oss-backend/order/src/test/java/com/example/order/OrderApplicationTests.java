@@ -1,6 +1,6 @@
 package com.example.order;
 
-import com.example.cart.dto.CartItemDto;
+import com.example.order.dto.CartItemDto;
 import com.example.order.dto.OrderRequest;
 import com.example.order.model.Order;
 import com.example.order.repository.OrderRepo;
