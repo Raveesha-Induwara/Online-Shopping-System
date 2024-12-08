@@ -62,6 +62,7 @@ public class Routes {
                     
                     .route("order-service", r -> r.path("/api/v1/orders").uri("lb://order"))
                     .route("order-service", r -> r.path("/api/v1/orders/{id}").uri("lb://order"))
+                    .route("order-service", r -> r.path("/api/v1/orders/user/{userId}").uri("lb://order"))
 
 					.route("payment-service", r -> r.path("/api/v1/payments").uri("lb://payment-service"))
                 	.route("payment-service", r -> r.path("/api/v1/payments/{id}").uri("lb://payment-service"))

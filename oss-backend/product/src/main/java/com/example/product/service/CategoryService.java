@@ -51,6 +51,9 @@ public class CategoryService {
         if (request.getDescription() != null) {
             existingCategory.setDescription(request.getDescription());
         }
+        if (request.getImageUrl() != null) {
+            existingCategory.setImageUrl(request.getImageUrl());
+        }
         
         categoryRepo.save(existingCategory);
         return "Category updated";
