@@ -37,12 +37,12 @@ const RegistrationOTP = () => {
         otp: data.otp,
       })
       .then((response) => {
-        alert(response.data.message);
+        // alert(response.data.message);
         setError("");
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("cartItemCount", '0');
-        navigate("/customer");
+        navigate("/customer/dashboard");
       })
       .catch((error) => {
         setError(error.response.data.result);

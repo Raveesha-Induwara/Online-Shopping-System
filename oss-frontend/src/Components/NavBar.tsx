@@ -285,7 +285,7 @@ export const NavBar = () => {
                   <Grid item xs={6}>
                     <TextField
                       label="Phone"
-                      name="phone"
+                      name="mobileNo"
                       value={userProfile.mobileNo}
                       onChange={handleInputChange}
                       InputProps={{ readOnly: !editMode }}

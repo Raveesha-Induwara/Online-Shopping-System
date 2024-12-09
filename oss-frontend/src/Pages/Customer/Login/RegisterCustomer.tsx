@@ -36,7 +36,7 @@ const RegistrationForm = () => {
         email: data.email,
       })
       .then((response) => {
-        alert(response.data.message);
+        // alert(response.data.message);
         localStorage.setItem("userEmail", data.email);
         setError("");
         navigate("/customer/RegistrationOTP", {

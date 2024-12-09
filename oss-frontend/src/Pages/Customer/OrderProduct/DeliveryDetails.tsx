@@ -112,7 +112,7 @@ export default function DeliveryDetails() {
   const placeOrder = (amount: number) => {
     axios
       .post(`http://localhost:8085/api/v1/orders`, {
-        userId: "221195ef-9826-40f9-86f6-fbea3dc94563",
+        userId: userId,
         totalAmount: amount,
       })
       .then((response) => {
