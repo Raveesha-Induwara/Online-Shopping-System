@@ -106,11 +106,5 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--    user microservice    -->
-        <dependency>
-            <groupId>org.native_developers</groupId>
-            <artifactId>user</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
     </dependencies>
 </project>

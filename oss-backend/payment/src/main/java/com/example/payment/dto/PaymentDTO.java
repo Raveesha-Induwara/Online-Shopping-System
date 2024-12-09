@@ -1,9 +1,7 @@
 package com.example.payment.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import com.example.payment.util.enums.PaymentMethodType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,9 @@ public class PaymentDTO {
 
     private int orderId;
 
-    private int customerId;
+    private String customerId;
 
     private double amount;
+
+    private PaymentMethodType paymentMethod;
 }

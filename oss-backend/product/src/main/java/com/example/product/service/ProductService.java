@@ -1,6 +1,6 @@
 package com.example.product.service;
 
-import com.example.inventory.dto.InventoryDto;
+import com.example.product.dto.InventoryDto;
 import com.example.product.dto.ProductRequest;
 import com.example.product.dto.ProductRespond;
 import com.example.product.exception.type.ProductNotFoundException;
@@ -40,6 +40,8 @@ public class ProductService {
                     .product_description(request.getProduct_description())
                     .product_category(request.getProduct_category())
                     .product_price(request.getProduct_price())
+                    .imagUrl(request.getProduct_image())
+                    .rate(request.getProduct_rate())
                     .build();
             productRepository.save(product);
             log.info("Product created with ID: {}", product.getId());
@@ -128,24 +130,27 @@ public class ProductService {
             if (request.getProduct_price() != null) {
                 existingProduct.setProduct_price(request.getProduct_price());
             }
+            if (request.getProduct_image() != null) {
+                existingProduct.setImagUrl(request.getProduct_image());
+            }
             
             // Update inventory for the product
             InventoryDto inventoryDto = new InventoryDto();
             inventoryDto.setProductId(id);
             inventoryDto.setQuantity(request.getProduct_quantity());
             
-            try {
-                inventoryWebClient.patch()
-                        .uri(uriBuilder -> uriBuilder.path("/").build())
-                        .bodyValue(inventoryDto)
-                        .retrieve()
-                        .bodyToMono(InventoryDto.class)
-                        .block();
-            } catch (WebClientResponseException e) {
-                if(e.getStatusCode().is5xxServerError()) {
-                    throw new WebClientException("Failed to call Inventory WebClient", e);
-                }
-            }
+//            try {
+//                inventoryWebClient.patch()
+//                        .uri(uriBuilder -> uriBuilder.path("/").build())
+//                        .bodyValue(inventoryDto)
+//                        .retrieve()
+//                        .bodyToMono(InventoryDto.class)
+//                        .block();
+//            } catch (WebClientResponseException e) {
+//                if(e.getStatusCode().is5xxServerError()) {
+//                    throw new WebClientException("Failed to call Inventory WebClient", e);
+//                }
+//            }
 
             productRepository.save(existingProduct);
             log.info("Product updated with ID: {}", id);
@@ -183,6 +188,7 @@ public class ProductService {
                 .product_description(product.getProduct_description())
                 .product_category(product.getProduct_category())
                 .product_price(product.getProduct_price())
+                .imagUrl(product.getImagUrl())
                 .product_rate(product.getRate())
                 .build();
     }

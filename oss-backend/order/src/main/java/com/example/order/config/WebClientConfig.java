@@ -18,4 +18,9 @@ public class WebClientConfig {
     public WebClient cartWebClient(WebClient.Builder builder) {
         return builder.baseUrl("http://cart/api/v1/carts").build();
     }
+
+    @Bean
+    public WebClient paymentWebClient(WebClient.Builder builder){
+        return builder.baseUrl("http://payment-service/api/v1/payments").build();
+    }
 }
