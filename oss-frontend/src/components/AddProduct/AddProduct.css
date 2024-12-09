@@ -14,7 +14,7 @@
 
 /* Popup Content */
 .popup-content {
-  background: white;
+  background: rgb(233, 231, 231);
   padding: 20px;
   border-radius: 10px;
   width: 35%;
@@ -29,13 +29,17 @@
   align-items: center;
   margin-bottom: 20px;
   background-color: #185a9d;
+  border-radius: 0.8em;
+  width: 31.5em;
+  height: 3em;
 }
 
-.popup-header h2 {
+.popup-header h3 {
   margin: 0;
   font-size: 20px;
   text-align: center;
-  margin-left: 160px;
+  margin-left: 8em;
+  font-weight: 3.5em;
 }
 
 .popup-close-btn {
@@ -49,40 +53,24 @@
 .add-product-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10em;
 }
 
 .add-product-form label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
-  background-color: rgb(255, 249, 249);
   color: #2e2e2e;
 }
 
 .add-product-form input,
 .add-product-form textarea {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
+  font-size: 15px;
   border-radius: 5px;
-  background-color: #ccc;
   color: #2e2e2e;
 }
 
 .add-product-form textarea {
   resize: none;
   height: 80px;
-  background-color: #ccc;
   color: #2e2e2e;
-}
-
-.add-product-btn {
-  padding: 10px;
-  font-size: 16px;
-  background-color: rgb(5, 5, 85);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 30px;
 }
