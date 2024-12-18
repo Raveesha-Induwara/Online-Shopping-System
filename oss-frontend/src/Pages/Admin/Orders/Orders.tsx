@@ -46,11 +46,9 @@ export default function Orders() {
   // Fetch orders
   useEffect(() => {
     try {
-      axios
-        .get("http://localhost:8085/api/v1/orders/${}")
-        .then((res) => {
-          setOrders(res.data);
-        });
+      axios.get("http://localhost:8085/api/v1/orders/${}").then((res) => {
+        setOrders(res.data);
+      });
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
@@ -91,7 +89,7 @@ export default function Orders() {
 
   return (
     <>
-      <div style={{ margin: "20px" }}>
+      <div style={{ margin: "20px", width: "100%" }}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

@@ -62,7 +62,7 @@ export const AdminDashboard: React.FC = () => {
       style={{
         backgroundColor: "white",
         minHeight: "100vh",
-        width: "100vw",
+        maxWidth: "100vw",
         // padding: "20px",
         boxSizing: "border-box",
         // margin: "0",
@@ -74,11 +74,11 @@ export const AdminDashboard: React.FC = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          gap: "20px",
+          // gap: "20px",
         }}
       >
-        <div style={{ flex: 1, minWidth: "300px" }}>
-          <Grid container spacing={2}>
+        <div style={{ flex: 1 }}>
+          <Grid container spacing={1}>
             <Grid item xs={12} sm={6} md={4}>
               <StatCard
                 title="Registered Users"
@@ -110,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* graphs */}
-        <div style={{ flex: 1, minWidth: "300px" }}>
+        <div style={{ flex: 1 }}>
           <Box
             sx={{
               border: "1px solid #ccc",
@@ -129,12 +129,12 @@ export const AdminDashboard: React.FC = () => {
                   valueFormatter: (value) => value.toString(),
                   min: 2010,
                   max: 2024,
-                  disableLine: "true",
+                  disableLine: true,
                 },
               ]}
               yAxis={[
                 {
-                  disableLine: "true",
+                  disableLine: true,
                   min: 100,
                   max: 4000,
                 },

@@ -7,16 +7,17 @@
 
 html,
 body {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   font-family: "Inter", sans-serif;
   background-color: #f4f4f9;
 }
 
 .OuterDiv {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
-  height: 100vh; /* Full height of the viewport */
+  height: 100%; /* Full height of the viewport */
   width: 100%; /* Full width of the viewport */
   background: linear-gradient(135deg, #f9f9f9 30%, #e0eafc 90%);
 }
@@ -40,7 +41,10 @@ body {
   padding: 8px 0;
   font-size: 14px;
   margin-top: auto; /* Push footer to bottom */
-  width: 100vw; /* Ensure it spans the full width */
-  position: relative; /* Allow it to follow the natural flow of the layout */
+  position: relative; /* Fixed position */
+  bottom: 0; /* Stick to the bottom of the viewport */
+  left: 0; /* Align to the left edge */
+  right: 0; /* Align to the right edge */
+  width: 100%; /* Full width of the document */
   box-sizing: border-box; /* Include padding in width calculations */
 }

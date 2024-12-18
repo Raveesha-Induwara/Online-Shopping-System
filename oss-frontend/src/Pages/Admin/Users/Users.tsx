@@ -25,14 +25,14 @@ interface OrderSummary {
 }
 
 interface User {
-  customerId: string,
-  firstName: string,
-  lastName: string,
-  mobileNo: string,
-  email: string,
-  homeNo: string,
-  street: string,
-  city: string
+  customerId: string;
+  firstName: string;
+  lastName: string;
+  mobileNo: string;
+  email: string;
+  homeNo: string;
+  street: string;
+  city: string;
 }
 
 // Custom styles
@@ -102,7 +102,7 @@ const Users: React.FC = () => {
         subTitle="Manage all users"
         icon={<GroupIcon />}
       /> */}
-      <div style={{ margin: "20px" }}>
+      <div style={{ margin: "20px", width: "100%" }}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -121,7 +121,9 @@ const Users: React.FC = () => {
                   onClick={() => handleRowClick(user)}
                 >
                   <TableCell align="center">{user.customerId}</TableCell>
-                  <TableCell align="center">{user.firstName + " " + user.lastName}</TableCell>
+                  <TableCell align="center">
+                    {user.firstName + " " + user.lastName}
+                  </TableCell>
                   <TableCell align="center">{user.email}</TableCell>
                   {/* <TableCell align="center" className={classes.orderSummary}>
                     <div className={classes.orderSummaryRow}>
@@ -152,7 +154,10 @@ const Users: React.FC = () => {
             <DialogContent>
               {[
                 { label: "User ID", value: selectedUser.customerId },
-                { label: "Username", value: selectedUser.firstName + " " + selectedUser.lastName },
+                {
+                  label: "Username",
+                  value: selectedUser.firstName + " " + selectedUser.lastName,
+                },
                 {
                   label: "Order Summary",
                   value: (
@@ -170,7 +175,15 @@ const Users: React.FC = () => {
                 },
                 { label: "Mobile Number", value: selectedUser.mobileNo },
                 { label: "Email Address", value: selectedUser.email },
-                { label: "Address", value: selectedUser.homeNo + ", " + selectedUser.street + ", " + selectedUser.city },
+                {
+                  label: "Address",
+                  value:
+                    selectedUser.homeNo +
+                    ", " +
+                    selectedUser.street +
+                    ", " +
+                    selectedUser.city,
+                },
               ].map((detail, index) => (
                 <div key={index} className={classes.detailItem}>
                   <strong>{detail.label}:</strong> {detail.value}
