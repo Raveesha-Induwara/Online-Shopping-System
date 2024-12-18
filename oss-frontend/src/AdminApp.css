@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Full height of the viewport */
-  width: 100vw; /* Full width of the viewport */
+  width: 100%; /* Full width of the viewport */
   background: linear-gradient(135deg, #f9f9f9 30%, #e0eafc 90%);
 }
 
@@ -39,4 +39,8 @@ body {
   text-align: center;
   padding: 8px 0;
   font-size: 14px;
+  margin-top: auto; /* Push footer to bottom */
+  width: 100vw; /* Ensure it spans the full width */
+  position: relative; /* Allow it to follow the natural flow of the layout */
+  box-sizing: border-box; /* Include padding in width calculations */
 }

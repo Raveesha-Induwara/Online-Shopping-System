@@ -22,13 +22,12 @@ import {
   Category,
   LocalMall,
 } from "@mui/icons-material";
-// import DashboardPage from "../pages/Dashboard/Dashboard";
+// Component imports
 import Users from "../Pages/Admin/Users/Users";
 import Orders from "../Pages/Admin/Orders/Orders";
-// import ProductsPage from "../pages/Products/Products";
-// import OrdersPage from "../pages/Orders/Orders";
 import CategoriesContent from "../Pages/Admin/Categories/Categories";
 import ProductsContent from "../Pages/Admin/Products/Products";
+import AdminDashboard from "../Pages/Admin/Dashboard/AdminDashboard";
 import "../AdminApp.css";
 
 const AppLayout = () => {
@@ -44,7 +43,7 @@ const AppLayout = () => {
     { text: "Categories", icon: <Category />, path: "/admin/categories" },
   ];
 
-  // Determine the current selected item's name based on the location
+  // Get current selected item
   const currentItem =
     sidebarItems.find((item) => item.path === location.pathname)?.text ||
     "App Layout";
@@ -59,7 +58,8 @@ const AppLayout = () => {
 
   return (
     <div className="OuterDiv">
-      <Box sx={{ display: "flex", height: "100vh" }}>
+      {/* Sidebar and content container */}
+      <Box sx={{ display: "flex", width: "100%" }}>
         {/* Sidebar */}
         <Drawer
           variant="permanent"
@@ -138,9 +138,9 @@ const AppLayout = () => {
           </AppBar>
 
           {/* Page Content */}
-          <Box sx={{ padding: 3 }}>
+          <Box className="content">
             <Routes>
-              {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+              <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/users" element={<Users />} />
               <Route path="/products" element={<ProductsContent />} />
               <Route path="/orders" element={<Orders />} />
@@ -149,9 +149,11 @@ const AppLayout = () => {
           </Box>
         </Box>
       </Box>
-      <footer className="footer">
+
+      {/* Footer */}
+      <Box className="footer">
         <p>&copy; 2024 My App. All rights reserved.</p>
-      </footer>
+      </Box>
     </div>
   );
 };
