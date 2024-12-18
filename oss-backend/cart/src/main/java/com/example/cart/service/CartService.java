@@ -10,7 +10,7 @@ import com.example.cart.model.Cart;
 import com.example.cart.model.CartItem;
 import com.example.cart.repo.CartItemRepo;
 import com.example.cart.repo.CartRepo;
-import com.example.inventory.dto.InventoryDto;
+import com.example.cart.dto.InventoryDto;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

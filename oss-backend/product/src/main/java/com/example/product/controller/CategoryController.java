@@ -23,26 +23,31 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         return new ResponseEntity<>(categoryService.getCategoryById(id), HttpStatus.OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping
     public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         return new ResponseEntity<>(categoryService.createCategory(categoryDto), HttpStatus.CREATED);
     }
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PatchMapping
     public ResponseEntity<String> updateCategory(@Valid @RequestBody UpdateCategoryDto updateCategoryDto) {
         return new ResponseEntity<>(categoryService.updateCategory(updateCategoryDto), HttpStatus.OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable long id){
         return ResponseEntity.ok(categoryService.deleteCategory(id));

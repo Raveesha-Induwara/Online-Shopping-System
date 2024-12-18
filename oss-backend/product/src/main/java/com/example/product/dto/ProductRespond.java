@@ -16,5 +16,6 @@ public class ProductRespond {
     private String product_description;
     private String product_category;
     private Integer product_price;
+    private String imagUrl;
     private double product_rate;
 }

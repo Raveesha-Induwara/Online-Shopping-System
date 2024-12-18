@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/v1/customers")
+@CrossOrigin()
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
