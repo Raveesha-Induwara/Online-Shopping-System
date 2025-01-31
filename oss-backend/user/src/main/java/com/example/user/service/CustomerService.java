@@ -46,9 +46,10 @@ public class CustomerService {
                 value.setFirstName(customerUpdateDto.getFirstName());
                 value.setLastName(customerUpdateDto.getLastName());
                 value.setMobileNo(customerUpdateDto.getMobileNo());
-                value.setHomeNo(customerUpdateDto.getHomeNo());
-                value.setStreet(customerUpdateDto.getStreet());
-                value.setCity(customerUpdateDto.getCity());
+                value.setAddress(customerUpdateDto.getAddress());
+                value.setGender(customerUpdateDto.getGender());
+                value.setDateOfBirth(customerUpdateDto.getDateOfBirth());
+                value.setImageUrl(customerUpdateDto.getImageUrl());
                 return value;
             });
             return new SuccessCustomerResponse(user);

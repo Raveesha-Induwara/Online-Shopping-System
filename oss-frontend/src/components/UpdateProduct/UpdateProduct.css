@@ -1,0 +1,78 @@
+/* Popup Overlay */
+.update-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Content */
+.update-popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 35%;
+  height: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Popup Header */
+.update-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #185a9d;
+  color: aliceblue;
+  border-radius: 0.8em;
+  width: 31.5em;
+  height: 3em;
+}
+
+.update-popup-header h3 {
+  margin: 0;
+  font-size: 25px;
+  text-align: center;
+  margin-left: 6em;
+  font-weight: 3.5em;
+}
+
+.update-popup-close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Form Styles */
+.update-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.update-product-form label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #2e2e2e;
+}
+
+.update-product-form input,
+.update-product-form textarea {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  color: #2e2e2e;
+}
+
+.update-product-form textarea {
+  resize: none;
+  height: 80px;
+  color: #2e2e2e;
+}

@@ -2,7 +2,7 @@ package com.example.auth.service;
 
 import com.example.auth.repo.ClientCredentialRepo;
 import com.example.auth.model.ClientCredential;
-import com.example.user.model.Customer;
+import com.example.auth.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;

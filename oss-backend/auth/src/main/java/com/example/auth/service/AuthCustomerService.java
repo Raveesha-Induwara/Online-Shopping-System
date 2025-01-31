@@ -8,13 +8,10 @@ import com.example.auth.exception.types.InvalidOtpException;
 import com.example.auth.model.Otp;
 import com.example.auth.repo.ClientCredentialRepo;
 import com.example.auth.common.AuthResponse;
-import com.example.auth.common.ErrorAuthResponse;
 import com.example.auth.repo.OtpRepo;
-import com.example.user.dto.*;
 import com.example.auth.enums.UserType;
 import com.example.auth.model.ClientCredential;
-import com.example.user.model.Customer;
-import jakarta.validation.constraints.Email;
+import com.example.auth.model.Customer;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +81,7 @@ public class AuthCustomerService {
     }
     
     public AuthResponse signUp(SignUpRequestDto request) {
-        Otp otpDocument = otpRepo.findOtpByEmailAndOtpTypeAndOtp(
+        Otp otpDocument = otpRepo.findByEmailAndOtpAndOtpType(
                 request.getEmail(), request.getOtp(), String.valueOf(OtpType.SIGNUP));
         
         if(otpDocument == null) {
@@ -129,6 +126,7 @@ public class AuthCustomerService {
         clientCredentialRepo.save(modelMapper.map(client, ClientCredential.class));
         otpRepo.delete(otpDocument);
         return new SuccessAuthResponse(new LoginResponseDto(
+                clientId,
                 authService.generateToken(request.getEmail()),
                 "refresh",
                 UserType.CUSTOMER,
@@ -140,7 +138,19 @@ public class AuthCustomerService {
         Authentication authentication = authService.authenticate(request.getEmail(), request.getPassword());
         
         if(authentication.isAuthenticated()) {
+            Customer existingUser = userWebClient.get()
+                                            .uri(uriBuilder -> uriBuilder
+                                            .path("/getuser")
+                                            .queryParam("email", request.getEmail())
+                                            .build())
+                                            .retrieve()
+                                            .bodyToMono(Customer.class)
+                                            .block();
+            
+            assert existingUser != null;
+            
             LoginResponseDto response = new LoginResponseDto();
+            response.setUserId(existingUser.getCustomerId());
             response.setAccessToken(authService.generateToken(request.getEmail()));
             response.setRefreshToken("refresh");
             response.setStatus("success");

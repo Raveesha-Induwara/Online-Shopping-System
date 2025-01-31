@@ -1,10 +1,7 @@
 package com.example.order.service;
 
-import com.example.cart.dto.CartItemDto;
-import com.example.order.dto.OrderItemRespond;
-import com.example.order.dto.OrderRequest;
-import com.example.order.dto.OrderRespond;
-import com.example.order.dto.UpdateOrderDto;
+import com.example.order.dto.CartItemDto;
+import com.example.order.dto.*;
 import com.example.order.enums.DeliveryAssign;
 import com.example.order.enums.OrderStatus;
 import com.example.order.exception.type.ItemNotFoundException;
@@ -32,7 +29,7 @@ public class OrderService {
     private WebClientService webClientService;
     
     @Transactional
-    public String createOrder(OrderRequest orderRequest) {
+    public PaymentResponseDTO createOrder(OrderRequest orderRequest) {
         Order newOrder = new Order();
         newOrder.setOrderDate(new Date());
         newOrder.setUserId(orderRequest.getUserId());
@@ -59,7 +56,9 @@ public class OrderService {
         
         // delete cart
         webClientService.deleteCart(orderRequest.getUserId());
-        return ("order created with id: " + newOrder.getOrderId());
+
+        //create payment link from payment-service and return it
+        return  webClientService.getPaymentLink(orderRequest.getTotalAmount());
     }
 
     public List<OrderRespond> getAllOrders() {
@@ -72,6 +71,17 @@ public class OrderService {
             log.error("Error occurred while retrieving all orders", e);
             throw e;
         }
+    }
+    
+    public List<OrderRespond> getOrdersByUserId(String userId) {
+        List<Order> order = orderRepo.findByUserId(userId);
+        if(order.isEmpty()) {
+            log.error("Error occurred while retrieving order with userId: {}", userId);
+            throw new OrderNotFoundException("Order not found with userId: " + userId);
+        }
+        List<OrderRespond> orderRespond = new ArrayList<>();
+        order.forEach(o -> orderRespond.add(mapToOrderResponse(o)));
+        return orderRespond;
     }
 
     public OrderRespond getOrderById(Long id) {

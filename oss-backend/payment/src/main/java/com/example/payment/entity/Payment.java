@@ -1,5 +1,6 @@
 package com.example.payment.entity;
 
+import com.example.payment.util.enums.PaymentMethodType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +28,12 @@ public class Payment {
     private int orderId;
 
     @Column(name = "customer_id",nullable = false)
-    private int customerId;
+    private String customerId;
 
     @Column(name = "amount",nullable = false)
     private double amount;
 
-//    @Column(name = "payment_method",nullable = false)
-//    private PaymentMethodType paymentMethod;
+    @Column(name = "payment_method",nullable = false)
+    private PaymentMethodType paymentMethod;
 
 }

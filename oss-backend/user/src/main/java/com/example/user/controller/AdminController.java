@@ -23,21 +23,25 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("/getadmins")
     public ResponseEntity<List<Admin>> getAdmins() {
         return new ResponseEntity<>(adminService.getAllAdmins(), HttpStatus.OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @PostMapping("/addadmin")
     public ResponseEntity<AdminDto> createAdmin(@Valid @RequestBody AdminDto adminDto) {
         return new ResponseEntity<>(adminService.createAdmin(adminDto), HttpStatus.CREATED);
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @DeleteMapping("/deleteadmin")
     public ResponseEntity<String> deleteAdmin(@Param(value = "email") String email) {
         return new ResponseEntity<>(adminService.deleteAdmin(email), HttpStatus.OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:8081, http://localhost:5173")
     @GetMapping("/getadmin")
     public ResponseEntity<Optional<Admin>> getAdminByEmail(@Param(value = "email") String email) {
         return new ResponseEntity<>(adminService.getAdminByEmail(email), HttpStatus.OK);

@@ -1,7 +1,6 @@
 package com.example.auth.service;
 
 import com.example.auth.common.AuthResponse;
-import com.example.auth.common.ErrorAuthResponse;
 import com.example.auth.common.SuccessAuthResponse;
 import com.example.auth.dto.LoginRequestDto;
 import com.example.auth.dto.LoginResponseDto;
@@ -10,7 +9,7 @@ import com.example.auth.enums.UserType;
 import com.example.auth.exception.types.EmailAlreadyExistException;
 import com.example.auth.model.AdminCredential;
 import com.example.auth.repo.AdminCredentialRepo;
-import com.example.user.dto.AdminDto;
+import com.example.auth.dto.AdminDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

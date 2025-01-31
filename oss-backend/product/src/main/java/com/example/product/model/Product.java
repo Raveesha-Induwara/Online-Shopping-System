@@ -21,5 +21,6 @@ public class Product {
     private String product_description;
     private String product_category;
     private Integer product_price;
-    private double rate;
+    private String imagUrl;
+    private Integer rate;
 }

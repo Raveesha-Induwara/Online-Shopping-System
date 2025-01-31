@@ -64,11 +64,5 @@
             <version>2.6.0</version>
         </dependency>
 
-        <!--    inventory microservice    -->
-        <dependency>
-            <groupId>org.native_developers</groupId>
-            <artifactId>inventory</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
     </dependencies>
 </project>
